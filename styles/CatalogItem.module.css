@@ -1,0 +1,49 @@
+.catalogItem {
+  display: grid;
+  margin: 10px;
+}
+
+.catalogCard {
+  background: #000000;
+  border-radius: 9px;
+  height: 100px;
+  color: white;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr 1fr;
+}
+
+.catalogCard h2,
+.productsCard h4 {
+  margin: 0;
+}
+
+.catalogCard img {
+  justify-self: end;
+  align-self: center;
+}
+
+.productsCard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+  background: lightgray;
+  margin-top: -5px;
+  padding: 20px;
+}
+
+.product {
+  width: 250px;
+  height: 250px;
+  background: darkgrey;
+  display: grid;
+  justify-self: center;
+  margin: 10px;
+}
+
+.product > div {
+  align-self: end;
+  padding: 15px;
+  background: black;
+  color: white;
+}
