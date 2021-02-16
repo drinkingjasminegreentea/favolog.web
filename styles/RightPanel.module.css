@@ -8,10 +8,6 @@
   align-items: center;
 }
 
-.rightBar > div {
-  justify-self: center;
-}
-
 .addButton {
   background: #000000;
   width: 70px;
@@ -24,6 +20,6 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
   margin-bottom: 40px;
-  position: fixed;
-  bottom: 5%;
+  align-self: end;
+  justify-self: center;
 }
