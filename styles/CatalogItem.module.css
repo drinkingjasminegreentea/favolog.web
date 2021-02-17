@@ -1,6 +1,9 @@
 .catalogItem {
   display: grid;
   margin: 10px;
+  background: lightgray;
+  height: fit-content;
+  border-radius: 9px;
 }
 
 .catalogCard {
@@ -24,11 +27,9 @@
 }
 
 .productsCard {
-  display: grid;
+  display: none;
   grid-template-columns: 1fr 1fr;
   grid-gap: 5px;
-  background: lightgray;
-  margin-top: -5px;
   padding: 20px;
 }
 

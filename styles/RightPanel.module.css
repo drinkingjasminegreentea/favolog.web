@@ -23,3 +23,7 @@
   align-self: end;
   justify-self: center;
 }
+
+.addButton:hover {
+  cursor: pointer;
+}

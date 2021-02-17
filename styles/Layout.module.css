@@ -33,31 +33,22 @@
 }
 
 .content {
-  height: fit-content;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px 1fr;
-  height: 100%;
-  overflow-y: auto;
+  overflow: auto;
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .content > h1 {
   justify-self: center;
 }
 
-.catalog {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow-y: scroll;
-}
-
 /* Hide scrollbar for Chrome, Safari and Opera */
-.catalog::-webkit-scrollbar {
+.content::-webkit-scrollbar {
   display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.catalog {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
