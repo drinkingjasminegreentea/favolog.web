@@ -7,7 +7,7 @@ const RightPanel = () => {
     return (
         <div className={styles.rightBar}>
             <h3>Hey, Jyldyz</h3>
-            <img src={'../icons/settings.svg'}></img>
+            <img src={'/icons/settings.svg'}></img>
             <div role='button' 
                 className={styles.addButton + " " + commonStyles.button} 
                 onClick={() => router.push('/catalog-add')}>

@@ -1,15 +1,49 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import { BlobServiceClient } from '@azure/storage-blob'
+import { v4 as uuidv4 } from 'uuid'
+
 export default function AddProduct({catalogId}) {
     const router = useRouter()
     const [name, setName] = useState('')
     const [brand, setBrand] = useState('')
+    const [image, setImage] = useState('')    
+    const [comments, setComments] = useState('')
 
+    function fileChangedHandler(event) {
+      const file = event.target.files[0];      
+      setImage(file);
+    }
+
+    function getFileExtension(fileName){      
+      const lastDot = name.lastIndexOf('.');      
+      return fileName.substring(lastDot + 1);
+    }
+
+    async function uploadImage(){
+
+      const blobName = uuidv4() + getFileExtension(image.name);
+      const account = "favostorage";
+      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-02-18T06:35:22Z&st=2021-02-17T18:35:22Z&spr=https&sig=iJCCqkHAx3Ow4Kar2ZHvf4fhfSDQ7X9fmSuWGMUoMgo%3D";
+      const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net${sas}`);
+      const containerClient = blobServiceClient.getContainerClient("productimages");
+      var options = {blobContentType:image.type};
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);            
+      
+      await blockBlobClient.uploadData(image, {blobHTTPHeaders: options});
+      return blobName;
+    }
+    
     async function add(){
+        
+        var blobName = await uploadImage(image.name);
+        
         const product = {
             name: name,
             brand: brand,
-            catalogId: catalogId
+            catalogId: catalogId,
+            imageName: blobName,
+            comments: comments
         }
         
         await fetch(`http://localhost/favolog.service/api/product`, {
@@ -30,6 +64,10 @@ export default function AddProduct({catalogId}) {
             <br/>
             <input onChange={e => setBrand(e.target.value) } value={brand} placeholder='Brand'></input>
             <br/>
+            <input onChange={e => setComments(e.target.value) } value={comments} placeholder='Comments'></input>
+            <br/>
+            <input type='file' accept="image/*" onChange={ fileChangedHandler } placeholder='Image'></input>
+            <br/>            
             <button onClick={() => add() }>Save</button>
         </div>
     </>

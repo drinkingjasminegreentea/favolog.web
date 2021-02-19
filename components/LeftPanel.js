@@ -13,7 +13,7 @@ const LeftPanel = () => {
             </h1>                  
         </div>
         <div className={styles.profileInfo}>
-            <img src={'../images/profile.jpg'} ></img>
+            <img src={'/images/profile.jpg'} ></img>
             <h1>Guy</h1>
             <p>Investor</p>            
         </div>

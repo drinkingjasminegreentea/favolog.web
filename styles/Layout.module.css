@@ -12,7 +12,6 @@
   display: grid;
   height: 100vh;
   grid-template-columns: 1fr 4fr 0.7fr;
-  overflow: hidden;
 }
 
 .container h1,
@@ -29,26 +28,14 @@
   display: grid;
   grid-template-rows: 100px 8fr;
   padding: 0 40px;
-  overflow: hidden;
 }
 
 .content {
-  height: 100%;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px 1fr;
-  overflow: auto;
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 
 .content > h1 {
   justify-self: center;
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.content::-webkit-scrollbar {
-  display: none;
 }

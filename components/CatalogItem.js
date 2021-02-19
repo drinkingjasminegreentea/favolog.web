@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import styles from '../styles/CatalogItem.module.css'
 import commonStyles from '../styles/CommonStyles.module.css'
 
 const CatalogItem = ({catalog}) => {
     const router = useRouter()
+    const productImageRoot = "https://favostorage.blob.core.windows.net/productimages/";
 
     const collapseOpen = (e) =>  {
         if (catalog.topProducts.length === 0) 
@@ -41,12 +43,19 @@ const CatalogItem = ({catalog}) => {
                 }                    
             </div>
             <div className={styles.productsCard}>
-                {catalog.topProducts.length > 0 && catalog.topProducts.map((product) => (
-                    <div key={product.id} className={styles.product}>           
-                    <img src={'../images/shampoo.jfif'}></img>            
-                        <div>
-                            <h4>{product.name}</h4>
-                            <span>{product.brand}</span>
+                {catalog.topProducts.length > 0 && catalog.topProducts.map((userProduct) => (
+                    <div key={userProduct.id} className={styles.product}>        
+                    <Image
+                        src={productImageRoot+userProduct.imageName}
+                        layout="intrinsic"
+                        objectFit = "contain"
+                        width="150"
+                        height="150"
+                        quality={100}                        
+                        />             
+                        <div className={styles.productInfo}>
+                            <h4>{userProduct.product.name}</h4>
+                            <span>{userProduct.product.brand}</span>
                         </div>                                       
                     </div>
                 ))}

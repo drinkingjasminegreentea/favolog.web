@@ -7,11 +7,11 @@ const SearchBar = () => {
     
     return (
         <div className={styles.header}>
-                <img className={commonStyles.button} src={'../icons/home.svg'} onClick={() => router.push('/')}>
+                <img className={commonStyles.button} src={'/icons/home.svg'} onClick={() => router.push('/')}>
 
                 </img>
                 <div className={styles.searchBar}>
-                    <img src={'../icons/search.svg'}></img>
+                    <img src={'/icons/search.svg'}></img>
                     <input placeholder='Search'></input>
                 </div>
             </div>

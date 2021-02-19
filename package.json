@@ -8,8 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@azure/storage-blob": "^12.4.1",
     "next": "10.0.6",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "uuid": "^8.3.2"
   }
 }

@@ -34,24 +34,14 @@
 }
 
 .product {
-  width: 250px;
-  height: 250px;
-  background: darkgrey;
   display: grid;
   justify-self: center;
   margin: 10px;
 }
 
-.product > div {
+.productInfo {
   align-self: end;
   padding: 15px;
   background: black;
   color: white;
-}
-
-.product > img {
-  place-self: center;
-  width: 180px;
-  height: 180px;
-  object-fit: scale-down;
 }
