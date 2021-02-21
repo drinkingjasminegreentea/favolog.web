@@ -6,7 +6,7 @@ const SearchBar = () => {
     
     return (
         <div className={styles.header}>
-            <Link href="/">
+            <Link href="/catalog">
                 <img className={commonStyles.button} src={'/icons/home.svg'}/>
             </Link>                
             <div className={styles.searchBar}>

@@ -1,13 +1,32 @@
 import { useMsal } from "@azure/msal-react";
 
+const createUser = async (accounts) => {
+    const claims = accounts[0].idTokenClaims;
+
+    const user = {
+        emailAddress: claims.email,
+        firstName: claims.given_name,
+        lastName: claims.family_name,                
+        uniqueExternalId: accounts[0].localAccountId
+    }
+    
+    await fetch(`http://localhost/favolog.service/api/user`, {
+        method: "POST",
+        headers: {            
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+}
+
 export default function Home() {      
     const { accounts } = useMsal();
     const isAuthenticated = accounts.length > 0;
 
-    if (accounts.length > 0){
-        const user = accounts[0].name;
-    }
-    console.log("accounts", accounts);    
+    if (isAuthenticated){
+        createUser(accounts)
+    }    
 
     return (
         <>

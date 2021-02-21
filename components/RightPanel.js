@@ -9,7 +9,7 @@ const LoggedInUser = () => {
     <>
         <button onClick={()=>{instance.logout()}}>Sign Out</button>            
             <img src={'/icons/settings.svg'}></img>
-            <Link href="/catalog-add">
+            <Link href="/catalog/add">
             <div role='button' 
                 className={styles.addButton + " " + commonStyles.button}>
                 <span>+</span>

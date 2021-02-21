@@ -1,27 +1,28 @@
 import { useState } from 'react'
+import { useMsal } from "@azure/msal-react";
+import { useRouter } from 'next/router'
 
-export default function User() {
-    const [name, setName] = useState('')
-    
+export default function CatalogAdd() {
+    const { accounts } = useMsal();
+    const [name, setName] = useState('')    
+    const [audienceType, setAudienceType] = useState('')    
+    const router = useRouter()
+
     async function add(){
         const catalog = {
             name: name,
             audienceType: 1,
-            userId: 1
+            uniqueExternalId: accounts[0].localAccountId
         }
         
-        const add = await fetch(`http://localhost/favolog.service/api/catalog`, {
+        await fetch(`http://localhost/favolog.service/api/catalog`, {
             method: "POST",
             headers: {            
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(catalog)
-        })
-        
-        const addResponse = await add.json()
-        
-        console.log(addResponse)
+        }).then(()=>{router.push("/catalog")});
     }    
 
     return <>

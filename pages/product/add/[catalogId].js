@@ -54,7 +54,7 @@ export default function AddProduct({catalogId}) {
             },
             body: JSON.stringify(product)
         })
-        .then(router.push('/user/raihan'))
+        .then(router.push('/catalog'))
     }
 
     return <>
@@ -71,13 +71,4 @@ export default function AddProduct({catalogId}) {
             <button onClick={() => add() }>Save</button>
         </div>
     </>
-  }
-
-  export async function getServerSideProps(context) {
-      
-    return {
-      props: {
-        catalogId: context.query.catalogId
-      }
-    }
   }
