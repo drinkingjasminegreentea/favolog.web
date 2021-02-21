@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.11.2",
+    "@azure/msal-react": "^1.0.0-alpha.6",
     "@azure/storage-blob": "^12.4.1",
     "next": "10.0.6",
     "react": "17.0.1",

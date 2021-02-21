@@ -24,7 +24,7 @@ export default function AddProduct({catalogId}) {
 
       const blobName = uuidv4() + getFileExtension(image.name);
       const account = "favostorage";
-      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-02-18T06:35:22Z&st=2021-02-17T18:35:22Z&spr=https&sig=iJCCqkHAx3Ow4Kar2ZHvf4fhfSDQ7X9fmSuWGMUoMgo%3D";
+      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-02-22T11:01:27Z&st=2021-02-19T03:01:27Z&spr=https&sig=BqLRopoZFZy3Ny%2F2zPWmKqADELVO6UiBODDbT7iN%2Fbc%3D";
       const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net${sas}`);
       const containerClient = blobServiceClient.getContainerClient("productimages");
       var options = {blobContentType:image.type};

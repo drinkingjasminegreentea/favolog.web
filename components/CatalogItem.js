@@ -1,10 +1,9 @@
-import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Link from 'next/link';
 import styles from '../styles/CatalogItem.module.css'
 import commonStyles from '../styles/CommonStyles.module.css'
 
 const CatalogItem = ({catalog}) => {
-    const router = useRouter()
     const productImageRoot = "https://favostorage.blob.core.windows.net/productimages/";
 
     const collapseOpen = (e) =>  {
@@ -29,13 +28,13 @@ const CatalogItem = ({catalog}) => {
         <div className={styles.catalogItem}>
             <div className={styles.catalogCard}>
                 <h2> {catalog.name} </h2>        
-                <img src={'../icons/edit.png'}></img>
-                <img className={commonStyles.button} 
-                    src={'../icons/add.png'}
-                    onClick={() => router.push(`/product/add/${catalog.id}`)}></img>
+                <img src={'../icons/edit.png'}/>
+                <Link href={`/product/add/${catalog.id}`}>
+                    <img className={commonStyles.button} src={'../icons/add.png'}/>
+                </Link>
                 {
                     catalog.topProducts.length > 0 &&  
-                    <img src={'../icons/arrowDown.png'} onClick={collapseOpen}></img>              
+                    <img src={'../icons/arrowDown.png'} onClick={collapseOpen}/>              
                 }     
                 {
                     catalog.topProducts.length > 0 &&  
@@ -52,7 +51,7 @@ const CatalogItem = ({catalog}) => {
                         width="150"
                         height="150"
                         quality={100}                        
-                        />             
+                        />
                         <div className={styles.productInfo}>
                             <h4>{userProduct.product.name}</h4>
                             <span>{userProduct.product.brand}</span>

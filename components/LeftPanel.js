@@ -1,16 +1,17 @@
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import styles from '../styles/LeftPanel.module.css'
 import commonStyles from '../styles/CommonStyles.module.css'
 
-const LeftPanel = () => {
-    const router = useRouter()
+const LeftPanel = () => {    
 
     return (
         <div className={styles.sideBar}>
         <div className={styles.logo}>
-            <h1 className={commonStyles.button} onClick={() => router.push('/user/raihan')}>
+            <Link href="/user/raihan">
+            <h1 className={commonStyles.button}>
                 Favolog
             </h1>                  
+            </Link>            
         </div>
         <div className={styles.profileInfo}>
             <img src={'/images/profile.jpg'} ></img>

@@ -12,8 +12,9 @@ export default function User({ catalogs }) {
     </>
   }
   
-  export async function getServerSideProps(context) {  
-    const res = await fetch(`http://localhost/favolog.service/api/catalog/GetUserCatalogOverview?username=${context.query.username}`)
+  export async function getServerSideProps({params}) {  
+    const username = params.username;
+    const res = await fetch(`http://localhost/favolog.service/api/catalog/GetUserCatalogOverview?username=${username}`)
     
     const catalogs = await res.json()
     
