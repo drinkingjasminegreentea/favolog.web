@@ -12,14 +12,13 @@
   display: grid;
   height: 100vh;
   grid-template-columns: 7fr 1fr;
-  margin: 20px;
+  margin: 0px 20px;
 }
 
 .container h1,
 .container h2,
 .container span {
   font-family: Gilroy-ExtraBold;
-  margin: 10px;
 }
 
 .container p {
@@ -33,7 +32,7 @@
 }
 
 .content {
-  margin: 20px;
+  margin: 0px 20px;
   text-align: center;
 }
 

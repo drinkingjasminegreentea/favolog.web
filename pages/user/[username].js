@@ -1,13 +1,13 @@
 import styles from '../../styles/CommonStyles.module.css'
-import CatalogItem from '../../components/CatalogItem'
+import CatalogCard from '../../components/CatalogCard'
 
-export default function User({ catalogs }) {
-    return <>          
-          <div className={styles.catalog}>
-          {catalogs.map((catalog) => (
-            <CatalogItem key={catalog.id} catalog={catalog}/>
-          ))}
-          </div>
+export default function User({username, catalogs }) {
+  return <>         
+      <div className={styles.catalog}>
+      {catalogs && catalogs.map((catalog) => (        
+        <CatalogCard key={catalog.id} catalog={catalog}/>
+      ))}
+      </div>
     </>
   }
   
@@ -19,6 +19,7 @@ export default function User({ catalogs }) {
     
     return {
       props: {
+        username,
         catalogs
       }
     }

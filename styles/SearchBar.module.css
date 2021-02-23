@@ -4,7 +4,7 @@
   height: 48px;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 15fr;
+  grid-template-columns: 1fr 1fr 15fr;
   margin: 20px;
   width: 70%;
 }

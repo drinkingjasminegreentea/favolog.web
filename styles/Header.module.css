@@ -1,11 +1,12 @@
 .headerRow {
   display: grid;
-  grid-template-columns: 125px 1fr;
+  grid-template-columns: 150px 1fr;
 }
 
 .leftColumn {
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  justify-items: center;
 }
 
 .leftColumn > img {
@@ -19,5 +20,4 @@
   grid-template-columns: 1fr;
   align-items: center;
   justify-items: center;
-  margin-left: 20px;
 }

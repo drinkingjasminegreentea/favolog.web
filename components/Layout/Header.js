@@ -17,7 +17,7 @@ export default function Header({user}) {
             <Link href="/">
                 <h1 className={commonStyles.button}>
                     Favolog
-                </h1>                  
+                </h1>      
             </Link>
             <Link href="/">
                 <img className={commonStyles.button} 
@@ -29,4 +29,22 @@ export default function Header({user}) {
             <SearchBar/>
         </div>
     </div>
+  }
+
+  export async function getServerSideProps({params}) {
+      console.log("header params", params)
+      let user = null
+
+      if (params){
+        const username = params.username;
+        const res = await fetch(`http://localhost/favolog.service/api/user/${username}`)
+    
+        user = await res.json()
+      }    
+    
+    return {
+      props: {
+        user
+      }
+    }
   }

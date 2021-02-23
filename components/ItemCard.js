@@ -1,14 +1,13 @@
 import styles from '../styles/CatalogItem.module.css'
 
-const ProductItem = ({product}) => {
+export default function ItemCard({item}){
        
     return (        
         <div className={styles.catalogItem}>            
-            <span> {product.name} </span>
-            <span> {product.brand} </span>
+            <span> {item.url} </span>            
         </div> 
     )
   }
   
-  export default ProductItem
+  
   

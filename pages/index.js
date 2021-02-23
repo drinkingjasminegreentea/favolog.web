@@ -7,7 +7,7 @@ const createUser = async (accounts) => {
         emailAddress: claims.email,
         firstName: claims.given_name,
         lastName: claims.family_name,                
-        uniqueExternalId: accounts[0].localAccountId
+        externalId: accounts[0].localAccountId
     }
     
     await fetch(`http://localhost/favolog.service/api/user`, {
