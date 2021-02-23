@@ -3,9 +3,13 @@ import ProductItem from '../../components/ProductItem'
 import Link from 'next/link'
 
 export default function Catalog({ catalog }) {
-    return <>          
+    return <>  
+    <div className={styles.catalogHeader}>
       <h1> {catalog.name} </h1>
-      <Link href={`/product/add/${catalog.id}`}><button>Add product</button></Link>
+      <Link href={`/product/add/${catalog.id}`}><img className={styles.button}
+       src='/icons/add.png'/></Link>
+      <img src='/icons/edit.png' className={styles.button}/>
+      </div>     
       <div className={styles.catalog}>
       {catalog.userProducts.map((userProduct) => (
         <ProductItem key={userProduct.id} product={userProduct.product}/>

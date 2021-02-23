@@ -9,12 +9,12 @@
 }
 
 .addButton {
-  background: #000000;
+  background: #535353;
   width: 70px;
   height: 70px;
   border-radius: 100px;
   display: grid;
-  text-align: center;
+  justify-items: center;
   align-items: center;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -25,5 +25,5 @@
 }
 
 .addButton:hover {
-  cursor: pointer;
+  background: black;
 }

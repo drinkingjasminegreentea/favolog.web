@@ -30,7 +30,7 @@ export default function Home() {
 
     return (
         <>
-            {isAuthenticated ? <h2> Catalogs</h2>  : <h2>Please sign-in </h2>  }            
+            {isAuthenticated ? <h2> Catalogs that user is following</h2>  : <h2>Public catalogs </h2>  }            
         </>
     );
 }

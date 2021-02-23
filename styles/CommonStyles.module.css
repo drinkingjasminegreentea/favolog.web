@@ -6,4 +6,16 @@
 
 .button:hover {
   cursor: pointer;
+  color: #535353;
+}
+
+.catalogHeader > img {
+  background-color: black;
+  width: 15px;
+  height: 15px;
+  margin: auto 5px;
+}
+
+.catalogHeader > h1 {
+  display: inline-block;
 }

@@ -11,7 +11,7 @@
 .container {
   display: grid;
   height: 100vh;
-  grid-template-columns: 8fr 1fr;
+  grid-template-columns: 7fr 1fr;
   margin: 20px;
 }
 
