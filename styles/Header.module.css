@@ -1,0 +1,23 @@
+.headerRow {
+  display: grid;
+  grid-template-columns: 125px 1fr;
+}
+
+.leftColumn {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.leftColumn > img {
+  justify-self: center;
+  align-self: center;
+  padding-right: 20px;
+}
+
+.centerColumn {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+  margin-left: 20px;
+}

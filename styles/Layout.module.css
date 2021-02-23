@@ -11,31 +11,32 @@
 .container {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 4fr 0.7fr;
+  grid-template-columns: 8fr 1fr;
+  margin: 20px;
 }
 
 .container h1,
-.container h2 {
+.container h2,
+.container span {
   font-family: Gilroy-ExtraBold;
+  margin: 10px;
 }
 
-.container p,
-.container span {
+.container p {
   font-family: Gilroy-Light;
 }
 
 .mainContent {
   display: grid;
-  grid-template-rows: 100px 8fr;
-  padding: 0 40px;
+  grid-template-rows: 1fr 9fr;
+  height: 100vh;
 }
 
 .content {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 100px 1fr;
+  margin: 20px;
+  text-align: center;
 }
 
 .content > h1 {
-  justify-self: center;
+  margin-bottom: 50px;
 }

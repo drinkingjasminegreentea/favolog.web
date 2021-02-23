@@ -8,6 +8,7 @@ export default function AddProduct({catalogId}) {
     const [name, setName] = useState('')
     const [brand, setBrand] = useState('')
     const [image, setImage] = useState('')    
+    const [url, setUrl] = useState('')    
     const [comments, setComments] = useState('')
 
     function fileChangedHandler(event) {
@@ -24,7 +25,7 @@ export default function AddProduct({catalogId}) {
 
       const blobName = uuidv4() + getFileExtension(image.name);
       const account = "favostorage";
-      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-02-22T11:01:27Z&st=2021-02-19T03:01:27Z&spr=https&sig=BqLRopoZFZy3Ny%2F2zPWmKqADELVO6UiBODDbT7iN%2Fbc%3D";
+      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-02-23T07:19:17Z&st=2021-02-22T23:19:17Z&spr=https&sig=A3VNKR4HvYH8hrR4vwbFAXk0rwfSvjvLPbQ%2BAxoP5RQ%3D";
       const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net${sas}`);
       const containerClient = blobServiceClient.getContainerClient("productimages");
       var options = {blobContentType:image.type};
@@ -34,15 +35,10 @@ export default function AddProduct({catalogId}) {
       return blobName;
     }
     
-    async function add(){
-        
-        var blobName = await uploadImage(image.name);
-        
+    async function add(){        
         const product = {
-            name: name,
-            brand: brand,
-            catalogId: catalogId,
-            imageName: blobName,
+            url: url,            
+            catalogId: catalogId,            
             comments: comments
         }
         
@@ -54,21 +50,26 @@ export default function AddProduct({catalogId}) {
             },
             body: JSON.stringify(product)
         })
-        .then(router.push('/catalog'))
+        .then(router.push(`/catalog/${catalogId}`))
     }
 
     return <>
         <h1>Add product</h1>
         <div>
-            <input onChange={e => setName(e.target.value) } value={name} placeholder='Name'></input>
-            <br/>
-            <input onChange={e => setBrand(e.target.value) } value={brand} placeholder='Brand'></input>
-            <br/>
+            <input onChange={e => setUrl(e.target.value) } value={url} placeholder='Url'></input>
+            <br/>            
             <input onChange={e => setComments(e.target.value) } value={comments} placeholder='Comments'></input>
-            <br/>
-            <input type='file' accept="image/*" onChange={ fileChangedHandler } placeholder='Image'></input>
             <br/>            
             <button onClick={() => add() }>Save</button>
         </div>
     </>
+  }
+
+  export async function getServerSideProps({params}) {     
+    
+    return {
+      props: {
+        catalogId: params.catalogId
+      }
+    }
   }
