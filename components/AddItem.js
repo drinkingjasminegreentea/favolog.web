@@ -1,4 +1,3 @@
-
 import { useState} from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
@@ -8,39 +7,27 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export default function AddItem({show, parentAction, catalogId}){    
     const [url, setUrl] = useState('')        
     const [comments, setComments] = useState('')      
-    const router = useRouter() 
+    const router = useRouter()       
     
-    const getOg = async(externalUrl) => {      
-      const response = await fetch(`http://api.linkpreview.net/?key=f2c2ccd3eff523bc489b879cafafad74&q=${externalUrl}`)
-      const result = await response.json()
-      return result;
-    }
-    
-    async function add(){            
-      var pageOgInfo = await getOg(url)  
+    const onItemAdd = async() => {
+      const item = {
+        url, comments, catalogId
+      }
       
-        const item = {
-            url: pageOgInfo.url,            
-            title: pageOgInfo.title,
-            imageUrl: pageOgInfo.image,
-            catalogId: catalogId,            
-            comments: comments
-        }
-        
-        await fetch(`http://localhost/favolog.service/api/item`, {
-            method: "POST",
-            headers: {            
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        })
-        .then(()=>{
-          parentAction()
-          setUrl('')
-          setComments('')
-          router.push(`/catalog/${catalogId}`)
-        })
+      await fetch(`http://localhost/favolog.service/api/item`, {
+        method: "POST",
+        headers: {            
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+      })
+      .then(()=>{
+        parentAction()
+        setUrl('')
+        setComments('')
+        router.push(`/catalog/${catalogId}`)
+      })
     }
     
     return <Modal show={show} onHide={parentAction} centered>
@@ -55,10 +42,9 @@ export default function AddItem({show, parentAction, catalogId}){
               <Button variant="secondary" onClick={parentAction}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={() => add()}>
+              <Button variant="primary" onClick={onItemAdd}>
                 Add
               </Button>              
             </Modal.Footer>                
-    </Modal>
-    
+    </Modal>    
 }
