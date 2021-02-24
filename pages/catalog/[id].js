@@ -35,7 +35,6 @@ export default function Catalog({ catalog }) {
     const res = await fetch(`http://localhost/favolog.service/api/catalog/${params.id}`)
     
     const catalog = await res.json()
-    console.log("catalog", catalog)
     return {
       props: {
         catalog

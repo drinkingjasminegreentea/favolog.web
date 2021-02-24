@@ -1,18 +1,28 @@
 
 import { useState} from 'react'
 import { useRouter } from 'next/router'
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default function AddItem({show, parentAction, catalogId}){    
     const [url, setUrl] = useState('')        
     const [comments, setComments] = useState('')      
-    const router = useRouter()        
-
-    async function add(){        
+    const router = useRouter() 
+    
+    const getOg = async(externalUrl) => {      
+      const response = await fetch(`http://api.linkpreview.net/?key=f2c2ccd3eff523bc489b879cafafad74&q=${externalUrl}`)
+      const result = await response.json()
+      return result;
+    }
+    
+    async function add(){            
+      var pageOgInfo = await getOg(url)  
+      
         const item = {
-            url: url,            
+            url: pageOgInfo.url,            
+            title: pageOgInfo.title,
+            imageUrl: pageOgInfo.image,
             catalogId: catalogId,            
             comments: comments
         }
