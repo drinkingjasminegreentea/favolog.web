@@ -1,5 +1,5 @@
 import { useMsal } from "@azure/msal-react"
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from 'react-bootstrap/Dropdown'
 import commonStyles from '../../styles/CommonStyles.module.css'
 
 const Settings = () => {    

@@ -29,17 +29,16 @@ export default function Catalog({ catalog }) {
       ))}
       </div>
     </>
-  }
+}
+
+export async function getServerSideProps({params}) {     
+  const res = await fetch(`http://localhost/favolog.service/api/catalog/${params.id}`)
   
-  export async function getServerSideProps({params}) {     
-    const res = await fetch(`http://localhost/favolog.service/api/catalog/${params.id}`)
-    
-    const catalog = await res.json()
-    return {
-      props: {
-        catalog
-      }
+  const catalog = await res.json()
+  return {
+    props: {
+      catalog
     }
   }
+}
 
-  

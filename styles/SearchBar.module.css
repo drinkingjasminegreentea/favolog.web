@@ -1,24 +1,29 @@
 .searchBar {
+  width: 60%;
+}
+
+.searchBar > form {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   border-radius: 2px;
   height: 48px;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1fr 15fr;
+  grid-template-columns: 1fr 15fr;
   margin: 20px;
-  width: 70%;
 }
 
-.searchBar > img {
+.searchBar > form > img {
   justify-self: center;
 }
 
-.searchBar > input {
+.searchBar > form > input {
   font-size: 18px;
   align-items: center;
   border: none;
 }
 
-.searchBar > input:focus {
+.searchBar > form > input:focus {
   outline: none;
+  border: none;
+  box-shadow: none;
 }
