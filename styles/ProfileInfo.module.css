@@ -19,7 +19,7 @@
   display: block;
 }
 
-.profileInfo > div.profilePlaceholder {
+div.profilePlaceholder {
   text-align: center;
   width: 100px;
   height: 100px;
@@ -28,11 +28,36 @@
   margin-left: 30px;
 }
 
+.userCard div.profilePlaceholder {
+  margin: 0;
+}
+
 .profilePlaceholder > span {
   font-size: 60px;
 }
 
-.followInfo {
+span.followInfo {
   font-size: 12px;
   margin-top: 10px;
+  display: inline;
+}
+
+.userGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: left;
+}
+
+.userCard {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+}
+
+.userCard img {
+  border-radius: 50%;
+}
+
+.userInfo > span {
+  display: block;
 }

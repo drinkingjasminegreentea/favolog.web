@@ -33,7 +33,7 @@ const LoggedInUser = ({user}) => {
     return (
     <>
         <div>
-            <Link href='/user'><span className={commonStyles.button}> {user.username} </span></Link>
+            <Link href={`/user/${user.username}`}><span className={commonStyles.button}> {user.username} </span></Link>
             <SettingsMenu/>                        
         </div>
         <div role='button' 

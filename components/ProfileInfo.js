@@ -1,5 +1,7 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/ProfileInfo.module.css'
+import commonStyles from '../styles/CommonStyles.module.css'
 import Button from 'react-bootstrap/Button'
 import {useEffect, useState, useContext} from 'react'
 import {UserContext} from '../src/UserContext'
@@ -8,6 +10,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
     const { user: loggedInUser } = useContext(UserContext)
     const [self, setIsSelf] = useState(false)
     const [isFollowing, setIsFollowing] = useState(false)
+    const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
 
     useEffect(() => {
         if (loggedInUser != null){
@@ -37,7 +40,11 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
         },
         body: JSON.stringify(userFollow)
     })      
-      .then(() => setIsFollowing(!isFollowing))
+      .then(() => 
+        {            
+            isFollowing ? setTotalFollowersSate(totalFollowersState-1) : setTotalFollowersSate(totalFollowersState+1)
+            setIsFollowing(!isFollowing)            
+        })      
     }
 
     return <div className={styles.profileInfo}>
@@ -57,7 +64,10 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
             {user.lastName && <span> {user.lastName} </span>}
             {user.website && <a href='user.website'> {user.website} </a>}
             {user.bio && <span> {user.bio} </span>}
-            <span className={styles.followInfo}>{totalFollowing} following | {totalFollowers} followers</span>
+            <Link href={`/user/following/${user.username}`}><span className={styles.followInfo + " " + commonStyles.button}>
+                {totalFollowing} following</span></Link> &nbsp; | &nbsp;
+            <Link href={`/user/followers/${user.username}`}><span className={styles.followInfo + " " + commonStyles.button}>
+                {totalFollowersState} followers</span></Link>
         </div>
         <div>{!self && <Button size='sm' variant="secondary" onClick={onButtonClick}> {isFollowing 
         ? 'Unfollow': 'Follow'} </Button>}</div>

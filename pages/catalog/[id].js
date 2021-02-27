@@ -24,12 +24,13 @@ export default function Page({ catalog, username }) {
     return <>  
     <div className={styles.catalogHeader}>
       <h1> {catalog.name} </h1>
-      {isEditable && <div className={styles.addEdit}> 
-        <img className={commonStyles.button} onClick={toggleModalWindow}
-          src='/icons/add.png'/>
+      <div className={styles.addEdit}>
+      {isEditable &&  <>
+        <img className={commonStyles.button} onClick={toggleModalWindow} src='/icons/add.png'/>
         <img src='/icons/edit.png' className={commonStyles.button}/>
-        <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </div>}
-        {username && <Link href={`/user/${username}`}><span className={commonStyles.button}>back to the user</span></Link>}
+        <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </>}
+        {username && <Link href={`/user/${username}`}>back</Link>}
+        </div>
       </div>     
       <div className={styles.catalog}>
       {catalog.catalogItems.map((item) => (
