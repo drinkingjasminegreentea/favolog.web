@@ -2,7 +2,7 @@ import ListGroup from 'react-bootstrap/Dropdown'
 import styles from '../styles/SearchResults.module.css'
 import Link from 'next/link'
 
-export default function Search({searchQuery, results}) {
+export default function Page({searchQuery, results}) {
   
   return <div> 
       <span>Search results {searchQuery}</span>
@@ -21,7 +21,7 @@ export default function Search({searchQuery, results}) {
       <h2>Items</h2>
       <ListGroup className={styles.searchContent}>
       {results.items.map((item) => (
-        <Link href={`test`} key={item.id}><ListGroup.Item as='li' action='false'> {item.title} </ListGroup.Item></Link>  
+        <Link href={`/item/${item.id}`} key={item.id}><ListGroup.Item as='li' action='false'> {item.title} </ListGroup.Item></Link>  
       ))}
       </ListGroup>      
     </div>

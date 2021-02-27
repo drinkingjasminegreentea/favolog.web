@@ -1,26 +1,30 @@
-import styles from '../../styles/CommonStyles.module.css'
+import styles from '../../styles/CatalogStyles.module.css'
 import CatalogCard from '../../components/CatalogCard'
+import ProfileInfo from '../../components/ProfileInfo'
 
-export default function User({username, catalogs }) {
-  return <>         
+export default function Page({user, catalogs }) {
+  return <>
+      <ProfileInfo user={user}/>    
       <div className={styles.catalog}>
-      {catalogs && catalogs.map((catalog) => (        
-        <CatalogCard key={catalog.id} catalog={catalog}/>
-      ))}
+        {catalogs && catalogs.map((catalog) => (        
+          <CatalogCard key={catalog.id} catalog={catalog}/>
+        ))}
       </div>
     </>
   }
   
-  export async function getServerSideProps({params}) {  
-    const username = params.username;
-    const res = await fetch(`http://localhost/favolog.service/api/catalog/GetUserCatalogOverview?username=${username}`)
+  export async function getServerSideProps({params}) {      
+    const username = params.username    
     
-    const catalogs = await res.json()
+    const user = await fetch(`http://localhost/favolog.service/api/user/${username}`)
+                  .then(response => response.json())     
     
+    const catalogs = await fetch(`http://localhost/favolog.service/api/user/${username}/catalogs`)
+                      .then(response => response.json())      
+
     return {
       props: {
-        username,
-        catalogs
+        user, catalogs
       }
     }
   }

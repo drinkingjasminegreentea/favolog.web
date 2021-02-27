@@ -1,11 +1,15 @@
 .rightBar {
   font-size: 14px;
-  padding: 10px 0;
   display: grid;
   height: 100vh;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 80px 1fr;
-  align-items: center;
+  grid-template-columns: 1fr;
+  padding-left: 50px;
+  padding-top: 30px;
+}
+
+.settingsIcon {
+  display: inline;
+  margin-left: 10px;
 }
 
 .addButton {
@@ -19,9 +23,9 @@
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 30px;
-  margin-bottom: 40px;
-  align-self: end;
-  justify-self: center;
+  position: fixed;
+  bottom: 20px;
+  margin-left: 30px;
 }
 
 .addButton:hover {

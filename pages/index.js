@@ -1,36 +1,14 @@
-import { useMsal } from "@azure/msal-react";
+import { AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 
-const createUser = async (accounts) => {
-    const claims = accounts[0].idTokenClaims;
-
-    const user = {
-        emailAddress: claims.email,
-        firstName: claims.given_name,
-        lastName: claims.family_name,                
-        externalId: accounts[0].localAccountId
-    }
-    
-    await fetch(`http://localhost/favolog.service/api/user`, {
-        method: "POST",
-        headers: {            
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-    })
-}
-
-export default function Home() {      
-    const { accounts } = useMsal();
-    const isAuthenticated = accounts.length > 0;
-
-    if (isAuthenticated){
-        createUser(accounts)
-    }    
-
+export default function Page() {      
     return (
-        <>
-            {isAuthenticated ? <h2> Catalogs that user is following</h2>  : <h2>Public catalogs </h2>  }            
+        <>            
+            <AuthenticatedTemplate>
+                <p>At least one account is signed in!</p>
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+                <p>No users are signed in!</p>
+            </UnauthenticatedTemplate>          
         </>
     );
 }

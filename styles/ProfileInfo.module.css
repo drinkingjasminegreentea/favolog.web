@@ -1,0 +1,31 @@
+.profileInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profileInfo img {
+  border-radius: 50%;
+}
+
+.profileInfo > div {
+  text-align: left;
+}
+
+.profileInfo > div > span {
+  display: block;
+}
+
+.profileInfo > div.profilePlaceholder {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  border: solid 1px grey;
+  justify-self: center;
+}
+
+.profilePlaceholder > span {
+  font-size: 60px;
+}

@@ -1,0 +1,26 @@
+.catalogHeader {
+  margin-bottom: 30px;
+}
+
+.catalogHeader > img {
+  background-color: black;
+  width: 15px;
+  height: 15px;
+  margin: auto 5px;
+}
+
+.catalogHeader > h1 {
+  display: inline-block;
+}
+
+.catalog {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: fit-content;
+  grid-gap: 20px;
+}
+
+.catalogItem {
+  display: grid;
+  justify-items: center;
+}

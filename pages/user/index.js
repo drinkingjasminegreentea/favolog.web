@@ -1,36 +1,28 @@
-import styles from '../../styles/CommonStyles.module.css'
+import styles from '../../styles/CatalogStyles.module.css'
 import CatalogCard from '../../components/CatalogCard'
-import { useEffect, useState } from 'react';
-import { useMsal } from "@azure/msal-react";
+import { useEffect, useState, useContext } from 'react'
+import {UserContext} from '../../src/UserContext'
+import ProfileInfo from '../../components/ProfileInfo'
 
-export default function User() {
-  const { instance } = useMsal();
-  const accounts = instance.getAllAccounts()
-  const [catalogs, setCatalogs] = useState([]);
-
-  async function fetchData(){            
-    if (accounts.length > 0){
-      const userId = accounts[0].localAccountId;
-      const res = await fetch(`http://localhost/favolog.service/api/catalog/GetUserCatalogOverview?externalId=${userId}`)    
-      const catalogs = await res.json()
-      return catalogs;
-    }      
-  }
-
-  useEffect(() => {    
-    fetchData()
-      .then(items => {        
-        setCatalogs(items)
-      })  
-  }, [])
-
-    return <> 
-          <div className={styles.catalog}>
-          {catalogs && catalogs.map((catalog) => (
-            <CatalogCard key={catalog.id} catalog={catalog}/>
-          ))}
-          </div>
-    </>
-  }  
-
+export default function Page() {
+  const { user } = useContext(UserContext)
+  const [catalogs, setCatalogs] = useState([])
   
+  useEffect(() => {
+    if (user){
+      fetch(`http://localhost/favolog.service/api/user/${user.username}/catalogs`)
+        .then(response => response.json())
+        .then(data => setCatalogs(data))      
+    }    
+  }, [user])
+
+  return <>
+    {user && <ProfileInfo user={user}/> }
+    <div className={styles.catalog}>
+      {catalogs && catalogs.map((catalog) => (
+        <CatalogCard key={catalog.id} catalog={catalog}/>
+      ))}
+    </div>
+  </>
+}  
+

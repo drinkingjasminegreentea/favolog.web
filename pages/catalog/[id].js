@@ -1,14 +1,18 @@
-import styles from '../../styles/CommonStyles.module.css'
+import styles from '../../styles/CatalogStyles.module.css'
+import commonStyles from '../../styles/CommonStyles.module.css'
 import ItemCard from '../../components/ItemCard'
-import { useMsal } from "@azure/msal-react"
 import AddItem from '../../components/AddItem'
-import {useState} from 'react'
+import {useState, useContext, useEffect} from 'react'
+import {UserContext} from '../../src/UserContext'
 
-export default function Catalog({ catalog }) {
-    const { accounts } = useMsal();
-    const editable = accounts.length > 0 && accounts[0].localAccountId == catalog.externalId;
-
-    const [showModal, setShowModal] = useState(false);
+export default function Page({ catalog }) {
+    const { user } = useContext(UserContext)            
+    const [isEditable, setIsEditable] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    
+    useEffect(()=>{      
+      setIsEditable(user && user.id === catalog.userId)      
+    }, [user])
 
     function toggleModalWindow(){
       setShowModal(!showModal)
@@ -17,15 +21,15 @@ export default function Catalog({ catalog }) {
     return <>  
     <div className={styles.catalogHeader}>
       <h1> {catalog.name} </h1>
-      {editable && <> 
-        <img className={styles.button} onClick={toggleModalWindow}
+      {isEditable && <> 
+        <img className={commonStyles.button} onClick={toggleModalWindow}
           src='/icons/add.png'/>
-        <img src='/icons/edit.png' className={styles.button}/>
+        <img src='/icons/edit.png' className={commonStyles.button}/>
         <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </>}
       </div>     
       <div className={styles.catalog}>
-      {catalog.items.map((item) => (
-        <ItemCard key={item.id} item={item}/>
+      {catalog.catalogItems.map((item) => (
+        <ItemCard key={item.id} catalogItem={item}/>
       ))}
       </div>
     </>
