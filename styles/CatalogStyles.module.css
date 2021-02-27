@@ -1,12 +1,20 @@
 .catalogHeader {
   margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr 0.2fr;
+  align-items: center;
 }
 
-.catalogHeader > img {
+.addEdit > img {
   background-color: black;
   width: 15px;
   height: 15px;
   margin: auto 5px;
+}
+
+.catalogHeader > img,
+.catalogHeader > span {
+  justify-self: end;
 }
 
 .catalogHeader > h1 {
@@ -16,11 +24,19 @@
 .catalog {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: fit-content;
   grid-gap: 20px;
+  text-align: left;
 }
 
 .catalogItem {
   display: grid;
-  justify-items: center;
+  width: fit-content;
+}
+
+.catalogItem h2 {
+  margin: 0;
+}
+
+.catalogItem span {
+  font-size: 15px;
 }

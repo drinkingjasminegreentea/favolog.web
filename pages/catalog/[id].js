@@ -4,14 +4,17 @@ import ItemCard from '../../components/ItemCard'
 import AddItem from '../../components/AddItem'
 import {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../../src/UserContext'
+import Link from 'next/link'
 
-export default function Page({ catalog }) {
+export default function Page({ catalog, username }) {
     const { user } = useContext(UserContext)            
-    const [isEditable, setIsEditable] = useState(false)
-    const [showModal, setShowModal] = useState(false)
+    const [isEditable, setIsEditable] = useState(false)    
+    const [showModal, setShowModal] = useState(false)    
     
-    useEffect(()=>{      
-      setIsEditable(user && user.id === catalog.userId)      
+    useEffect(()=>{
+      if (user){
+        setIsEditable(user.id === catalog.userId)        
+      }      
     }, [user])
 
     function toggleModalWindow(){
@@ -21,11 +24,12 @@ export default function Page({ catalog }) {
     return <>  
     <div className={styles.catalogHeader}>
       <h1> {catalog.name} </h1>
-      {isEditable && <> 
+      {isEditable && <div className={styles.addEdit}> 
         <img className={commonStyles.button} onClick={toggleModalWindow}
           src='/icons/add.png'/>
         <img src='/icons/edit.png' className={commonStyles.button}/>
-        <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </>}
+        <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </div>}
+        {username && <Link href={`/user/${username}`}><span className={commonStyles.button}>back to the user</span></Link>}
       </div>     
       <div className={styles.catalog}>
       {catalog.catalogItems.map((item) => (
@@ -35,13 +39,15 @@ export default function Page({ catalog }) {
     </>
 }
 
-export async function getServerSideProps({params}) {     
+export async function getServerSideProps({params, query}) {     
+  const username =  query.username ? query.username : null
   const res = await fetch(`http://localhost/favolog.service/api/catalog/${params.id}`)
   
   const catalog = await res.json()
   return {
     props: {
-      catalog
+      catalog,
+      username
     }
   }
 }

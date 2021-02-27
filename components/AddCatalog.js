@@ -30,7 +30,7 @@ export default function AddCatalog({show, parentAction}){
         parentAction()
         setName('')
         router.push(`/catalog/${newCatalog.id}`)
-      });
+      })
   }  
   
   return <Modal show={show} onHide={parentAction} centered>

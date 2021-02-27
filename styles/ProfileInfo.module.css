@@ -1,6 +1,7 @@
 .profileInfo {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 0.6fr 1fr 1fr;
+  justify-items: left;
   align-items: center;
   margin-bottom: 30px;
 }
@@ -13,7 +14,8 @@
   text-align: left;
 }
 
-.profileInfo > div > span {
+.profileDetails > span,
+.followInfo > span {
   display: block;
 }
 
@@ -21,11 +23,16 @@
   text-align: center;
   width: 100px;
   height: 100px;
-  border-radius: 100px;
+  border-radius: 50%;
   border: solid 1px grey;
-  justify-self: center;
+  margin-left: 30px;
 }
 
 .profilePlaceholder > span {
   font-size: 60px;
+}
+
+.followInfo {
+  font-size: 12px;
+  margin-top: 10px;
 }

@@ -6,20 +6,21 @@ import ProfileInfo from '../../components/ProfileInfo'
 
 export default function Page() {
   const { user } = useContext(UserContext)
-  const [catalogs, setCatalogs] = useState([])
+  const [userProfile, setUserProfile] = useState()
   
   useEffect(() => {
     if (user){
-      fetch(`http://localhost/favolog.service/api/user/${user.username}/catalogs`)
+      fetch(`http://localhost/favolog.service/api/user/${user.username}/profile`)
         .then(response => response.json())
-        .then(data => setCatalogs(data))      
+        .then(data => setUserProfile(data))      
     }    
   }, [user])
-
+  
   return <>
-    {user && <ProfileInfo user={user}/> }
+    {userProfile && <ProfileInfo user={userProfile.user}
+      totalFollowing={userProfile.totalFollowing} totalFollowers={userProfile.totalFollowers}/> }
     <div className={styles.catalog}>
-      {catalogs && catalogs.map((catalog) => (
+      {userProfile && userProfile.catalogs.map((catalog) => (
         <CatalogCard key={catalog.id} catalog={catalog}/>
       ))}
     </div>

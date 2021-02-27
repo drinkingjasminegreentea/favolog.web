@@ -6,6 +6,7 @@ import {useContext, useEffect, useState} from 'react'
 import styles from '../styles/Settings.module.css'
 import {UserContext} from '../src/UserContext'
 import { v4 as uuidv4 } from 'uuid'
+import { useRouter } from 'next/router'
 
 export default function Page() {
     const { user, setUser } = useContext(UserContext)    
@@ -16,6 +17,7 @@ export default function Page() {
     const [bio, setBio] = useState('')
     const [website, setWebsite] = useState('')
     const [file, setFile] = useState()
+    const router = useRouter()        
 
     useEffect(()=>{        
         if (user){
@@ -72,6 +74,7 @@ export default function Page() {
         })
         .then(response => response.json())
         .then(data => setUser(data))
+        .then(() => router.push('/user'))
     }
 
     return (

@@ -2,8 +2,8 @@ import ListGroup from 'react-bootstrap/Dropdown'
 import styles from '../styles/SearchResults.module.css'
 import Link from 'next/link'
 
-export default function Page({searchQuery, results}) {
-  
+export default function Page({searchQuery, results}) {  
+
   return <div> 
       <span>Search results {searchQuery}</span>
       <h2>Users</h2>
