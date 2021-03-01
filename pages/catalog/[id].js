@@ -2,6 +2,7 @@ import styles from '../../styles/CatalogStyles.module.css'
 import commonStyles from '../../styles/CommonStyles.module.css'
 import CatalogItemCard from '../../components/CatalogItemCard'
 import AddItem from '../../components/AddItem'
+import DeleteCatalog from '../../components/DeleteCatalog'
 import {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../../src/UserContext'
 import Link from 'next/link'
@@ -10,7 +11,8 @@ import Image from 'next/image'
 export default function Page({ catalog }) {
     const { user } = useContext(UserContext)            
     const [isEditable, setIsEditable] = useState(false)    
-    const [showModal, setShowModal] = useState(false) 
+    const [showAddItem, setShowAddItem] = useState(false)
+    const [showDeleteCatalog, setShowDeleteCatalog] = useState(false)
     const author = catalog.user   
     
     useEffect(()=>{
@@ -19,8 +21,12 @@ export default function Page({ catalog }) {
       }      
     }, [user])
 
-    function toggleModalWindow(){
-      setShowModal(!showModal)
+    function toggleAddItem(){
+      setShowAddItem(!showAddItem)
+    }
+
+    function toggleDeleteCatalog(){
+      setShowDeleteCatalog(!showDeleteCatalog)
     }
     
     return <>  
@@ -28,9 +34,11 @@ export default function Page({ catalog }) {
       <h4> {catalog.name} </h4>
       <div className={styles.catalogMenu}>
         {isEditable &&  <span className={styles.addEdit}>
-          <img className={commonStyles.button} onClick={toggleModalWindow} src='/icons/add.png'/>
-          <img src='/icons/edit.png' className={commonStyles.button}/>
-          <AddItem show={showModal} parentAction={(toggleModalWindow)} catalogId={catalog.id}/> </span>}
+          <img className={commonStyles.button} onClick={toggleAddItem} src='/icons/add.svg'/>
+          <img src='/icons/edit.svg' className={commonStyles.button}/>
+          <img src='/icons/delete.svg' className={commonStyles.button} onClick={toggleDeleteCatalog}/>
+          <AddItem show={showAddItem} parentAction={(toggleAddItem)} catalogId={catalog.id}/> 
+          <DeleteCatalog show={showDeleteCatalog} parentAction={(toggleDeleteCatalog)} catalogId={catalog.id}/></span>}
           <Link href={`/user/${author.username}`}>
             <div className={styles.catalogAuthor + " " + commonStyles.button}>
             {author.profileImage ? <Image
@@ -44,7 +52,7 @@ export default function Page({ catalog }) {
                   className={styles.authorProfile}                      
               />
           : <div className={styles.authorPlaceholder}><b> {author.username.substring(0, 1).toUpperCase()} </b> </div> }
-          <span>{author.username}</span>
+          <span> &nbsp; {author.username}</span>
           </div></Link>
         </div>
       </div> 

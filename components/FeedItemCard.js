@@ -17,8 +17,7 @@ export default function FeedItemCard({item}){
                 className={commonStyles.button}               
             /></div></Link>                              
             <Link href={`catalog/${item.catalogId}`}><h5 className={commonStyles.button}> {item.catalogName} </h5></Link>
-            <Link href={`user/${item.username}`}><div className={commonStyles.button + " " + styles.catalogAuthorGrid}> 
-            <span>
+            <Link href={`user/${item.username}`}><div className={commonStyles.button + " " + styles.catalogAuthorGrid}>             
             {item.profileImage ? <Image
                   src={`https://favostorage.blob.core.windows.net/profileimages/${item.profileImage}`}
                   layout="fixed"
@@ -29,8 +28,8 @@ export default function FeedItemCard({item}){
                   quality={100}  
                   className={styles.authorProfile}                      
               />
-          : <div className={styles.authorPlaceholder}><b> {item.username.substring(0, 1).toUpperCase()} </b> </div> } </span>
-          <span> {item.username} </span>
+          : <div className={styles.authorPlaceholder}><b> {item.username.substring(0, 1).toUpperCase()} </b> </div> } 
+          <span> &nbsp; {item.username} </span>
             </div></Link>
             <Link href={`/item/${item.id}`}><span className={commonStyles.button}> {item.comments}</span></Link>            
         </div>

@@ -42,7 +42,7 @@ export default function AddItem({show, parentAction, catalogId}){
               <Button variant="secondary" onClick={parentAction}>
                 Cancel
               </Button>
-              <Button variant="primary" onClick={onItemAdd}>
+              <Button variant="secondary" onClick={onItemAdd}>
                 Add
               </Button>              
             </Modal.Footer>                

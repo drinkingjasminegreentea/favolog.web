@@ -10,7 +10,6 @@
 
 .wrapper {
   height: 100vh;
-  margin: 0px 20px;
   display: grid;
   grid-template-columns: 1fr 940px 1fr;
 }
@@ -37,17 +36,21 @@
 
 .content {
   text-align: center;
+  margin: 40px 0px;
 }
 
-.content > h1 {
-  margin-bottom: 50px;
+.logo {
+  letter-spacing: 5px;
+  font-size: 30px;
+  font-weight: 800;
+  color: #535353;
 }
 
 .search {
   width: 60%;
   display: grid;
   grid-template-columns: 1fr 15fr;
-  justify-self: center;
+  justify-self: end;
 }
 
 .search > img {

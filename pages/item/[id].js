@@ -4,8 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Page({ item, catalogId }) {       
-    return <div className={styles.itemPage}>      
-    <h4>{item.title}</h4>
+    return <div className={styles.itemPage}>
+      <span>
+      {catalogId && <Link href={`/catalog/${catalogId}`}><span className={commonStyles.button + " " + styles.rightAlign}> Back to catalog </span></Link>}
+      </span>          
     <Image
           src={`https://favostorage.blob.core.windows.net/productimages/${item.imageName}`}
           layout="intrinsic"
@@ -14,8 +16,8 @@ export default function Page({ item, catalogId }) {
           height="300"
           quality={100}                        
       />      
-      <div className={styles.itemDetails}> 
-        {catalogId && <Link href={`/catalog/${catalogId}`}><span className={commonStyles.button + " " + styles.rightAlign}> Back to catalog </span></Link>}
+      <div className={styles.itemDetails}>
+        <h4>{item.title}</h4>         
         <h5>Catalogs</h5>
         {item.catalogs.map((catalog) => (
         <Link key={catalog.id} href={`/catalog/${catalog.id}`}><span className={commonStyles.button}> {catalog.name}</span></Link>
@@ -30,8 +32,7 @@ export default function Page({ item, catalogId }) {
       </div>      
 }
 
-export async function getServerSideProps({params, query}) {     
-  console.log(query)
+export async function getServerSideProps({params, query}) {       
   const res = await fetch(`http://localhost/favolog.service/api/item/${params.id}`)  
   const item = await res.json()
   const catalogId = query.catalogId || null

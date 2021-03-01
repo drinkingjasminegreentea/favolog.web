@@ -22,3 +22,8 @@
   width: 500px;
   align-self: center;
 }
+
+.settingsPage {
+  display: grid;
+  justify-items: left;
+}

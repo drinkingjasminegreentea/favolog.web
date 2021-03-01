@@ -78,8 +78,8 @@ export default function Page() {
     }
 
     return (
-        <>            
-            <h1>Settings</h1> 
+        <div className={styles.settingsPage}>            
+            <h4>Settings</h4> 
             <Form className={styles.settingsForm}>
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
@@ -102,11 +102,11 @@ export default function Page() {
 
                     <Form.File accept="image/*" label="Profile image" onChange={e => setFile(event.target.files[0])}/>                    
                 </Form.Group>
-                <Button variant="primary" onClick={update}>
+                <Button variant="secondary" onClick={update}>
                     Save
                 </Button>         
             </Form> 
-        </>
+        </div>
     )
 }
 

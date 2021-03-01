@@ -44,7 +44,7 @@ export default function AddCatalog({show, parentAction}){
             <Button variant="secondary" onClick={parentAction}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={() => add()}>
+            <Button variant="secondary" onClick={() => add()}>
               Add
             </Button>              
           </Modal.Footer>                

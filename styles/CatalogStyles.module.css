@@ -5,13 +5,16 @@
   align-items: center;
 }
 
+.catalogHeader > h4 {
+  justify-self: start;
+}
+
 .catalogMenu {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
 .addEdit > img {
-  background-color: black;
   width: 15px;
   height: 15px;
   margin: auto 5px;
@@ -21,6 +24,7 @@
   grid-column-start: 2;
   display: grid;
   grid-template-columns: 30px 1fr;
+  width: fit-content;
 }
 
 .catalogHeader > img,
@@ -62,13 +66,12 @@
   grid-template-columns: 350px 1fr;
 }
 
-.itemPage > h4 {
-  grid-column: auto / span 2;
-  margin-bottom: 30px;
+.itemPage > span {
+  grid-column-start: 2;
+  justify-self: end;
 }
 
 .itemDetails {
-  margin-top: 20px;
   display: grid;
   height: fit-content;
 }
