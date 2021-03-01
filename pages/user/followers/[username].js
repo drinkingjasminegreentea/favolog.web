@@ -1,9 +1,10 @@
 import styles from '../../../styles/ProfileInfo.module.css'
 import UserCard from '../../../components/UserCard'
 
-export default function Page({users}) {  
+export default function Page({users, username}) {  
   
-  return <>    
+  return <>
+    <h5>People following {username} </h5>
     <div className={styles.userGrid}>
       {users && users.map((user) => (        
         <UserCard key={user.id} user={user}/>
@@ -20,7 +21,7 @@ export default function Page({users}) {
 
     return {
       props: {
-        users
+        users, username
       }
     }
   }

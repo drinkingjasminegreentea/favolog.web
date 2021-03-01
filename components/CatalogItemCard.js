@@ -1,10 +1,12 @@
 import styles from '../styles/CatalogStyles.module.css'
+import commonStyles from '../styles/CommonStyles.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
-export default function ItemCard({catalogItem}){
-    const item = catalogItem.item
+export default function CatalogItemCard({item, catalogId}){   
+    
     return (        
-        <div className={styles.catalogItem}>                                    
+        <Link href={`/item/${item.id}?catalogId=${catalogId}`}><div className={styles.catalogItem + " " + commonStyles.button}>                                    
             <span> {item.title} </span>                     
             <Image
                 src={`https://favostorage.blob.core.windows.net/productimages/${item.imageName}`}
@@ -12,11 +14,10 @@ export default function ItemCard({catalogItem}){
                 objectFit = "contain"
                 width="200"
                 height="200"
-                quality={100}                        
+                quality={100}    
+                className={commonStyles.button}                    
             />            
-            <span> {catalogItem.comments}</span>
-            <a href={item.url} target="_blank" > <Image src='/icons/globe.svg' width="20" height="20"></Image> </a>
-        </div> 
+        </div></Link>
     )
   }
   

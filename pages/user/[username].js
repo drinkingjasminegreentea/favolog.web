@@ -10,7 +10,7 @@ export default function Page({userProfile }) {
     <ProfileInfo user={user} totalFollowing={userProfile.totalFollowing} totalFollowers={userProfile.totalFollowers}/>
     <div className={styles.catalog}>
       {catalogs && catalogs.map((catalog) => (        
-        <CatalogCard key={catalog.id} catalog={catalog} username={user.username}/>
+        <CatalogCard key={catalog.id} catalog={catalog}/>
       ))}
     </div>
     </>

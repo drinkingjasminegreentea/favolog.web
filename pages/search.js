@@ -1,29 +1,29 @@
-import ListGroup from 'react-bootstrap/Dropdown'
-import styles from '../styles/SearchResults.module.css'
 import Link from 'next/link'
+import UserCard from '../components/UserCard'
+import styles from '../styles/CatalogStyles.module.css'
 
 export default function Page({searchQuery, results}) {  
 
-  return <div> 
-      <span>Search results {searchQuery}</span>
+  return <div className={styles.searchResults}> 
+      <span>Search results <b>'{searchQuery}'</b></span>
       <h2>Users</h2>
-      <ListGroup className={styles.searchContent}>
-      {results.users.map((item) => (
-        <Link href={`/user/${item.username}`} key={item.id}><ListGroup.Item as='li' action='false'> {item.username} </ListGroup.Item></Link>  
-      ))}
-      </ListGroup>
-      <h2>Catalogs</h2>
-      <ListGroup className={styles.searchContent}> 
-      {results.catalogs.map((item) => (
-        <Link href={`/catalog/${item.id}`} key={item.id}><ListGroup.Item as='li' action='false'> {item.name} </ListGroup.Item></Link>
-      ))}
-      </ListGroup>      
-      <h2>Items</h2>
-      <ListGroup className={styles.searchContent}>
-      {results.items.map((item) => (
-        <Link href={`/item/${item.id}`} key={item.id}><ListGroup.Item as='li' action='false'> {item.title} </ListGroup.Item></Link>  
-      ))}
-      </ListGroup>      
+      <div className={styles.catalog}>
+        {results.users.map((item) => (
+          <UserCard key={item.id} user={item}/>
+        ))}      
+      </div>
+      <h2>Catalogs</h2>      
+      <div className={styles.catalog}>
+        {results.catalogs.map((item) => (
+          <Link href={`/catalog/${item.id}`} key={item.id}><span>{item.Name}</span></Link>
+        ))}   
+      </div>    
+      <h2>Items</h2>      
+      <div className={styles.catalog}>
+        {results.items.map((item) => (
+          <Link href={`/item/${item.id}`} key={item.id}><span>{item.title}</span></Link>  
+        ))}       
+      </div>       
     </div>
  }
 

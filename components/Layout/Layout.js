@@ -7,7 +7,7 @@ import Link from 'next/link'
 function Header() {
     return <div className={styles.header}>
         <Link href="/">
-            <h2 className={commonStyles.button}>Favolog</h2>      
+            <h4 className={commonStyles.button}> <b> Favolog</b></h4>      
         </Link>     
         <SearchBar/>
     </div>

@@ -9,11 +9,9 @@ export default function CatalogCard({catalog, username}){
         catalogLink += `?username=${username}`
     
     return (        
-        <div className={styles.catalogItem}>
-            <div>
-                <Link href={catalogLink}><h2 className={commonStyles.button}> {catalog.name} </h2></Link>
-                <span> {catalog.itemCount} items </span>
-            </div>        
+        <Link href={catalogLink}><div className={styles.catalogItem + " " + commonStyles.button}>
+            <h4> {catalog.name} </h4>
+            <span> {catalog.itemCount} items </span>       
             {catalog.lastItemImage && <Image
                 src={`https://favostorage.blob.core.windows.net/productimages/${catalog.lastItemImage}`}
                 layout="intrinsic"
@@ -22,7 +20,7 @@ export default function CatalogCard({catalog, username}){
                 height="200"
                 quality={100}                        
             /> }
-        </div> 
+        </div></Link> 
     )
   }
   

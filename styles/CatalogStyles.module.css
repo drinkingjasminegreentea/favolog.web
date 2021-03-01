@@ -1,8 +1,13 @@
 .catalogHeader {
   margin-bottom: 30px;
   display: grid;
-  grid-template-columns: 1fr 0.2fr;
+  grid-template-columns: 1fr 0.3fr;
   align-items: center;
+}
+
+.catalogMenu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .addEdit > img {
@@ -10,6 +15,12 @@
   width: 15px;
   height: 15px;
   margin: auto 5px;
+}
+
+.catalogAuthor {
+  grid-column-start: 2;
+  display: grid;
+  grid-template-columns: 30px 1fr;
 }
 
 .catalogHeader > img,
@@ -24,7 +35,7 @@
 .catalog {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 20px;
+  grid-gap: 50px;
   text-align: left;
 }
 
@@ -39,4 +50,51 @@
 
 .catalogItem span {
   font-size: 15px;
+}
+
+.searchResults {
+  text-align: left;
+}
+
+.itemPage {
+  display: grid;
+  text-align: left;
+  grid-template-columns: 350px 1fr;
+}
+
+.itemPage > h4 {
+  grid-column: auto / span 2;
+  margin-bottom: 30px;
+}
+
+.itemDetails {
+  margin-top: 20px;
+  display: grid;
+  height: fit-content;
+}
+
+.itemDetails h5 {
+  padding-top: 10px;
+}
+
+.rightAlign {
+  justify-self: end;
+}
+
+.authorProfile {
+  border-radius: 50%;
+}
+
+.authorPlaceholder {
+  text-align: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: solid 1px grey;
+}
+
+.catalogAuthorGrid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 30px 1fr;
 }

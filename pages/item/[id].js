@@ -1,8 +1,11 @@
+import styles from '../../styles/CatalogStyles.module.css'
+import commonStyles from '../../styles/CommonStyles.module.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
-export default function Page({ item }) {       
-    return <>  
-    <h1>{item.title}</h1>
+export default function Page({ item, catalogId }) {       
+    return <div className={styles.itemPage}>      
+    <h4>{item.title}</h4>
     <Image
           src={`https://favostorage.blob.core.windows.net/productimages/${item.imageName}`}
           layout="intrinsic"
@@ -10,18 +13,33 @@ export default function Page({ item }) {
           width="300"
           height="300"
           quality={100}                        
-      />
-      <a href={item.url} target="_blank" > Link </a>      
-    </>
+      />      
+      <div className={styles.itemDetails}> 
+        {catalogId && <Link href={`/catalog/${catalogId}`}><span className={commonStyles.button + " " + styles.rightAlign}> Back to catalog </span></Link>}
+        <h5>Catalogs</h5>
+        {item.catalogs.map((catalog) => (
+        <Link key={catalog.id} href={`/catalog/${catalog.id}`}><span className={commonStyles.button}> {catalog.name}</span></Link>
+          ))}       
+        <h5>Stores</h5> 
+        <a href={item.url} target="_blank" > {item.urlDomain} </a>
+        <h5>Comments</h5>   
+        {item.catalogItems.map((item) => (
+        <span key={item.id}> {item.comments}</span>
+          ))}
+      </div>
+      </div>      
 }
 
-export async function getServerSideProps({params}) {     
+export async function getServerSideProps({params, query}) {     
+  console.log(query)
   const res = await fetch(`http://localhost/favolog.service/api/item/${params.id}`)  
   const item = await res.json()
+  const catalogId = query.catalogId || null
 
   return {
     props: {
-      item
+      item,
+      catalogId
     }
   }
 }
