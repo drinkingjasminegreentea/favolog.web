@@ -42,7 +42,7 @@ export default function Page({ catalog }) {
           <Link href={`/user/${author.username}`}>
             <div className={styles.catalogAuthor + " " + commonStyles.button}>
             {author.profileImage ? <Image
-                  src={`https://favostorage.blob.core.windows.net/profileimages/${author.profileImage}`}
+                  src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${author.profileImage}`}
                   layout="fixed"
                   objectFit = "cover"
                   objectPosition = "top"
@@ -65,7 +65,7 @@ export default function Page({ catalog }) {
 }
 
 export async function getServerSideProps({params}) {       
-  const res = await fetch(`http://localhost/favolog.service/api/catalog/${params.id}`)
+  const res = await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${params.id}`)
   
   const catalog = await res.json()
   return {

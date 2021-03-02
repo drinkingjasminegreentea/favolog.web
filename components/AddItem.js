@@ -13,8 +13,9 @@ export default function AddItem({show, parentAction, catalogId}){
       const item = {
         url, comments, catalogId
       }
-      
-      await fetch(`http://localhost/favolog.service/api/item`, {
+            
+      await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, 
+      {
         method: "POST",
         headers: {            
             'Accept': 'application/json',

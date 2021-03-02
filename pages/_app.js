@@ -18,9 +18,9 @@ function MyApp({ Component, pageProps }) {
         firstName: claims.given_name,
         lastName: claims.family_name,                
         externalId: claims.sub
-    }
+    }   
     
-    fetch(`http://localhost/favolog.service/api/user`, {
+    fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
         method: "POST",
         headers: {            
             'Accept': 'application/json',

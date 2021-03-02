@@ -1,5 +1,5 @@
 module.exports = {
     images: {
-      domains: ['favostorage.blob.core.windows.net'],
+      domains: ['favolog.blob.core.windows.net'],
     },
   }

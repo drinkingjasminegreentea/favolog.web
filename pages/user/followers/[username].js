@@ -16,7 +16,7 @@ export default function Page({users, username}) {
   export async function getServerSideProps({params}) {
     const username = params.username    
     
-    const users = await fetch(`http://localhost/favolog.service/api/user/${username}/followers`)
+    const users = await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/followers`)
                   .then(response => response.json())          
 
     return {

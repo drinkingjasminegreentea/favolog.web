@@ -37,10 +37,8 @@ export default function Page() {
 
     async function uploadImage(){    
       const blobName = uuidv4() + getFileExtension(file.name)      
-      const account = "favostorage";
-      const sas = "?sv=2020-02-10&ss=b&srt=sco&sp=rwdlacx&se=2021-03-04T10:59:25Z&st=2021-02-27T02:59:25Z&spr=https&sig=cJlgbPx9oJKwzpj%2BNdWl98DF4kqjt0%2BuGfjYFxhGm3Q%3D";
-      const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net${sas}`);
-      const containerClient = blobServiceClient.getContainerClient("profileimages")
+      const blobServiceClient = new BlobServiceClient(`https://${process.env.NEXT_PUBLIC_BLOBSTORAGEACCOUNT}.blob.core.windows.net${process.env.NEXT_PUBLIC_BLOBSTORAGESASKEY}`)
+      const containerClient = blobServiceClient.getContainerClient(`${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}`)
       var options = {blobContentType:file.type}
       const blockBlobClient = containerClient.getBlockBlobClient(blobName)         
       
@@ -64,7 +62,7 @@ export default function Page() {
             userUpdate.profileImage = await uploadImage()
         }
         
-        await fetch(`http://localhost/favolog.service/api/user`, {
+        await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
             method: "PUT",
             headers: {            
                 'Accept': 'application/json',

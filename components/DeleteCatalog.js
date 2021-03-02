@@ -11,7 +11,7 @@ export default function DeleteCatalog({show, parentAction, catalogId}){
     
     const onItemAdd = async() => {      
       
-      await fetch(`http://localhost/favolog.service/api/catalog/${catalogId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`, {
         method: "DELETE"
       })
       .then(()=>{

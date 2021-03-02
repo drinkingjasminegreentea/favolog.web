@@ -29,7 +29,7 @@ export default function Page({searchQuery, results}) {
 
 export async function getServerSideProps({query}) {
   const searchQuery = query.q
-  const res = await fetch(`http://localhost/favolog.service/api/Search?query=${searchQuery}`)  
+  const res = await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/Search?query=${searchQuery}`)  
   const results = await res.json()
   
   return {

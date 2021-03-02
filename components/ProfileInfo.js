@@ -19,7 +19,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
                 setIsFollowing(false)
             }            
             else{
-                fetch(`http://localhost/favolog.service/api/user/${loggedInUser.id}/isFollowing/${user.id}`)
+                fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${loggedInUser.id}/isFollowing/${user.id}`)
                     .then(response => response.json())
                     .then(data => setIsFollowing(data))  
             }
@@ -32,7 +32,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
             followerId: loggedInUser.id
         }
         
-        fetch(`http://localhost/favolog.service/api/user/follow`, {
+        fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
             method: "POST",
             headers: {            
                 'Accept': 'application/json',
@@ -49,7 +49,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
 
     return <div className={styles.profileInfo}>
         {user.profileImage ? <span> <Image
-                src={`https://favostorage.blob.core.windows.net/profileimages/${user.profileImage}`}
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${user.profileImage}`}
                 layout="fixed"
                 objectFit = "cover"
                 objectPosition = "top"
@@ -62,7 +62,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
             <h4> {user.username} </h4>
             {user.first && <span> {user.firstName} </span>}
             {user.lastName && <span> {user.lastName} </span>}
-            {user.website && <a href='user.website'> {user.website} </a>}
+            {user.website && <a href={user.website}> {user.website} </a>}
             {user.bio && <span> {user.bio} </span>}
             <Link href={`/user/following/${user.username}`}><span className={styles.followInfo + " " + commonStyles.button}>
                 {totalFollowing} following</span></Link> &nbsp; | &nbsp;

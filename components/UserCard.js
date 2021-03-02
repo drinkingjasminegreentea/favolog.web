@@ -7,7 +7,7 @@ export default function UserCard({user}){
     return (        
         <Link href={`/user/${user.username}`}><div className={styles.userCard + " " + commonStyles.button}>                                                
             {user.profileImage ? <span> <Image
-                src={`https://favostorage.blob.core.windows.net/profileimages/${user.profileImage}`}
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${user.profileImage}`}
                 layout="fixed"
                 objectFit = "cover"
                 objectPosition = "top"

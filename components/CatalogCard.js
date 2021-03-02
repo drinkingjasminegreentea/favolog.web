@@ -7,13 +7,13 @@ export default function CatalogCard({catalog, username}){
     let catalogLink = `/catalog/${catalog.id}`
     if (username)
         catalogLink += `?username=${username}`
-    
+        
     return (        
         <Link href={catalogLink}><div className={styles.catalogItem + " " + commonStyles.button}>
             <h4> {catalog.name} </h4>
             <span> {catalog.itemCount} items </span>       
             {catalog.lastItemImage && <Image
-                src={`https://favostorage.blob.core.windows.net/productimages/${catalog.lastItemImage}`}
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${catalog.lastItemImage}`}
                 layout="intrinsic"
                 objectFit = "contain"
                 width="200"

@@ -9,7 +9,7 @@ export default function Page({ item, catalogId }) {
       {catalogId && <Link href={`/catalog/${catalogId}`}><span className={commonStyles.button + " " + styles.rightAlign}> Back to catalog </span></Link>}
       </span>          
     <Image
-          src={`https://favostorage.blob.core.windows.net/productimages/${item.imageName}`}
+          src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
           layout="intrinsic"
           objectFit = "contain"
           width="300"
@@ -33,7 +33,7 @@ export default function Page({ item, catalogId }) {
 }
 
 export async function getServerSideProps({params, query}) {       
-  const res = await fetch(`http://localhost/favolog.service/api/item/${params.id}`)  
+  const res = await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item/${params.id}`)  
   const item = await res.json()
   const catalogId = query.catalogId || null
 

@@ -16,8 +16,9 @@ export default function AddCatalog({show, parentAction}){
           audienceType: 1,
           userId: user.id
       }
-      
-      fetch(`http://localhost/favolog.service/api/catalog`, {
+            
+      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`, 
+      {
           method: "POST",
           headers: {            
               'Accept': 'application/json',

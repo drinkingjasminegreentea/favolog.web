@@ -3,12 +3,12 @@ import commonStyles from '../styles/CommonStyles.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function FeedItemCard({item}){      
+export default function FeedItemCard({item}){    
     return (        
         <div className={styles.catalogItem}>                                                                  
             <Link href={`/item/${item.itemId}`}><div><span className={commonStyles.button}> {item.title} </span>            
             <Image
-                src={`https://favostorage.blob.core.windows.net/productimages/${item.imageName}`}
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
                 layout="intrinsic"
                 objectFit = "contain"
                 width="200"
@@ -19,7 +19,7 @@ export default function FeedItemCard({item}){
             <Link href={`catalog/${item.catalogId}`}><h5 className={commonStyles.button}> {item.catalogName} </h5></Link>
             <Link href={`user/${item.username}`}><div className={commonStyles.button + " " + styles.catalogAuthorGrid}>             
             {item.profileImage ? <Image
-                  src={`https://favostorage.blob.core.windows.net/profileimages/${item.profileImage}`}
+                  src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${item.profileImage}`}
                   layout="fixed"
                   objectFit = "cover"
                   objectPosition = "top"
