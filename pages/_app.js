@@ -1,6 +1,6 @@
-import { MsalProvider, useAccount, useMsal } from "@azure/msal-react";
-import { PublicClientApplication } from "@azure/msal-browser";
-import { msalConfig } from "../config/authConfig";
+import { MsalProvider } from "@azure/msal-react"
+import { PublicClientApplication } from "@azure/msal-browser"
+import { msalConfig } from "../src/authConfig"
 import Layout from '../components/Layout/Layout'
 import {useState} from 'react'
 import {UserContext} from '../src/UserContext'
