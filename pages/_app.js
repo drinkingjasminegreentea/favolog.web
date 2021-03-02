@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
       .then((result)=> {
           postUser(result)
       })
-      .catch(()=>{console.log('error')})
+      .catch((error)=>{console.error('error:', error)})
   }
 
   const signOut = () => {
