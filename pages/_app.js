@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }) {
   const [user, setUser] = useState()  
   const router = useRouter()
 
-  const postUser = async (authResult) => {    
+  const postUser = async (authResult) => {        
     const claims = authResult.idTokenClaims    
 
     const user = {
