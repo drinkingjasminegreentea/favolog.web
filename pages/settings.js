@@ -1,12 +1,49 @@
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BlobServiceClient } from '@azure/storage-blob'
 import {useContext, useEffect, useState} from 'react'
 import styles from '../styles/Settings.module.css'
+import commonStyles from '../styles/CommonStyles.module.css'
 import {UserContext} from '../src/UserContext'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
+import { useMsal } from '@azure/msal-react'
+
+const DeleteProfile = ({username, show, parentAction}) => {
+    const {instance} = useMsal()
+    const router = useRouter()     
+
+    async function deleteProfile(){              
+        fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}`,
+        {
+            method: "DELETE"            
+        })        
+        .then(()=>{
+          instance.logout()
+          parentAction()          
+          router.push(`/`)
+        })
+    }
+    
+    return <Modal show={show} onHide={parentAction} centered>
+        <Modal.Header closeButton>
+              <Modal.Title>Delete profile</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <input placeholder='Enter delete here'></input>        
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={parentAction}>
+                Cancel
+              </Button>
+              <Button variant="secondary" onClick={() => deleteProfile()}>
+                Delete
+              </Button>              
+            </Modal.Footer>                
+    </Modal>
+}
 
 export default function Page() {
     const { user, setUser } = useContext(UserContext)    
@@ -75,6 +112,12 @@ export default function Page() {
         .then(() => router.push(`/user/${username}`))
     }
 
+    const [showDeleteProfile, setShowDeleteProfile] = useState(false);
+
+    function toggleDeleteProfileModal(){
+        setShowDeleteProfile(!showDeleteProfile)
+    }
+
     return (
         <div className={styles.settingsPage}>            
             <h4>Settings</h4> 
@@ -98,12 +141,18 @@ export default function Page() {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={emailAddress} onChange={e => setEmailAddress(e.target.value)}/>
 
-                    <Form.File accept="image/*" label="Profile image" onChange={e => setFile(event.target.files[0])}/>                    
+                    <Form.File accept="image/*" label="Profile image" onChange={e => setFile(event.target.files[0])}/>                                               
                 </Form.Group>
                 <Button variant="secondary" onClick={update}>
                     Save
                 </Button>         
-            </Form> 
+            </Form>
+            <span role='button' 
+                        className={commonStyles.button}
+                        onClick={toggleDeleteProfileModal}>
+                        Delete profile
+            </span>
+            <DeleteProfile username={username} show={showDeleteProfile} parentAction={(toggleDeleteProfileModal)}/>   
         </div>
     )
 }

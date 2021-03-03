@@ -1,4 +1,4 @@
-export default function Page({searchQuery, results}) {  
+export default function Page(){  
 
     return <div> 
         <h1>Privacy Policy</h1>
