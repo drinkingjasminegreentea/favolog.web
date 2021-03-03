@@ -16,12 +16,11 @@ export default function Page({userProfile }) {
     </>
   }
   
-  export async function getServerSideProps({params, query}) {
+  export async function getServerSideProps({params}) {    
     const username = params.username    
     
     const userProfile = await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/profile`)
-                  .then(response => response.json())          
-
+                  .then(response => response.json())              
     return {
       props: {
         userProfile

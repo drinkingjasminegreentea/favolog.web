@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 import {useEffect, useState, useContext} from 'react'
 import {UserContext} from '../src/UserContext'
 
-export default function ProfileInfo({user, totalFollowing, totalFollowers}) {    
+export default function ProfileInfo({user, totalFollowing, totalFollowers}) {       
     const { user: loggedInUser } = useContext(UserContext)
     const [self, setIsSelf] = useState(false)
     const [isFollowing, setIsFollowing] = useState(false)

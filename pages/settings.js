@@ -72,7 +72,7 @@ export default function Page() {
         })
         .then(response => response.json())
         .then(data => setUser(data))
-        .then(() => router.push('/user'))
+        .then(() => router.push(`/user/${username}`))
     }
 
     return (
