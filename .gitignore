@@ -2,7 +2,6 @@
 # next.js build output
 .next
 # dotenv environment variables 
-.env
 .env.local
 # Dependency directories
 node_modules/
