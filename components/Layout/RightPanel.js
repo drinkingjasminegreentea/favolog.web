@@ -17,6 +17,7 @@ const SettingsMenu = () => {
         
         <Dropdown.Menu>
             <Dropdown.Item href='/settings'>Edit Profile</Dropdown.Item>
+            <Dropdown.Item href='/privacypolicy'>Privacy Policy</Dropdown.Item>
             <Dropdown.Item onClick={signOut}>Sign out</Dropdown.Item>        
         </Dropdown.Menu>
     </Dropdown> 
