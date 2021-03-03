@@ -3,18 +3,20 @@ import { PublicClientApplication } from "@azure/msal-browser"
 import { msalConfig } from "../src/authConfig"
 import Layout from '../components/Layout/Layout'
 import {useState} from 'react'
+import { useRouter } from 'next/router'
 import {UserContext} from '../src/UserContext'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {  
   const msalInstance = new PublicClientApplication(msalConfig)  
   const [user, setUser] = useState()  
+  const router = useRouter()
 
-  const postUser = async (authResult) => {
-    const claims = authResult.idTokenClaims
+  const postUser = async (authResult) => {    
+    const claims = authResult.idTokenClaims    
 
     const user = {
-        emailAddress: claims.email,
+        emailAddress: claims.emails[0],
         firstName: claims.given_name,
         lastName: claims.family_name,                
         externalId: claims.sub
@@ -40,17 +42,12 @@ function MyApp({ Component, pageProps }) {
       .catch((error)=>{console.error('error:', error)})
   }
 
-  const signOut = () => {
+  const signOut = () => {    
     msalInstance.logout()
+    .then(()=> setUser())
+    .then(()=> router.push(`/`))
   }
-  
-  if (!user){
-    const allAccounts = msalInstance.getAllAccounts()  
-    if (allAccounts.length > 0){
-      postUser(allAccounts[0])
-    }
-  }
-  
+      
   return (
     <MsalProvider instance={msalInstance}>
       <UserContext.Provider value={{user, signIn, signOut, setUser}}>

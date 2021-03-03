@@ -9,11 +9,9 @@ import commonStyles from '../styles/CommonStyles.module.css'
 import {UserContext} from '../src/UserContext'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
-import { useMsal } from '@azure/msal-react'
 
 const DeleteProfile = ({username, show, parentAction}) => {
-    const {instance} = useMsal()
-    const router = useRouter()     
+    const { signOut } = useContext(UserContext)           
 
     async function deleteProfile(){              
         fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}`,
@@ -21,9 +19,8 @@ const DeleteProfile = ({username, show, parentAction}) => {
             method: "DELETE"            
         })        
         .then(()=>{
-          instance.logout()
+          signOut()
           parentAction()          
-          router.push(`/`)
         })
     }
     

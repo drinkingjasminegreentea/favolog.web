@@ -4,9 +4,9 @@ import {UserContext} from '../src/UserContext'
 import FeedItemCard from '../components/FeedItemCard'
 
 export default function Page() {  
-    const {user} = useContext(UserContext)
+    const {user} = useContext(UserContext)    
     const [feedItems, setFeedItems] = useState([])
-
+    
     useEffect(()=>{
         if (user){
             fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${user.username}/feed`)
