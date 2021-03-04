@@ -31,7 +31,7 @@ const CatalogEdit = ({catalogId}) => {
 const ProfileImage = ({user}) =>{
   if (user.profileImage){
     return <Image
-      src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${author.profileImage}`}
+      src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${user.profileImage}`}
       layout="fixed"
       objectFit = "cover"
       objectPosition = "top"
