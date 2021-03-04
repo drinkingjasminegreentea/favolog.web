@@ -23,7 +23,15 @@
   align-self: center;
 }
 
-.settingsPage {
+.settingsPage,
+.settingsForm {
   display: grid;
-  justify-items: left;
+}
+
+.deleteProfile {
+  margin-top: 50px;
+}
+
+.settingsForm button {
+  justify-self: center;
 }

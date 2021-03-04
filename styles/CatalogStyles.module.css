@@ -1,17 +1,13 @@
 .catalogHeader {
   margin-bottom: 30px;
   display: grid;
-  grid-template-columns: 1fr 0.3fr;
+  grid-template-columns: 2fr 1fr;
   align-items: center;
 }
 
-.catalogHeader > h4 {
-  justify-self: start;
-}
-
-.catalogMenu {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.addEdit,
+.catalogAuthor {
+  justify-self: right;
 }
 
 .addEdit > img {
@@ -25,15 +21,6 @@
   display: grid;
   grid-template-columns: 30px 1fr;
   width: fit-content;
-}
-
-.catalogHeader > img,
-.catalogHeader > span {
-  justify-self: end;
-}
-
-.catalogHeader > h1 {
-  display: inline-block;
 }
 
 .catalog {

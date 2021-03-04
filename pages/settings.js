@@ -117,7 +117,7 @@ export default function Page() {
 
     return (
         <div className={styles.settingsPage}>            
-            <h4>Settings</h4> 
+            <h4>Edit Profile</h4> 
             <Form className={styles.settingsForm}>
                 <Form.Group>
                     <Form.Label>Username</Form.Label>
@@ -143,13 +143,13 @@ export default function Page() {
                 <Button variant="secondary" onClick={update}>
                     Save
                 </Button>         
-            </Form>
+            </Form>            
             <span role='button' 
-                        className={commonStyles.button}
+                        className={commonStyles.button + " " + styles.deleteProfile}
                         onClick={toggleDeleteProfileModal}>
                         Delete profile
             </span>
-            <DeleteProfile username={username} show={showDeleteProfile} parentAction={(toggleDeleteProfileModal)}/>   
+            <DeleteProfile username={username} show={showDeleteProfile} parentAction={(toggleDeleteProfileModal)}/>                                      
         </div>
     )
 }
