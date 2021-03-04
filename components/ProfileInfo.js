@@ -68,7 +68,7 @@ export default function ProfileInfo({user, totalFollowing, totalFollowers}) {
             <Link href={`/user/followers/${user.username}`}><span className={styles.followInfo + " " + commonStyles.button}>
                 {totalFollowersState} followers</span></Link>
         </div>
-        <div>{!self && <Button size='sm' variant="secondary" onClick={onButtonClick}> {isFollowing 
+        <div className={styles.followUnfollow}>{!self && <Button size='sm' variant="secondary" onClick={onButtonClick}> {isFollowing 
         ? 'Unfollow': 'Follow'} </Button>}</div>
     </div>    
 }
