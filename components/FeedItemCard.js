@@ -6,8 +6,8 @@ import Link from 'next/link'
 export default function FeedItemCard({item}){    
     return (        
         <div className={styles.catalogItem}>                                                                  
-            <Link href={`/item/${item.itemId}`}><div><span className={commonStyles.button}> {item.title} </span>            
-            <Image
+            <Link href={`/item/${item.itemId}`}><span className={commonStyles.button}> {item.title} </span></Link>            
+            <Link href={`/item/${item.itemId}`}><div><Image
                 src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
                 layout="fixed"
                 objectFit = "contain"
@@ -15,7 +15,7 @@ export default function FeedItemCard({item}){
                 height="200"
                 quality={100}
                 className={commonStyles.button}               
-            /></div></Link>                              
+            /></div></Link>                               
             <Link href={`catalog/${item.catalogId}`}><h5 className={commonStyles.button}> {item.catalogName} </h5></Link>
             <Link href={`user/${item.username}`}><div className={commonStyles.button + " " + styles.catalogAuthorGrid}>             
             {item.profileImage ? <Image
