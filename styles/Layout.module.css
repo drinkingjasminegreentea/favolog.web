@@ -150,7 +150,7 @@
 .search {
   display: grid;
   grid-gap: 5px;
-  grid-template-columns: 1fr 15fr;
+  grid-template-columns: 1fr 1fr 12fr;
   justify-self: end;
 }
 

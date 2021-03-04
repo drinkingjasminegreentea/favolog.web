@@ -5,7 +5,7 @@ export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {       
     const {instance, accounts} = useMsal()
-    const [ user, setUser ] = useState()
+    const [ user, setUser ] = useState()    
 
     const postUser = async (authResult) => {        
         const claims = authResult.idTokenClaims    
@@ -45,7 +45,7 @@ export const UserContextProvider = ({ children }) => {
 
       useEffect(()=>{                
         if (accounts.length > 0)
-            postUser(accounts[0])
+            postUser(accounts[0])        
       }, [accounts])
       
     return (

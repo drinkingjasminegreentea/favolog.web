@@ -24,11 +24,17 @@ export default function SearchBar() {
     }
     
     return (
-        <div className={styles.search}>                        
+        <div className={styles.search}>  
             <Link href="/">
                 <img className='button'
                     src={'/icons/home.svg'}/>
             </Link>
+
+            <Link href="/explore">
+                <img className='button'
+                    src={'/icons/explore.svg'}/>
+            </Link>                      
+            
             <Form onSubmit={handleSubmit}>                
                 <img src={'/icons/search.svg'}></img>
                 <Form.Control type="text" 
