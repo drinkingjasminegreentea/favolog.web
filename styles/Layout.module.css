@@ -167,13 +167,7 @@
   grid-template-columns: 1fr 15fr;
 }
 
-.search > form > img {
-  justify-self: center;
-}
-
 .search > form > input {
-  font-size: 18px;
-  align-items: center;
   border: none;
 }
 
@@ -181,15 +175,6 @@
   outline: none;
   border: none;
   box-shadow: none;
-}
-
-.rightBar {
-  font-size: 14px;
-  display: grid;
-  height: 100vh;
-  grid-template-columns: 1fr;
-  padding-top: 30px;
-  justify-items: center;
 }
 
 .settingsIcon {
