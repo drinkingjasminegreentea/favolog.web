@@ -3,9 +3,10 @@ import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {UserContext} from '../src/UserContext'
+import {UserContext} from '../../src/UserContext'
+import styles from '../../styles/Layout.module.css'
 
-export default function AddCatalog({show, parentAction}){
+const AddCatalogDialog = ({show, parentAction}) =>{
   const { user } = useContext(UserContext)
   const [name, setName] = useState('')        
   const router = useRouter()        
@@ -49,6 +50,24 @@ export default function AddCatalog({show, parentAction}){
               Add
             </Button>              
           </Modal.Footer>                
-  </Modal>
-    
+  </Modal>    
+}
+
+export default function AddCatalog(){
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModalWindow = () => {
+      setShowModal(!showModal)
+  }
+
+  return (
+    <div className={styles.addCatalog}>        
+        <div role='button' 
+            className={styles.addButton + " button"}
+            onClick={toggleModalWindow}>
+            <img src='/icons/add.png'/>
+        </div>
+        <AddCatalogDialog show={showModal} parentAction={(toggleModalWindow)}/>
+    </div>
+    )
 }

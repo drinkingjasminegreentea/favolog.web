@@ -19,3 +19,8 @@ a {
 .dropdown-item:active {
   background-color: grey;
 }
+
+.button:hover {
+  cursor: pointer;
+  color: #535353;
+}

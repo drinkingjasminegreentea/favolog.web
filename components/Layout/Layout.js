@@ -1,26 +1,23 @@
 import styles from '../../styles/Layout.module.css'
-import commonStyles from '../../styles/CommonStyles.module.css'
-import RightPanel from './RightPanel'
+import Settings from './Settings'
+import AddCatalog from './AddCatalog'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
 
-function Header() {
-    return <div className={styles.header}>
-        <Link href="/">
-            <span className={commonStyles.button + " " + styles.logo}> FAVOLOG </span>      
-        </Link>     
-        <SearchBar/>
-    </div>
-}
+const Logo = ()=>{
+  return  <Link href="/"><span className={"button " + styles.logo}> FAVOLOG </span></Link> 
+ }
 
 export default function Layout({ children }) {
-    return <div className={styles.wrapper}>
-        <div className={styles.center}>
-            <Header/>
-            <div className={styles.content}>
-                {children}                         
-            </div>        
+    return <div className={styles.wrapper}>        
+        <div className={styles.header}>
+                <Logo/>
+                <SearchBar/>                            
+        </div>
+        <Settings/>
+        <div className={styles.content}>                    
+                {children}        
         </div>        
-        <RightPanel/>
+        <AddCatalog/>  
     </div>
 }

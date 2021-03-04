@@ -50,6 +50,18 @@ span.followInfo {
   grid-gap: 20px;
 }
 
+@media (max-width: 1200px) {
+  .userGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .userGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .userCard {
   display: grid;
   grid-template-columns: 120px 1fr;

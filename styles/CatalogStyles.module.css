@@ -44,12 +44,14 @@
 @media (max-width: 500px) {
   .catalog {
     grid-template-columns: 1fr;
+    justify-items: center;
   }
 }
 
 .catalogItem {
   display: grid;
   width: fit-content;
+  justify-items: center;
 }
 
 .catalogItem h2 {
@@ -67,12 +69,17 @@
 .itemPage {
   display: grid;
   text-align: left;
-  grid-template-columns: 350px 1fr;
+  grid-template-columns: 0.5fr 1fr;
+  row-gap: 10px;
 }
 
 .itemPage > span {
   grid-column-start: 2;
   justify-self: end;
+}
+
+.itemPage > h4 {
+  grid-column: 1/3;
 }
 
 .itemDetails {

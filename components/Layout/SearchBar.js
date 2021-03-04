@@ -1,4 +1,3 @@
-import commonStyles from '../../styles/CommonStyles.module.css'
 import styles from '../../styles/Layout.module.css'
 import {useRouter} from 'next/router'
 import {useState, useRef} from 'react'
@@ -27,7 +26,7 @@ export default function SearchBar() {
     return (
         <div className={styles.search}>                        
             <Link href="/">
-                <img className={commonStyles.button} 
+                <img className='button'
                     src={'/icons/home.svg'}/>
             </Link>
             <Form onSubmit={handleSubmit}>                
