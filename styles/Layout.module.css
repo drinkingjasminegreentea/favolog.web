@@ -11,12 +11,18 @@
 .wrapper {
   display: grid;
   margin: 10px 0px 40px 0px;
+  grid-gap: 10px;
 }
 
 .header {
   display: grid;
   height: fit-content;
   align-items: center;
+  grid-gap: 10px;
+}
+
+.content {
+  margin-top: 10px;
 }
 
 @media (min-width: 1200px) {
@@ -73,6 +79,9 @@
   .search {
     width: 100%;
   }
+  .search > form {
+    margin: 0;
+  }
   .content,
   .header {
     grid-column-start: 1;
@@ -101,6 +110,9 @@
   }
   .search {
     width: 100%;
+  }
+  .search > form {
+    margin: 0;
   }
   .content,
   .header {
@@ -137,6 +149,7 @@
 
 .search {
   display: grid;
+  grid-gap: 5px;
   grid-template-columns: 1fr 15fr;
   justify-self: end;
 }
@@ -152,7 +165,6 @@
   align-items: center;
   display: grid;
   grid-template-columns: 1fr 15fr;
-  margin: 20px;
 }
 
 .search > form > img {
