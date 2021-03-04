@@ -25,9 +25,26 @@
 
 .catalog {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 50px;
   text-align: left;
+}
+
+@media (min-width: 1200px) {
+  .catalog {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 1200px) {
+  .catalog {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .catalog {
+    grid-template-columns: 1fr;
+  }
 }
 
 .catalogItem {

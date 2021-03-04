@@ -14,7 +14,7 @@ export default function CatalogCard({catalog, username}){
             <span> {catalog.itemCount} items </span>       
             {catalog.lastItemImage && <Image
                 src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${catalog.lastItemImage}`}
-                layout="intrinsic"
+                layout="fixed"
                 objectFit = "contain"
                 width="200"
                 height="200"

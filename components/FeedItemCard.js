@@ -9,7 +9,7 @@ export default function FeedItemCard({item}){
             <Link href={`/item/${item.itemId}`}><div><span className={commonStyles.button}> {item.title} </span>            
             <Image
                 src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-                layout="intrinsic"
+                layout="fixed"
                 objectFit = "contain"
                 width="200"
                 height="200"

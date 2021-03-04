@@ -11,7 +11,18 @@
 .wrapper {
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 940px 1fr;
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    grid-template-columns: 1fr 940px 1fr;
+  }
+}
+
+@media (max-width: 1200px) {
+  .wrapper {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
 }
 
 .wrapper h1,
