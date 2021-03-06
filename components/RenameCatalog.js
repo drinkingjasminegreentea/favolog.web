@@ -5,18 +5,19 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-export default function AddItem({show, parentAction, catalogId}){    
-    const [url, setUrl] = useState('')              
+export default function RenameCatalog({show, parentAction, catalog}){
+    const [name, setName] = useState(catalog.name)              
     const router = useRouter()       
     
-    const onItemAdd = async() => {
+    const onSubmit = async() => {
       const item = {
-        url, catalogId
+        name: name, 
+        id: catalog.id
       }
       
-      await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, 
+      await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`, 
       {
-        method: "POST",
+        method: "PUT",
         headers: {            
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -24,25 +25,24 @@ export default function AddItem({show, parentAction, catalogId}){
         body: JSON.stringify(item)
       })
       .then(()=>{
-        parentAction()
-        setUrl('')        
-        router.push(`/catalog/${catalogId}`)
+        parentAction()         
+        router.push(`/catalog/${catalog.id}`)
       })
     }
     
     return <Modal show={show} onHide={parentAction} centered>
         <Modal.Header closeButton>
-              <Modal.Title>Add new item to catalog</Modal.Title>
+              <Modal.Title>Edit catalog</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Control type="text" placeholder="Item page Url" value={url} onChange={e => setUrl(e.target.value)}/>                                
+          <Form.Control type="text" placeholder="Catalog name" value={name} onChange={e => setName(e.target.value)} required/>                                
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={parentAction}>
             Cancel
           </Button>
-          <Button variant="secondary" onClick={onItemAdd}>
-            Add
+          <Button variant="secondary" onClick={onSubmit}>
+            Save
           </Button>              
         </Modal.Footer>                
     </Modal>    

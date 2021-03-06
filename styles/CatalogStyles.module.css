@@ -11,8 +11,8 @@
 }
 
 .addEdit > img {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   margin: auto 5px;
 }
 
@@ -111,4 +111,8 @@
   display: grid;
   align-items: center;
   grid-template-columns: 30px 1fr;
+}
+
+.deleteItem {
+  justify-self: end;
 }

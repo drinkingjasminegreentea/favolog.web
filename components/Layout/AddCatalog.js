@@ -2,6 +2,7 @@ import { useState, useContext} from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {UserContext} from '../../src/UserContext'
 import styles from '../../styles/Layout.module.css'
@@ -39,8 +40,8 @@ const AddCatalogDialog = ({show, parentAction}) =>{
       <Modal.Header closeButton>
             <Modal.Title>Create a new catalog</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-              <input onChange={e => setName(e.target.value) } value={name} placeholder='Name your catalog'></input>        
+          <Modal.Body>              
+              <Form.Control type="text" placeholder="Name your catalog" value={name} onChange={e => setName(e.target.value)}/>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={parentAction}>

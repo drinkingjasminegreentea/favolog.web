@@ -24,3 +24,8 @@ a {
   cursor: pointer;
   color: #535353;
 }
+
+input.form-control:focus {
+  border-color: #ced4da;
+  box-shadow: none;
+}

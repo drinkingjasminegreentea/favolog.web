@@ -2,30 +2,37 @@ import styles from '../../styles/CatalogStyles.module.css'
 import commonStyles from '../../styles/CommonStyles.module.css'
 import CatalogItemCard from '../../components/CatalogItemCard'
 import AddItem from '../../components/AddItem'
+import RenameCatalog from '../../components/RenameCatalog'
 import DeleteCatalog from '../../components/DeleteCatalog'
 import {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../../src/UserContext'
 import Link from 'next/link'
 import Image from 'next/image'
 
-const CatalogEdit = ({catalogId}) => {
+const CatalogEdit = ({catalog}) => {
     const [showAddItem, setShowAddItem] = useState(false)
+    const [showRenameCatalog, setShowRenameCatalog] = useState(false)
     const [showDeleteCatalog, setShowDeleteCatalog] = useState(false)
 
     function toggleAddItem(){
       setShowAddItem(!showAddItem)
     }
 
+    function toggleRenameCatalog(){
+      setShowRenameCatalog(!showRenameCatalog)
+    }
+
     function toggleDeleteCatalog(){
       setShowDeleteCatalog(!showDeleteCatalog)
     }
 
-  return <span className={styles.addEdit}>
-    <img className={commonStyles.button} onClick={toggleAddItem} src='/icons/add.svg'/>
-    <img src='/icons/edit.svg' className={commonStyles.button}/>
-    <img src='/icons/delete.svg' className={commonStyles.button} onClick={toggleDeleteCatalog}/>
-    <AddItem show={showAddItem} parentAction={(toggleAddItem)} catalogId={catalogId}/> 
-    <DeleteCatalog show={showDeleteCatalog} parentAction={(toggleDeleteCatalog)} catalogId={catalogId}/></span>
+  return <span className={styles.addEdit}>    
+    <img src='/icons/plus-circle.svg' className={commonStyles.button} onClick={toggleAddItem}/>
+    <img src='/icons/pencil-fill.svg' className={commonStyles.button} onClick={toggleRenameCatalog}/>
+    <img src='/icons/trash.svg' className={commonStyles.button} onClick={toggleDeleteCatalog}/>
+    <AddItem show={showAddItem} parentAction={toggleAddItem} catalogId={catalog.id}/> 
+    <RenameCatalog show={showRenameCatalog} parentAction={toggleRenameCatalog} catalog={catalog}/>
+    <DeleteCatalog show={showDeleteCatalog} parentAction={toggleDeleteCatalog} catalogId={catalog.id}/></span>
 }
 
 const ProfileImage = ({user}) =>{
@@ -60,7 +67,7 @@ export default function Page({ catalog }) {
     return <>  
     <div className={styles.catalogHeader}>
       <h4> {catalog.name} </h4>
-      {isEditable ?  <CatalogEdit catalogId={catalog.id}/> : <Link href={`/user/${author.username}`}>
+      {isEditable ?  <CatalogEdit catalog={catalog}/> : <Link href={`/user/${author.username}`}>
               <div className={styles.catalogAuthor + " " + commonStyles.button}>
                 <ProfileImage user={author}/>
               <span> {author.username}</span>
@@ -68,7 +75,7 @@ export default function Page({ catalog }) {
         </div> 
       <div className={styles.catalog}>
       {catalog.items.map((item) => (
-        <CatalogItemCard key={item.id} item={item} catalogId={catalog.id}/>
+        <CatalogItemCard key={item.id} item={item} catalogId={catalog.id} isEditable={isEditable}/>
       ))}
       </div>
     </>
