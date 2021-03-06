@@ -11,7 +11,8 @@ export default function AddItem({show, parentAction, catalogId}){
     
     const onItemAdd = async() => {
       const item = {
-        url, catalogId
+        originalUrl: url,
+        catalogId
       }
       
       await fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, 
@@ -22,7 +23,11 @@ export default function AddItem({show, parentAction, catalogId}){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(item)
-      })
+      })     
+      .then((response) => {
+        if(!response.ok)
+          router.push(`/item/add?catalogId=${catalogId}&url=${url}`)
+      }) 
       .then(()=>{
         parentAction()
         setUrl('')        
@@ -32,9 +37,10 @@ export default function AddItem({show, parentAction, catalogId}){
     
     return <Modal show={show} onHide={parentAction} centered>
         <Modal.Header closeButton>
-              <Modal.Title>Add new item to catalog</Modal.Title>
+          <Modal.Title>Add new item to catalog</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <Form.Label>Please enter the item Url</Form.Label>
           <Form.Control type="text" placeholder="Item page Url" value={url} onChange={e => setUrl(e.target.value)}/>                                
         </Modal.Body>
         <Modal.Footer>

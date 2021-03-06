@@ -24,7 +24,10 @@ export default function CatalogItemCard({item, catalogId, isEditable}){
                     className="button"
                 />
             </div></Link>                    
-            {isEditable && <img src='/icons/x.svg' className={"button " + styles.deleteItem} onClick={toggleDeleteItem}/>}
+            {isEditable &&<span className={styles.itemEditIcons}> 
+                <img src='/icons/pencil.svg' /> 
+                <img src='/icons/x.svg' className="button" onClick={toggleDeleteItem}/> 
+            </span>}
             <DeleteCatalogItem show={showDeleteItem} parentAction={toggleDeleteItem} catalogId={catalogId} itemId={item.id}/>   
         </div>
     )

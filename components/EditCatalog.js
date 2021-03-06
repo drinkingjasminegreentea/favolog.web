@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-export default function RenameCatalog({show, parentAction, catalog}){
+export default function EditCatalog({show, parentAction, catalog}){
     const [name, setName] = useState(catalog.name)              
     const router = useRouter()       
     

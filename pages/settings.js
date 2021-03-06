@@ -138,7 +138,7 @@ export default function Page() {
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={emailAddress} onChange={e => setEmailAddress(e.target.value)}/>
 
-                    <Form.File accept="image/*" label="Profile image" onChange={e => setFile(event.target.files[0])}/>                                               
+                    <Form.File accept="image/*" label="Profile image" onChange={e => setFile(e.target.files[0])}/>                                               
                 </Form.Group>
                 <Button variant="secondary" onClick={update}>
                     Save

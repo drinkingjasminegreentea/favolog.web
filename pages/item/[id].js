@@ -14,7 +14,7 @@ export default function Page({ item, catalogId }) {
         {item.catalogs.map((catalog) => (
         <Link key={catalog.id} href={`/catalog/${catalog.id}`}><span className={commonStyles.button}> {catalog.name}</span></Link>
           ))}       
-        <h5>Stores</h5> 
+        <h5>Source</h5> 
         <a href={item.url} target="_blank" > {item.urlDomain} </a>
         <h5>Comments</h5>   
         {item.catalogItems.map((item) => (

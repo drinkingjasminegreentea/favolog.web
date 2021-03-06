@@ -2,7 +2,7 @@ import styles from '../../styles/CatalogStyles.module.css'
 import commonStyles from '../../styles/CommonStyles.module.css'
 import CatalogItemCard from '../../components/CatalogItemCard'
 import AddItem from '../../components/AddItem'
-import RenameCatalog from '../../components/RenameCatalog'
+import EditCatalog from '../../components/EditCatalog'
 import DeleteCatalog from '../../components/DeleteCatalog'
 import {useState, useContext, useEffect} from 'react'
 import {UserContext} from '../../src/UserContext'
@@ -11,15 +11,15 @@ import Image from 'next/image'
 
 const CatalogEdit = ({catalog}) => {
     const [showAddItem, setShowAddItem] = useState(false)
-    const [showRenameCatalog, setShowRenameCatalog] = useState(false)
+    const [showEditCatalog, setShowEditCatalog] = useState(false)
     const [showDeleteCatalog, setShowDeleteCatalog] = useState(false)
 
     function toggleAddItem(){
       setShowAddItem(!showAddItem)
     }
 
-    function toggleRenameCatalog(){
-      setShowRenameCatalog(!showRenameCatalog)
+    function toggleEditCatalog(){
+      setShowEditCatalog(!showEditCatalog)
     }
 
     function toggleDeleteCatalog(){
@@ -28,10 +28,10 @@ const CatalogEdit = ({catalog}) => {
 
   return <span className={styles.addEdit}>    
     <img src='/icons/plus-circle.svg' className={commonStyles.button} onClick={toggleAddItem}/>
-    <img src='/icons/pencil-fill.svg' className={commonStyles.button} onClick={toggleRenameCatalog}/>
+    <img src='/icons/pencil-fill.svg' className={commonStyles.button} onClick={toggleEditCatalog}/>
     <img src='/icons/trash.svg' className={commonStyles.button} onClick={toggleDeleteCatalog}/>
     <AddItem show={showAddItem} parentAction={toggleAddItem} catalogId={catalog.id}/> 
-    <RenameCatalog show={showRenameCatalog} parentAction={toggleRenameCatalog} catalog={catalog}/>
+    <EditCatalog show={showEditCatalog} parentAction={toggleEditCatalog} catalog={catalog}/>
     <DeleteCatalog show={showDeleteCatalog} parentAction={toggleDeleteCatalog} catalogId={catalog.id}/></span>
 }
 

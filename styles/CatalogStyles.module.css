@@ -113,6 +113,6 @@
   grid-template-columns: 30px 1fr;
 }
 
-.deleteItem {
+.itemEditIcons {
   justify-self: end;
 }
