@@ -7,7 +7,7 @@ import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {  
   const msalInstance = new PublicClientApplication(msalConfig)    
-       
+         
   return (
     <MsalProvider instance={msalInstance}>
       <UserContextProvider>

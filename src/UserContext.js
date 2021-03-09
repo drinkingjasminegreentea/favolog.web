@@ -1,36 +1,41 @@
 import { createContext, useState, useEffect } from 'react'
 import {useMsal} from '@azure/msal-react'
 
+export const scopes = ["https://favolog.onmicrosoft.com/api/access"]
 export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {       
     const {instance, accounts} = useMsal()
     const [ user, setUser ] = useState()    
 
-    const postUser = async (authResult) => {        
-        const claims = authResult.idTokenClaims    
+    const postUser = async (account) => {        
+        const claims = account.idTokenClaims    
     
         const user = {
             emailAddress: claims.emails[0],
             firstName: claims.given_name,
             lastName: claims.family_name,                
             externalId: claims.sub
-        }   
+        }  
         
-        fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
-            method: "POST",
-            headers: {            
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
+        instance.acquireTokenSilent({account, scopes} )
+        .then((response) => {
+            fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
+                method: "POST",
+                headers: {            
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${response.accessToken}`
+                },
+                body: JSON.stringify(user)
+            })
+                .then(response => response.json())
+                .then(data => setUser(data))
         })
-          .then(response => response.json())
-          .then(data => setUser(data))
       }
-
-    const signIn = () => {
-        instance.loginPopup()
+    
+    const signIn = () => {        
+        instance.loginPopup({scopes})
           .then((result)=> {
               postUser(result)
           })
