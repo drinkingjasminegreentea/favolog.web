@@ -1,16 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { UserContext } from '../../src/UserContext'
 import styles from '../../styles/Layout.module.css'
 import { scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
 
 const AddCatalogDialog = ({ show, parentAction }) => {
-  const { user } = useContext(UserContext)
   const [name, setName] = useState('')
   const router = useRouter()
   const { instance, accounts } = useMsal()
@@ -20,7 +18,6 @@ const AddCatalogDialog = ({ show, parentAction }) => {
     const catalog = {
       name: name,
       audienceType: 1,
-      userId: user.id,
     }
 
     instance.acquireTokenSilent({ account, scopes }).then((response) => {

@@ -15,7 +15,7 @@ export default function Page() {
 
       instance.acquireTokenSilent({ account, scopes }).then((response) => {
         fetch(
-          `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.username}`,
+          `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.id}`,
           {
             method: 'GET',
             headers: {

@@ -27,6 +27,7 @@
   display: grid;
   grid-gap: 50px;
   text-align: left;
+  justify-items: center;
 }
 
 @media (min-width: 1200px) {
@@ -48,10 +49,20 @@
   }
 }
 
-.catalogItem {
+.catalogItem,
+.itemAddCard {
   display: grid;
   width: fit-content;
   justify-items: center;
+  align-items: center;
+}
+
+.itemAddCard {
+  border: solid 1px lightgrey;
+  width: 160px;
+  height: 190px;
+  margin-top: 20%;
+  border-radius: 5%;
 }
 
 .catalogItem h2 {
@@ -60,6 +71,7 @@
 
 .catalogItem span {
   font-size: 15px;
+  font-weight: bold;
 }
 
 .searchResults {
@@ -115,4 +127,14 @@
 
 .itemEditIcons {
   justify-self: end;
+}
+
+.emptyCatalog {
+  width: 160px;
+  height: 190px;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  border: solid 1px lightgrey;
+  border-radius: 5%;
 }

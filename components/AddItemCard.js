@@ -6,8 +6,9 @@ import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { scopes } from '../src/UserContext'
 import { useMsal } from '@azure/msal-react'
+import styles from '../styles/CatalogStyles.module.css'
 
-export default function AddItem({ show, parentAction, catalogId }) {
+const AddItem = ({ show, parentAction, catalogId, addItemToCatalog }) => {
   const [url, setUrl] = useState('')
   const router = useRouter()
   const { instance, accounts } = useMsal()
@@ -29,11 +30,14 @@ export default function AddItem({ show, parentAction, catalogId }) {
         body: JSON.stringify(item),
       })
         .then((response) => {
-          if (response.ok) {
-            parentAction()
-            setUrl('')
-            router.push(`/catalog/${catalogId}`)
-          } else Promise.reject(response)
+          if (response.ok) return response.json()
+          else return Promise.reject(response)
+        })
+        .then((data) => {
+          addItemToCatalog(data)
+          parentAction()
+          setUrl('')
+          router.push(`/catalog/${catalogId}`)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
@@ -65,5 +69,31 @@ export default function AddItem({ show, parentAction, catalogId }) {
         </Button>
       </Modal.Footer>
     </Modal>
+  )
+}
+
+export default function AddItemCard({ catalogId, addItemToCatalog }) {
+  const [showAddItem, setShowAddItem] = useState(false)
+
+  function toggleAddItem() {
+    setShowAddItem(!showAddItem)
+  }
+
+  return (
+    <div className={styles.itemAddCard}>
+      <img
+        className='button'
+        src='/icons/plus-circle.svg'
+        width='50'
+        height='50'
+        onClick={toggleAddItem}
+      />
+      <AddItem
+        show={showAddItem}
+        parentAction={toggleAddItem}
+        catalogId={catalogId}
+        addItemToCatalog={addItemToCatalog}
+      />
+    </div>
   )
 }

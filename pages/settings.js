@@ -12,14 +12,14 @@ import { useRouter } from 'next/router'
 import { scopes } from '../src/UserContext'
 import { useMsal } from '@azure/msal-react'
 
-const DeleteProfile = ({ username, show, parentAction }) => {
+const DeleteProfile = ({ userId, show, parentAction }) => {
   const { signOut } = useContext(UserContext)
   const { instance, accounts } = useMsal()
   const account = accounts[0]
 
   async function deleteProfile() {
     instance.acquireTokenSilent({ account, scopes }).then((response) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}`, {
+      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${userId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${response.accessToken}`,
@@ -59,7 +59,6 @@ const DeleteProfile = ({ username, show, parentAction }) => {
 
 export default function Page() {
   const { user, setUser } = useContext(UserContext)
-  const [username, setUsername] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -72,7 +71,6 @@ export default function Page() {
 
   useEffect(() => {
     if (user) {
-      setUsername(user.username)
       setFirstName(user.firstName || '')
       setLastName(user.lastName || '')
       setEmailAddress(user.emailAddress)
@@ -151,30 +149,6 @@ export default function Page() {
       <h4>Edit Profile</h4>
       <Form className={styles.settingsForm}>
         <Form.Group>
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Username'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-
-          <Form.Label>Bio</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Bio'
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
-
-          <Form.Label>Website</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Website'
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-          />
-
           <Form.Label>First name</Form.Label>
           <Form.Control
             type='text'
@@ -199,6 +173,22 @@ export default function Page() {
             onChange={(e) => setEmailAddress(e.target.value)}
           />
 
+          <Form.Label>Bio</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Bio'
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          />
+
+          <Form.Label>Website</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Website'
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+
           <Form.File
             accept='image/*'
             label='Profile image'
@@ -216,11 +206,13 @@ export default function Page() {
       >
         Delete profile
       </span>
-      <DeleteProfile
-        username={username}
-        show={showDeleteProfile}
-        parentAction={toggleDeleteProfileModal}
-      />
+      {user && (
+        <DeleteProfile
+          userId={user.id}
+          show={showDeleteProfile}
+          parentAction={toggleDeleteProfileModal}
+        />
+      )}
     </div>
   )
 }

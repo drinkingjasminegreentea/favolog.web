@@ -44,19 +44,15 @@ export default function Page({ itemId, catalogId }) {
       <h4>{item.title}</h4>
       <div className={styles.itemDetails}>
         <h5>Catalogs</h5>
-        {item.catalogs.map((catalog) => (
-          <Link key={catalog.id} href={`/catalog/${catalog.id}`}>
-            <span className='button'> {catalog.name}</span>
-          </Link>
-        ))}
+        <Link key={item.catalog.id} href={`/catalog/${item.catalog.id}`}>
+          <span className='button'> {item.catalog.name}</span>
+        </Link>
         <h5>Source</h5>
         <a href={item.url} target='_blank'>
           {item.urlDomain}
         </a>
         <h5>Comments</h5>
-        {item.catalogItems.map((item) => (
-          <span key={item.id}> {item.comments}</span>
-        ))}
+        <span key={item.id}> {item.comments}</span>
       </div>
       <Image
         src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}

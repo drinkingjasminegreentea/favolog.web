@@ -18,17 +18,22 @@ export default function DeleteCatalogItem({
 
   const submit = async () => {
     instance.acquireTokenSilent({ account, scopes }).then((response) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item/${itemId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${response.accessToken}`,
-        },
-      })
+      fetch(
+        `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}/item/${itemId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${response.accessToken}`,
+          },
+        }
+      )
         .then((response) => {
-          if (response.ok) {
-            parentAction()
-            router.push(`/catalog/${catalogId}`)
-          } else Promise.reject(response)
+          if (response.ok) return response.json()
+          else return Promise.reject(response)
+        })
+        .then((data) => {
+          parentAction(data)
+          router.push(`/catalog/${catalogId}`)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
@@ -37,13 +42,13 @@ export default function DeleteCatalogItem({
   }
 
   return (
-    <Modal show={show} onHide={parentAction} centered>
+    <Modal show={show} onHide={() => parentAction()} centered>
       <Modal.Header closeButton>
         <Modal.Title>Delete item</Modal.Title>
       </Modal.Header>
       <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={parentAction}>
+        <Button variant='secondary' onClick={() => parentAction()}>
           Cancel
         </Button>
         <Button variant='secondary' onClick={submit}>

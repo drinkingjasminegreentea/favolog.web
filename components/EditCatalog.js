@@ -29,11 +29,12 @@ export default function EditCatalog({ show, parentAction, catalog }) {
         body: JSON.stringify(data),
       })
         .then((response) => {
-          if (response.ok) {
-            parentAction()
-            setName('')
-            router.push(`/catalog/${catalog.id}`)
-          } else Promise.reject(response)
+          if (response.ok) return response.json()
+          else return Promise.reject(response)
+        })
+        .then((data) => {
+          parentAction(data)
+          router.push(`/catalog/${catalog.id}`)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
@@ -42,7 +43,7 @@ export default function EditCatalog({ show, parentAction, catalog }) {
   }
 
   return (
-    <Modal show={show} onHide={parentAction} centered>
+    <Modal show={show} onHide={() => parentAction()} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit catalog</Modal.Title>
       </Modal.Header>
@@ -56,7 +57,7 @@ export default function EditCatalog({ show, parentAction, catalog }) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={parentAction}>
+        <Button variant='secondary' onClick={() => parentAction()}>
           Cancel
         </Button>
         <Button variant='secondary' onClick={submit}>
