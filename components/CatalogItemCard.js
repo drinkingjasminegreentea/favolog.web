@@ -22,8 +22,10 @@ export default function CatalogItemCard({
   return (
     <div className={styles.catalogItem + ' button'}>
       <Link href={`/item/${item.id}?catalogId=${catalogId}`}>
-        <div>
-          <span> {item.title} </span>
+        <span> {item.title} </span>
+      </Link>
+      <Link href={`/item/${item.id}?catalogId=${catalogId}`}>
+        <div className={styles.cardImage}>
           <Image
             src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
             layout='fixed'

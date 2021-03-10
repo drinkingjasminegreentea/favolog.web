@@ -102,12 +102,12 @@ export default function Page() {
   const update = async () => {
     const userUpdate = {
       id: user.id,
-      username,
       firstName,
       lastName,
       emailAddress,
       bio,
       website,
+      externalId: user.externalId,
     }
 
     if (file) {
@@ -130,7 +130,7 @@ export default function Page() {
         })
         .then((data) => {
           setUser(data)
-          router.push(`/user/${username}`)
+          router.push(`/user/${user.id}`)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
