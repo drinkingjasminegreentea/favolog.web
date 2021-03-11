@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../styles/ProfileInfo.module.css'
-import commonStyles from '../styles/CommonStyles.module.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../src/UserContext'
@@ -73,14 +72,15 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </h4>
         {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
-        <Link href={`/user/following/${user.username}`}>
-          <span className={styles.followInfo + ' ' + commonStyles.button}>
+        <br />
+        <Link href={`/user/following/${user.id}`}>
+          <span className={styles.followInfo + ' button'}>
             {totalFollowing} following
           </span>
         </Link>
         &nbsp; | &nbsp;
-        <Link href={`/user/followers/${user.username}`}>
-          <span className={styles.followInfo + ' ' + commonStyles.button}>
+        <Link href={`/user/followers/${user.id}`}>
+          <span className={styles.followInfo + ' button'}>
             {totalFollowersState} followers
           </span>
         </Link>

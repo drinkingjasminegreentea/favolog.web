@@ -2,15 +2,13 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BlobServiceClient } from '@azure/storage-blob'
 import { useContext, useEffect, useState } from 'react'
 import styles from '../styles/Settings.module.css'
-import commonStyles from '../styles/CommonStyles.module.css'
 import { UserContext } from '../src/UserContext'
-import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
 import { scopes } from '../src/UserContext'
 import { useMsal } from '@azure/msal-react'
+import uploadImage from '../src/UploadImage'
 
 const DeleteProfile = ({ userId, show, parentAction }) => {
   const { signOut } = useContext(UserContext)
@@ -79,26 +77,6 @@ export default function Page() {
     }
   }, [user])
 
-  function getFileExtension(fileName) {
-    const lastDot = fileName.lastIndexOf('.')
-    return fileName.substring(lastDot)
-  }
-
-  async function uploadImage() {
-    const blobName = uuidv4() + getFileExtension(file.name)
-    const blobServiceClient = new BlobServiceClient(
-      `https://${process.env.NEXT_PUBLIC_BLOBSTORAGEACCOUNT}.blob.core.windows.net${process.env.NEXT_PUBLIC_BLOBSTORAGESASKEY}`
-    )
-    const containerClient = blobServiceClient.getContainerClient(
-      `${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}`
-    )
-    var options = { blobContentType: file.type }
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
-
-    await blockBlobClient.uploadData(file, { blobHTTPHeaders: options })
-    return blobName
-  }
-
   const update = async () => {
     const userUpdate = {
       id: user.id,
@@ -111,7 +89,10 @@ export default function Page() {
     }
 
     if (file) {
-      userUpdate.profileImage = await uploadImage()
+      userUpdate.profileImage = await uploadImage(
+        file,
+        process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER
+      )
     }
 
     instance.acquireTokenSilent({ account, scopes }).then((response) => {
@@ -201,7 +182,7 @@ export default function Page() {
       </Form>
       <span
         role='button'
-        className={commonStyles.button + ' ' + styles.deleteProfile}
+        className={'button ' + styles.deleteProfile}
         onClick={toggleDeleteProfileModal}
       >
         Delete profile

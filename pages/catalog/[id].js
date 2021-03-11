@@ -1,6 +1,5 @@
 import styles from '../../styles/CatalogStyles.module.css'
-import commonStyles from '../../styles/CommonStyles.module.css'
-import CatalogItemCard from '../../components/CatalogItemCard'
+import ItemCard from '../../components/ItemCard'
 import EditCatalog from '../../components/EditCatalog'
 import AddItemCard from '../../components/AddItemCard'
 import DeleteCatalog from '../../components/DeleteCatalog'
@@ -28,12 +27,12 @@ const CatalogEdit = ({ catalog, setCatalog }) => {
     <span className={styles.addEdit}>
       <img
         src='/icons/pencil-fill.svg'
-        className={commonStyles.button}
+        className='button'
         onClick={() => setShowEditCatalog(!showEditCatalog)}
       />
       <img
         src='/icons/trash.svg'
-        className={commonStyles.button}
+        className='button'
         onClick={() => setShowDeleteCatalog(!showDeleteCatalog)}
       />
       <EditCatalog
@@ -127,7 +126,7 @@ export default function Page({ catalogId }) {
           <CatalogEdit catalog={catalog} setCatalog={setCatalog} />
         ) : (
           <Link href={`/user/${catalog.user.id}`}>
-            <div className={styles.catalogAuthor + ' ' + commonStyles.button}>
+            <div className={styles.catalogAuthor + ' button'}>
               <ProfileImage user={catalog.user} />
               <span> {catalog.user.firstName}</span>
               {catalog.user.lastName && <span> {catalog.user.lastName}</span>}
@@ -141,11 +140,13 @@ export default function Page({ catalogId }) {
           addItemToCatalog={addItemToCatalog}
         />
         {catalog.items.map((item) => (
-          <CatalogItemCard
+          <ItemCard
             key={item.id}
             item={item}
             catalogId={catalog.id}
             isEditable={isEditable}
+            user={catalog.user}
+            profileImage={catalog.user.profileImage}
             removeItemFromCatalog={removeItemFromCatalog}
           />
         ))}

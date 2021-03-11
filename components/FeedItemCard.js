@@ -1,16 +1,16 @@
 import styles from '../styles/CatalogStyles.module.css'
-import commonStyles from '../styles/CommonStyles.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import ProfileIcon from './ProfileIcon'
 
 export default function FeedItemCard({ item }) {
   return (
     <div className={styles.catalogItem}>
-      <Link href={`/item/${item.itemId}`}>
-        <span className={commonStyles.button}> {item.title} </span>
-      </Link>
-      <Link href={`/item/${item.itemId}`}>
-        <div className={styles.cardImage}>
+      <a href={item.url} target='_blank'>
+        <span>{item.title}</span>
+      </a>
+      <div className={styles.cardImage}>
+        {item.imageName ? (
           <Image
             src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
             layout='fixed'
@@ -18,38 +18,33 @@ export default function FeedItemCard({ item }) {
             width='200'
             height='200'
             quality={100}
-            className={commonStyles.button}
           />
-        </div>
-      </Link>
+        ) : (
+          <div className={styles.emptyCatalog}>
+            <img src='/icons/file-image.svg' width='50' height='50' />
+          </div>
+        )}
+      </div>
+
       <Link href={`catalog/${item.catalogId}`}>
-        <h5 className={commonStyles.button}> {item.catalogName} </h5>
+        <h5 className='button'> {item.catalogName} </h5>
       </Link>
-      <Link href={`user/${item.userId}`}>
-        <div className={commonStyles.button + ' ' + styles.catalogAuthorGrid}>
-          {item.profileImage ? (
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${item.profileImage}`}
-              layout='fixed'
-              objectFit='cover'
-              objectPosition='top'
-              width='30'
-              height='30'
-              quality={100}
-              className={styles.authorProfile}
-            />
-          ) : (
-            <div className={styles.authorPlaceholder}>
-              <b> {item.firstName.substring(0, 1).toUpperCase()} </b>{' '}
-            </div>
+      <div className={'button ' + styles.comment}>
+        <ProfileIcon
+          profileImage={item.profileImage}
+          firstName={item.firstName}
+        />
+        <div>
+          <span> {item.firstName} </span>
+          {item.LastName && <span>{item.LastName}</span>} <br />
+          {item.comment && (
+            <span>
+              {item.comment.substring(0, 25)} ..
+              <img className='button' src='/icons/expand_more-24px.svg' />
+            </span>
           )}
-          <span> &nbsp; {item.firstName} </span>{' '}
-          {item.LastName && <span>{item.LastName}</span>}
         </div>
-      </Link>
-      <Link href={`/item/${item.id}`}>
-        <span className={commonStyles.button}> {item.comments}</span>
-      </Link>
+      </div>
     </div>
   )
 }

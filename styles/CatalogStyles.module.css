@@ -27,7 +27,7 @@
   display: grid;
   grid-gap: 50px;
   text-align: left;
-  justify-items: center;
+  justify-items: left;
 }
 
 @media (min-width: 1200px) {
@@ -54,16 +54,18 @@
   display: grid;
   width: fit-content;
   align-items: center;
+  width: 250px;
 }
 
 .itemAddCard {
   border: solid 1px lightgrey;
   width: 160px;
   height: 190px;
-  margin-top: 20%;
+  margin-top: 25%;
   border-radius: 5%;
   display: grid;
   justify-content: center;
+  justify-self: center;
 }
 
 .catalogItem h2 {
@@ -140,6 +142,13 @@
   border-radius: 5%;
 }
 
-.cardImage {
+.cardImage,
+.comment {
   justify-self: center;
+}
+
+.comment {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  width: 100%;
 }

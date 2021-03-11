@@ -1,4 +1,3 @@
-import commonStyles from '../styles/CommonStyles.module.css'
 import styles from '../styles/CatalogStyles.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,7 +8,7 @@ export default function CatalogCard({ catalog, username }) {
 
   return (
     <Link href={catalogLink}>
-      <div className={styles.catalogItem + ' ' + commonStyles.button}>
+      <div className={styles.catalogItem + ' button'}>
         <h4> {catalog.name} </h4>
         <span> {catalog.itemCount} items </span>
         {catalog.lastItemImage ? (
