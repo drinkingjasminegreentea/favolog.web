@@ -69,9 +69,9 @@ export default function Page() {
 
   useEffect(() => {
     if (user) {
-      setFirstName(user.firstName || '')
+      setFirstName(user.firstName)
       setLastName(user.lastName || '')
-      setEmailAddress(user.emailAddress)
+      setEmailAddress(user.emailAddress || '')
       setBio(user.bio || '')
       setWebsite(user.website || '')
     }

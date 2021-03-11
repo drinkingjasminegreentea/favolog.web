@@ -8,12 +8,11 @@ export default function FeedItemCard({ item }) {
     <div className={styles.catalogItem}>
       <a href={item.url} target='_blank'>
         <span className='bold'>{item.title}</span>
+
+        <div className={styles.cardImage}>
+          <ItemImage imageName={item.imageName} />
+        </div>
       </a>
-
-      <div className={styles.cardImage}>
-        <ItemImage imageName={item.imageName} />
-      </div>
-
       <Link href={`catalog/${item.catalogId}`}>
         <h5 className='link'> {item.catalogName} </h5>
       </Link>
