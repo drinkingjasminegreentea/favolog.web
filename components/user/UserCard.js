@@ -1,10 +1,10 @@
-import styles from '../styles/ProfileInfo.module.css'
-import Image from 'next/image'
+import styles from '../../styles/ProfileInfo.module.css'
+import Image from 'next/Image'
 import Link from 'next/link'
 
 export default function UserCard({ user }) {
   return (
-    <Link href={`/user/${user.username}`}>
+    <Link href={`/user/${user.id}`}>
       <div className={styles.userCard + ' button'}>
         {user.profileImage ? (
           <span>
@@ -20,12 +20,11 @@ export default function UserCard({ user }) {
           </span>
         ) : (
           <div className={styles.profilePlaceholder}>
-            <span> {user.username.substring(0, 1).toUpperCase()} </span>
+            <span>{user.firstName.substring(0, 1).toUpperCase()}</span>
           </div>
         )}
         <div className={styles.userInfo}>
-          <h5> {user.username} </h5>
-          <span>
+          <span className='bold'>
             {user.firstName} {user.lastName}
           </span>
           <span> {user.bio} </span>

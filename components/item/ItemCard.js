@@ -1,13 +1,10 @@
-import styles from '../styles/CatalogStyles.module.css'
-import Image from 'next/image'
+import styles from '../../styles/CatalogStyles.module.css'
 import DeleteItem from './DeleteItem'
 import EditItem from './EditItem'
 import AddComment from './AddComment'
+import Comment from './Comment'
 import { useState } from 'react'
-import ProfileIcon from './ProfileIcon'
-import Link from 'next/link'
-import Accordion from 'react-bootstrap/Accordion'
-import Card from 'react-bootstrap/Card'
+import ItemImage from './ItemImage'
 
 export default function ItemCard({
   item,
@@ -61,45 +58,13 @@ export default function ItemCard({
         </span>
       )}
       <a href={itemState.url} target='_blank'>
-        <span> {itemState.title} </span>
+        <span className='bold'> {itemState.title} </span>
       </a>
       <div className={styles.cardImage}>
-        {itemState.imageName ? (
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${itemState.imageName}`}
-            layout='fixed'
-            objectFit='contain'
-            width='200'
-            height='200'
-            quality={100}
-          />
-        ) : (
-          <div className={styles.emptyCatalog}>
-            <img src='/icons/file-image.svg' width='50' height='50' />
-          </div>
-        )}
+        <ItemImage imageName={item.imageName} />
       </div>
-      {item.comment ? (
-        <div className={styles.comment}>
-          <ProfileIcon
-            profileImage={user.profileImage}
-            firstName={user.firstName}
-          />
-          <div>
-            <span>{user.firstName} </span>
-            {user.LastName && <span>{user.LastName}</span>} <br />
-            <Accordion>
-              <span>{item.comment.substring(0, 25)} ..</span>
-              <Accordion.Toggle as='a' variant='link' eventKey='0'>
-                <img className='button' src='/icons/expand_more-24px.svg' />
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey='0'>
-                <span>Hello! I'm the body</span>
-              </Accordion.Collapse>
-            </Accordion>
-          </div>
-        </div>
-      ) : (
+      {item.comment && <Comment item={item} user={user} />}
+      {!item.comment && isEditable && (
         <div
           className={styles.comment + ' button'}
           onClick={() => setShowAddComment(!showAddComment)}

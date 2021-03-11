@@ -19,7 +19,7 @@
 .catalogAuthor {
   grid-column-start: 2;
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 35px 1fr;
   width: fit-content;
 }
 
@@ -70,11 +70,6 @@
 
 .catalogItem h2 {
   margin: 0;
-}
-
-.catalogItem span {
-  font-size: 15px;
-  font-weight: bold;
 }
 
 .searchResults {
@@ -149,6 +144,14 @@
 
 .comment {
   display: grid;
-  grid-template-columns: 30px 1fr;
+  grid-template-columns: 35px 1fr;
   width: 100%;
+}
+
+.activePage {
+  border-bottom: solid 2px;
+}
+
+.itemView {
+  display: grid;
 }

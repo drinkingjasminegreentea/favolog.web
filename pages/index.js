@@ -2,7 +2,7 @@ import styles from '../styles/CatalogStyles.module.css'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext, scopes } from '../src/UserContext'
 import { useMsal } from '@azure/msal-react'
-import FeedItemCard from '../components/FeedItemCard'
+import FeedItemCard from '../components/item/FeedItemCard'
 
 export default function Page() {
   const { instance, accounts } = useMsal()
@@ -27,17 +27,14 @@ export default function Page() {
           .then((response) => response.json())
           .then((data) => setFeedItems(data))
       })
-    } else {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed`)
-        .then((response) => response.json())
-        .then((data) => setFeedItems(data))
     }
   }, [user, accounts])
 
   return (
     <div className={styles.catalog}>
-      {feedItems &&
-        feedItems.map((item) => <FeedItemCard key={item.id} item={item} />)}
+      {feedItems.map((item) => (
+        <FeedItemCard key={item.id} item={item} />
+      ))}
     </div>
   )
 }

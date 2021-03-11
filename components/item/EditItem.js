@@ -3,16 +3,30 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../src/UserContext'
+import { scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
+import uploadImage from '../../src/UploadImage'
 
-export default function AddComment({ show, parentAction, item }) {
-  const [comment, setComment] = useState('')
+export default function EditItem({ show, parentAction, item }) {
+  const [title, setTitle] = useState(item.title)
+  const [url, setUrl] = useState(item.url)
+  const [comment, setComment] = useState(item.comment)
+  const [file, setFile] = useState()
+
   const { instance, accounts } = useMsal()
   const account = accounts[0]
 
   const submit = async () => {
+    item.title = title
+    item.url = url
     item.comment = comment
+
+    if (file) {
+      item.ImageName = await uploadImage(
+        file,
+        process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER
+      )
+    }
 
     instance.acquireTokenSilent({ account, scopes }).then((response) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
@@ -39,14 +53,34 @@ export default function AddComment({ show, parentAction, item }) {
   return (
     <Modal show={show} onHide={parentAction} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Add comment</Modal.Title>
+        <Modal.Title>Edit item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Form.Label>Title</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='Title'
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Form.Label>Url</Form.Label>
+        <Form.Control
+          type='text'
+          placeholder='Url'
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+        />
+        <Form.Label>Comment</Form.Label>
         <Form.Control
           as='textarea'
           rows={3}
           value={comment}
           onChange={(e) => setComment(e.target.value)}
+        />
+        <Form.File
+          accept='image/*'
+          label='Item image'
+          onChange={(e) => setFile(e.target.files[0])}
         />
       </Modal.Body>
       <Modal.Footer>
@@ -54,7 +88,7 @@ export default function AddComment({ show, parentAction, item }) {
           Cancel
         </Button>
         <Button variant='secondary' onClick={submit}>
-          Add
+          Save
         </Button>
       </Modal.Footer>
     </Modal>

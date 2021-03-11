@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../src/UserContext'
+import { scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
 
 export default function EditCatalog({ show, parentAction, catalog }) {

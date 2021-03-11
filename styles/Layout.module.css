@@ -1,13 +1,3 @@
-@font-face {
-  font-family: Gilroy-ExtraBold;
-  src: url(../public/fonts/Gilroy-ExtraBold.otf);
-}
-
-@font-face {
-  font-family: Gilroy-Light;
-  src: url(../public/fonts/Gilroy-Light.otf);
-}
-
 .wrapper {
   display: grid;
   margin: 10px 0px 40px 0px;
@@ -128,16 +118,6 @@
   .addButton {
     right: 10px;
   }
-}
-
-.wrapper h1,
-.wrapper h2 {
-  font-family: Gilroy-ExtraBold;
-}
-
-.wrapper p,
-.wrapper span {
-  font-family: Gilroy-Light;
 }
 
 .logo {

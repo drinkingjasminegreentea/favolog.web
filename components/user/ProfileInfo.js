@@ -1,27 +1,39 @@
-import Image from 'next/image'
+import Image from 'next/Image'
 import Link from 'next/link'
-import styles from '../styles/ProfileInfo.module.css'
+import styles from '../../styles/ProfileInfo.module.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
-import { UserContext } from '../src/UserContext'
+import { UserContext, scopes } from '../../src/UserContext'
+import { useMsal } from '@azure/msal-react'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { user: loggedInUser } = useContext(UserContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
+  const { instance, accounts } = useMsal()
+  const account = accounts[0]
 
   useEffect(() => {
-    if (loggedInUser != null) {
+    if (loggedInUser) {
       if (user.id == loggedInUser.id) {
         setIsSelf(true)
         setIsFollowing(false)
       } else {
-        fetch(
-          `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${loggedInUser.id}/isFollowing/${user.id}`
-        )
-          .then((response) => response.json())
-          .then((data) => setIsFollowing(data))
+        instance.acquireTokenSilent({ account, scopes }).then((response) => {
+          fetch(
+            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${loggedInUser.id}/isFollowing/${user.id}`,
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${response.accessToken}`,
+              },
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => setIsFollowing(data))
+        })
       }
     }
   }, [loggedInUser])
@@ -32,18 +44,21 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       followerId: loggedInUser.id,
     }
 
-    fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userFollow),
-    }).then(() => {
-      isFollowing
-        ? setTotalFollowersSate(totalFollowersState - 1)
-        : setTotalFollowersSate(totalFollowersState + 1)
-      setIsFollowing(!isFollowing)
+    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${response.accessToken}`,
+        },
+        body: JSON.stringify(userFollow),
+      }).then(() => {
+        isFollowing
+          ? setTotalFollowersSate(totalFollowersState - 1)
+          : setTotalFollowersSate(totalFollowersState + 1)
+        setIsFollowing(!isFollowing)
+      })
     })
   }
 
@@ -73,13 +88,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
         <br />
-        <Link href={`/user/following/${user.id}`}>
+        <Link href={`/user/${user.id}/following`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowing} following
           </span>
         </Link>
         &nbsp; | &nbsp;
-        <Link href={`/user/followers/${user.id}`}>
+        <Link href={`/user/${user.id}/followers`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowersState} followers
           </span>

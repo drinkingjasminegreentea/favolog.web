@@ -6,6 +6,20 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+@font-face {
+  font-family: Gilroy-ExtraBold;
+  src: url(../public/fonts/Gilroy-ExtraBold.otf);
+}
+
+@font-face {
+  font-family: Gilroy-Light;
+  src: url(../public/fonts/Gilroy-Light.otf);
+}
+
+span {
+  font-family: Gilroy-Light;
+}
+
 a,
 a:hover {
   color: inherit;
@@ -26,7 +40,17 @@ a:hover {
   color: #535353;
 }
 
+.link:hover {
+  cursor: pointer;
+  color: #535353;
+  text-decoration: underline;
+}
+
 input.form-control:focus {
   border-color: #ced4da;
   box-shadow: none;
+}
+
+.bold {
+  font-weight: bold;
 }

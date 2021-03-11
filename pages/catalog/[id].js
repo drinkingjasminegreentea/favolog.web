@@ -1,76 +1,12 @@
 import styles from '../../styles/CatalogStyles.module.css'
-import ItemCard from '../../components/ItemCard'
-import EditCatalog from '../../components/EditCatalog'
-import AddItemCard from '../../components/AddItemCard'
-import DeleteCatalog from '../../components/DeleteCatalog'
+import ItemCard from '../../components/item/ItemCard'
+import AddItemCard from '../../components/item/AddItemCard'
+import ProfileIcon from '../../components/user/ProfileIcon'
+import CatalogMenu from '../../components/catalog/CatalogMenu'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext, scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
-
-const CatalogEdit = ({ catalog, setCatalog }) => {
-  const [showEditCatalog, setShowEditCatalog] = useState(false)
-  const [showDeleteCatalog, setShowDeleteCatalog] = useState(false)
-
-  function updateCatalog(update) {
-    if (update) {
-      const items = catalog.items
-      const updatedCatalog = { ...catalog, ...update }
-      updatedCatalog.items = items
-      setCatalog(updatedCatalog)
-    }
-    setShowEditCatalog(false)
-  }
-
-  return (
-    <span className={styles.addEdit}>
-      <img
-        src='/icons/pencil-fill.svg'
-        className='button'
-        onClick={() => setShowEditCatalog(!showEditCatalog)}
-      />
-      <img
-        src='/icons/trash.svg'
-        className='button'
-        onClick={() => setShowDeleteCatalog(!showDeleteCatalog)}
-      />
-      <EditCatalog
-        show={showEditCatalog}
-        parentAction={updateCatalog}
-        catalog={catalog}
-      />
-      <DeleteCatalog
-        show={showDeleteCatalog}
-        parentAction={() => setShowDeleteCatalog(!showDeleteCatalog)}
-        catalogId={catalog.id}
-      />
-    </span>
-  )
-}
-
-const ProfileImage = ({ user }) => {
-  if (user.profileImage) {
-    return (
-      <Image
-        src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${user.profileImage}`}
-        layout='fixed'
-        objectFit='cover'
-        objectPosition='top'
-        width='30'
-        height='30'
-        quality={100}
-        className={styles.authorProfile}
-      />
-    )
-  } else {
-    return (
-      <div className={styles.authorPlaceholder}>
-        <b> {user.firstName.substring(0, 1).toUpperCase()} </b>{' '}
-      </div>
-    )
-  }
-}
 
 export default function Page({ catalogId }) {
   const [isEditable, setIsEditable] = useState(false)
@@ -123,22 +59,29 @@ export default function Page({ catalogId }) {
       <div className={styles.catalogHeader}>
         <h4> {catalog.name} </h4>
         {isEditable ? (
-          <CatalogEdit catalog={catalog} setCatalog={setCatalog} />
+          <CatalogMenu catalog={catalog} setCatalog={setCatalog} />
         ) : (
           <Link href={`/user/${catalog.user.id}`}>
             <div className={styles.catalogAuthor + ' button'}>
-              <ProfileImage user={catalog.user} />
-              <span> {catalog.user.firstName}</span>
-              {catalog.user.lastName && <span> {catalog.user.lastName}</span>}
+              <ProfileIcon
+                profileImage={catalog.user.profileImage}
+                firstName={catalog.user.firstName}
+              />
+              <span>
+                {catalog.user.firstName}&nbsp;
+                {catalog.user.lastName || ''}
+              </span>
             </div>
           </Link>
         )}
       </div>
       <div className={styles.catalog}>
-        <AddItemCard
-          catalogId={catalog.id}
-          addItemToCatalog={addItemToCatalog}
-        />
+        {isEditable && (
+          <AddItemCard
+            catalogId={catalog.id}
+            addItemToCatalog={addItemToCatalog}
+          />
+        )}
         {catalog.items.map((item) => (
           <ItemCard
             key={item.id}
@@ -146,7 +89,6 @@ export default function Page({ catalogId }) {
             catalogId={catalog.id}
             isEditable={isEditable}
             user={catalog.user}
-            profileImage={catalog.user.profileImage}
             removeItemFromCatalog={removeItemFromCatalog}
           />
         ))}

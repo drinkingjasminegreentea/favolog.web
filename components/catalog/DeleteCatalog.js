@@ -1,17 +1,22 @@
+import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../src/UserContext'
+import { useContext } from 'react'
+import { UserContext } from '../../src/UserContext'
+import { scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
 
-export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
+export default function DeleteCatalog({ show, parentAction, catalogId }) {
+  const { user } = useContext(UserContext)
+  const router = useRouter()
   const { instance, accounts } = useMsal()
   const account = accounts[0]
 
   const submit = async () => {
     instance.acquireTokenSilent({ account, scopes }).then((response) => {
       fetch(
-        `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}/item/${itemId}`,
+        `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`,
         {
           method: 'DELETE',
           headers: {
@@ -20,11 +25,10 @@ export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
         }
       )
         .then((response) => {
-          if (response.ok) return response.json()
-          else return Promise.reject(response)
-        })
-        .then((data) => {
-          parentAction(data)
+          if (response.ok) {
+            parentAction()
+            router.push(`/user/${user.id}`)
+          } else Promise.reject(response)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
@@ -33,13 +37,13 @@ export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
   }
 
   return (
-    <Modal show={show} onHide={() => parentAction()} centered>
+    <Modal show={show} onHide={parentAction} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Delete item</Modal.Title>
+        <Modal.Title>Delete catalog</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Are you sure you want to delete this item?</Modal.Body>
+      <Modal.Body>Are you sure you want to delete this catalog?</Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={() => parentAction()}>
+        <Button variant='secondary' onClick={parentAction}>
           Cancel
         </Button>
         <Button variant='secondary' onClick={submit}>

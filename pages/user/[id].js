@@ -1,6 +1,6 @@
 import styles from '../../styles/CatalogStyles.module.css'
-import CatalogCard from '../../components/CatalogCard'
-import ProfileInfo from '../../components/ProfileInfo'
+import CatalogCard from '../../components/catalog/CatalogCard'
+import ProfileInfo from '../../components/user/ProfileInfo'
 
 export default function Page({ userProfile }) {
   const user = userProfile.user
