@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import UserCard from '../components/user/UserCard'
+import ProfileIcon from '../components/user/ProfileIcon'
 import styles from '../styles/CatalogStyles.module.css'
 
 export default function Page({ searchQuery, results }) {
@@ -17,9 +18,22 @@ export default function Page({ searchQuery, results }) {
       <h2>Catalogs</h2>
       <div className={styles.catalog}>
         {results.catalogs.map((item) => (
-          <Link href={`/catalog/${item.id}`} key={item.id}>
-            <span>{item.Name}</span>
-          </Link>
+          <div>
+            <Link href={`/catalog/${item.id}`} key={item.id}>
+              <span className='bold link'>{item.name}</span>
+            </Link>
+            <Link href={`/user/${item.user.id}`}>
+              <div className={styles.catalogAuthor + ' link'}>
+                <ProfileIcon
+                  profileImage={item.user.profileImage}
+                  firstName={item.user.firstName}
+                />
+                <span>
+                  {item.user.firstName} {item.user.lastName}
+                </span>
+              </div>
+            </Link>
+          </div>
         ))}
       </div>
     </div>

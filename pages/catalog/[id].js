@@ -68,8 +68,7 @@ export default function Page({ catalogId }) {
                 firstName={catalog.user.firstName}
               />
               <span>
-                {catalog.user.firstName}&nbsp;
-                {catalog.user.lastName || ''}
+                {item.user.firstName} {item.user.lastName}
               </span>
             </div>
           </Link>
