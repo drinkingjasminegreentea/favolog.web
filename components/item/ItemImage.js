@@ -1,4 +1,4 @@
-import Image from 'next/Image'
+import Image from 'next/image'
 import styles from '../../styles/CatalogStyles.module.css'
 
 export default function ItemImage({ imageName }) {
