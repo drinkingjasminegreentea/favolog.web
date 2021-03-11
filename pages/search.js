@@ -2,23 +2,30 @@ import Link from 'next/link'
 import UserCard from '../components/user/UserCard'
 import ProfileIcon from '../components/user/ProfileIcon'
 import styles from '../styles/CatalogStyles.module.css'
+import { PageContext } from '../src/PageContext'
+import { useContext } from 'react'
 
 export default function Page({ searchQuery, results }) {
+  const { setActivePage } = useContext(PageContext)
+  setActivePage(null)
+
   return (
     <div className={styles.searchResults}>
       <span>
         Search results <b>'{searchQuery}'</b>
       </span>
-      <h2>Users</h2>
+      <br />
+      <h4>Users</h4>
       <div className={styles.catalog}>
         {results.users.map((item) => (
           <UserCard key={item.id} user={item} />
         ))}
       </div>
-      <h2>Catalogs</h2>
+      <br />
+      <h4>Catalogs</h4>
       <div className={styles.catalog}>
         {results.catalogs.map((item) => (
-          <div>
+          <div key={item.id}>
             <Link href={`/catalog/${item.id}`} key={item.id}>
               <span className='bold link'>{item.name}</span>
             </Link>

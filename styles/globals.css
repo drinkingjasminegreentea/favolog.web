@@ -54,3 +54,7 @@ input.form-control:focus {
 .bold {
   font-weight: bold;
 }
+
+.active {
+  border-bottom: solid 2px;
+}

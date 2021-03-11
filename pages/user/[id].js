@@ -1,10 +1,17 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import CatalogCard from '../../components/catalog/CatalogCard'
 import ProfileInfo from '../../components/user/ProfileInfo'
+import { PageContext } from '../../src/PageContext'
+import { useContext, useEffect } from 'react'
 
 export default function Page({ userProfile }) {
   const user = userProfile.user
   const catalogs = userProfile.catalogs
+  const { setActivePage } = useContext(PageContext)
+
+  useEffect(() => {
+    setActivePage(null)
+  }, [])
 
   return (
     <>

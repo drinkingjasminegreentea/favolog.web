@@ -1,6 +1,7 @@
 import styles from '../styles/CatalogStyles.module.css'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext, scopes } from '../src/UserContext'
+import { ActivePages, PageContext } from '../src/PageContext'
 import { useMsal } from '@azure/msal-react'
 import FeedItemCard from '../components/item/FeedItemCard'
 import Alert from 'react-bootstrap/Alert'
@@ -8,6 +9,7 @@ import Alert from 'react-bootstrap/Alert'
 export default function Page() {
   const { instance, accounts } = useMsal()
   const { user } = useContext(UserContext)
+  const { setActivePage } = useContext(PageContext)
   const [feedItems, setFeedItems] = useState([])
   const [emptyFeed, setEmptyFeed] = useState(false)
 
@@ -52,13 +54,15 @@ export default function Page() {
             return Promise.reject(response)
           })
           .then((data) => {
-            if (data.length > 0) setFeedItems(data)
-            else fetchDiscoverFeed(response.accessToken)
+            if (data.length > 0) {
+              setFeedItems(data)
+            } else fetchDiscoverFeed(response.accessToken)
           })
           .catch((error) => {
             console.log('Something went wrong.', error)
           })
       })
+      setActivePage(ActivePages.home)
     }
   }, [user, accounts])
 

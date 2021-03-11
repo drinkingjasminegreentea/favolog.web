@@ -7,12 +7,14 @@ import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext, scopes } from '../../src/UserContext'
 import { useMsal } from '@azure/msal-react'
+import { PageContext } from '../../src/PageContext'
 
 export default function Page({ catalogId }) {
   const [isEditable, setIsEditable] = useState(false)
   const [catalog, setCatalog] = useState(null)
   const { instance, accounts } = useMsal()
   const { user } = useContext(UserContext)
+  const { setActivePage } = useContext(PageContext)
 
   useEffect(() => {
     if (accounts.length > 0 && user) {
@@ -36,6 +38,7 @@ export default function Page({ catalogId }) {
           })
       })
     }
+    setActivePage(null)
   }, [user, accounts])
 
   const addItemToCatalog = (item) => {
@@ -68,7 +71,7 @@ export default function Page({ catalogId }) {
                 firstName={catalog.user.firstName}
               />
               <span>
-                {item.user.firstName} {item.user.lastName}
+                {catalog.user.firstName} {catalog.user.lastName}
               </span>
             </div>
           </Link>

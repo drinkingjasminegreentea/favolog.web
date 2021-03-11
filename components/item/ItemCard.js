@@ -59,10 +59,10 @@ export default function ItemCard({
       )}
       <a href={itemState.url} target='_blank'>
         <span className='bold'> {itemState.title} </span>
+        <div className={styles.cardImage}>
+          <ItemImage imageName={item.imageName} />
+        </div>
       </a>
-      <div className={styles.cardImage}>
-        <ItemImage imageName={item.imageName} />
-      </div>
       {item.comment && <Comment item={item} user={user} />}
       {!item.comment && isEditable && (
         <div
