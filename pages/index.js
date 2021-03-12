@@ -83,7 +83,7 @@ export default function Page() {
   return (
     <>
       {newUser && (
-        <Alert variant='light'>
+        <Alert variant='info'>
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
             Create your favorites catalogs by clicking on the plus button.
