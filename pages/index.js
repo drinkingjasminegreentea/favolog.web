@@ -1,6 +1,6 @@
 import styles from '../styles/CatalogStyles.module.css'
 import { useContext, useEffect, useState } from 'react'
-import { UserContext, scopes } from '../src/UserContext'
+import { UserContext } from '../src/UserContext'
 import { ActivePages, PageContext } from '../src/PageContext'
 import { useMsal } from '@azure/msal-react'
 import FeedItemCard from '../components/item/FeedItemCard'
@@ -12,6 +12,7 @@ export default function Page() {
   const { setActivePage } = useContext(PageContext)
   const [feedItems, setFeedItems] = useState([])
   const [emptyFeed, setEmptyFeed] = useState(false)
+  const { acquireToken } = useContext(UserContext)
 
   const fetchDiscoverFeed = (accessToken) => {
     setEmptyFeed(true)
@@ -36,16 +37,14 @@ export default function Page() {
 
   useEffect(() => {
     if (accounts.length > 0 && user) {
-      const account = accounts[0]
-
-      instance.acquireTokenSilent({ account, scopes }).then((response) => {
+      acquireToken().then((accessToken) => {
         fetch(
           `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.id}`,
           {
             method: 'GET',
             headers: {
               Accept: 'application/json',
-              Authorization: `Bearer ${response.accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
             },
           }
         )

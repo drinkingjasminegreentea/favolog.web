@@ -1,17 +1,15 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 
 export default function EditCatalog({ show, parentAction, catalog }) {
   const [name, setName] = useState(catalog.name)
   const router = useRouter()
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   const submit = async () => {
     const data = {
@@ -19,12 +17,12 @@ export default function EditCatalog({ show, parentAction, catalog }) {
       id: catalog.id,
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(data),
       })

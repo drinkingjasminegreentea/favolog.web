@@ -6,21 +6,17 @@ import { useContext, useEffect, useState } from 'react'
 import styles from '../styles/Settings.module.css'
 import { UserContext } from '../src/UserContext'
 import { useRouter } from 'next/router'
-import { scopes } from '../src/UserContext'
-import { useMsal } from '@azure/msal-react'
 import uploadImage from '../src/UploadImage'
 
 const DeleteProfile = ({ userId, show, parentAction }) => {
-  const { signOut } = useContext(UserContext)
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { signOut, acquireToken } = useContext(UserContext)
 
   async function deleteProfile() {
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${userId}`, {
         method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       })
         .then((response) => {
@@ -64,8 +60,7 @@ export default function Page() {
   const [website, setWebsite] = useState('')
   const [file, setFile] = useState()
   const router = useRouter()
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   useEffect(() => {
     if (user) {
@@ -95,12 +90,12 @@ export default function Page() {
       )
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(userUpdate),
       })

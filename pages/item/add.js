@@ -4,17 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { BlobServiceClient } from '@azure/storage-blob'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { useState, useContext } from 'react'
+import { UserContext } from '../../src/UserContext'
 
 export default function Page({ originalUrl, catalogId }) {
   const [file, setFile] = useState()
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState(originalUrl)
   const router = useRouter()
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   function getFileExtension(fileName) {
     const lastDot = fileName.lastIndexOf('.')
@@ -47,12 +45,12 @@ export default function Page({ originalUrl, catalogId }) {
       item.imageName = await uploadImage()
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(item),
       })

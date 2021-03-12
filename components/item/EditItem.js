@@ -1,20 +1,17 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 import uploadImage from '../../src/UploadImage'
 
 export default function EditItem({ show, parentAction, item }) {
   const [title, setTitle] = useState(item.title)
   const [url, setUrl] = useState(item.url)
-  const [comment, setComment] = useState(item.comment)
+  const [comment, setComment] = useState(item.comment || '')
   const [file, setFile] = useState()
-
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   const submit = async () => {
     item.title = title
@@ -28,12 +25,12 @@ export default function EditItem({ show, parentAction, item }) {
       )
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(item),
       })

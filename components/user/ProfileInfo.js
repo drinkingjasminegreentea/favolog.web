@@ -3,16 +3,14 @@ import Link from 'next/link'
 import styles from '../../styles/ProfileInfo.module.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
-import { UserContext, scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { user: loggedInUser } = useContext(UserContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   useEffect(() => {
     if (loggedInUser) {
@@ -20,14 +18,14 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         setIsSelf(true)
         setIsFollowing(false)
       } else {
-        instance.acquireTokenSilent({ account, scopes }).then((response) => {
+        acquireToken().then((accessToken) => {
           fetch(
             `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${loggedInUser.id}/isFollowing/${user.id}`,
             {
               method: 'GET',
               headers: {
                 Accept: 'application/json',
-                Authorization: `Bearer ${response.accessToken}`,
+                Authorization: `Bearer ${accessToken}`,
               },
             }
           )
@@ -44,13 +42,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       followerId: loggedInUser.id,
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(userFollow),
       }).then(() => {
@@ -101,7 +99,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </Link>
       </div>
       <div className={styles.followUnfollow}>
-        {!self && (
+        {!self && loggedInUser && (
           <Button size='sm' variant='secondary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>

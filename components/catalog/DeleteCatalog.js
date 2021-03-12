@@ -4,23 +4,20 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContext } from 'react'
 import { UserContext } from '../../src/UserContext'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
 
 export default function DeleteCatalog({ show, parentAction, catalogId }) {
-  const { user } = useContext(UserContext)
   const router = useRouter()
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { user } = useContext(UserContext)
+  const { acquireToken } = useContext(UserContext)
 
   const submit = async () => {
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(
         `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`,
         {
           method: 'DELETE',
           headers: {
-            Authorization: `Bearer ${response.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )

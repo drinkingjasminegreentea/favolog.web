@@ -1,21 +1,20 @@
+import { useContext } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 
 export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   const submit = async () => {
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(
         `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}/item/${itemId}`,
         {
           method: 'DELETE',
           headers: {
-            Authorization: `Bearer ${response.accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       )

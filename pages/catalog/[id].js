@@ -5,41 +5,32 @@ import ProfileIcon from '../../components/user/ProfileIcon'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
-import { UserContext, scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 import { PageContext } from '../../src/PageContext'
 
 export default function Page({ catalogId }) {
   const [isEditable, setIsEditable] = useState(false)
   const [catalog, setCatalog] = useState(null)
-  const { instance, accounts } = useMsal()
   const { user } = useContext(UserContext)
   const { setActivePage } = useContext(PageContext)
 
-  useEffect(() => {
-    if (accounts.length > 0 && user) {
-      const account = accounts[0]
+  fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setCatalog(data)
+    })
 
-      instance.acquireTokenSilent({ account, scopes }).then((response) => {
-        fetch(
-          `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              Authorization: `Bearer ${response.accessToken}`,
-            },
-          }
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            setCatalog(data)
-            setIsEditable(user.id === data.userId)
-          })
-      })
+  useEffect(() => {
+    if (user && catalog) {
+      setIsEditable(user.id === data.userId)
     }
     setActivePage(null)
-  }, [user, accounts])
+  }, [user, catalog])
 
   const addItemToCatalog = (item) => {
     const updatedCatalog = { ...catalog }

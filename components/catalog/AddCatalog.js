@@ -1,18 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/Layout.module.css'
-import { scopes } from '../../src/UserContext'
-import { useMsal } from '@azure/msal-react'
+import { UserContext } from '../../src/UserContext'
 
 const AddCatalogDialog = ({ show, parentAction }) => {
   const [name, setName] = useState('')
   const router = useRouter()
-  const { instance, accounts } = useMsal()
-  const account = accounts[0]
+  const { acquireToken } = useContext(UserContext)
 
   async function add() {
     const catalog = {
@@ -20,12 +18,12 @@ const AddCatalogDialog = ({ show, parentAction }) => {
       audienceType: 1,
     }
 
-    instance.acquireTokenSilent({ account, scopes }).then((response) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${response.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(catalog),
       })
