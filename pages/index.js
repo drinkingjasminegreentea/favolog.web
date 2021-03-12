@@ -83,7 +83,7 @@ export default function Page() {
   return (
     <>
       {newUser && (
-        <Alert variant='secondary'>
+        <Alert variant='light'>
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
             Create your favorites catalogs by clicking on the plus button.
@@ -92,10 +92,10 @@ export default function Page() {
         </Alert>
       )}
       {guestUser && (
-        <Alert variant='secondary'>
+        <Alert variant='info'>
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
-            Sign up to start creating and sharing your favorites catalogs.
+            Sign in to start creating and sharing your favorites catalogs.
           </span>
         </Alert>
       )}
