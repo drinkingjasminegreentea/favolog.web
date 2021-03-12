@@ -71,7 +71,7 @@ export const UserContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    if (accounts.length > 0) postUser(accounts[0])
+    if (accounts.length > 0 && !user) postUser(accounts[0])
   }, [accounts])
 
   return (

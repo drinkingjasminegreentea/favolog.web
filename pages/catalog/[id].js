@@ -14,20 +14,22 @@ export default function Page({ catalogId }) {
   const { user } = useContext(UserContext)
   const { setActivePage } = useContext(PageContext)
 
-  fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      setCatalog(data)
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
     })
+      .then((response) => response.json())
+      .then((data) => {
+        setCatalog(data)
+      })
+  }, [])
 
   useEffect(() => {
     if (user && catalog) {
-      setIsEditable(user.id === data.userId)
+      setIsEditable(user.id === catalog.userId)
     }
     setActivePage(null)
   }, [user, catalog])
