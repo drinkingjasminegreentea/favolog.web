@@ -26,6 +26,7 @@ export default function ItemCard({
   }
 
   const updateItem = (data) => {
+    console.log('data', data)
     if (data) {
       const copy = { ...itemState, ...data }
       setItemState(copy)
@@ -58,13 +59,15 @@ export default function ItemCard({
         </span>
       )}
       <a href={itemState.url} target='_blank'>
-        <span className='bold'> {itemState.title} </span>
-        <div className={styles.cardImage}>
-          <ItemImage imageName={item.imageName} />
-        </div>
+        <span className='bold'> {itemState.title} </span>{' '}
       </a>
-      {item.comment && <Comment item={item} user={user} />}
-      {!item.comment && isEditable && (
+      <div className={styles.cardImage}>
+        <a href={item.url} target='_blank'>
+          <ItemImage imageName={itemState.imageName} />
+        </a>
+      </div>
+      {itemState.comment && <Comment item={itemState} user={user} />}
+      {!itemState.comment && isEditable && (
         <div
           className={styles.comment + ' button'}
           onClick={() => setShowAddComment(!showAddComment)}

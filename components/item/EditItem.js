@@ -48,7 +48,7 @@ export default function EditItem({ show, parentAction, item }) {
   }
 
   return (
-    <Modal show={show} onHide={parentAction} centered>
+    <Modal show={show} onHide={() => parentAction()} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit item</Modal.Title>
       </Modal.Header>
@@ -81,7 +81,7 @@ export default function EditItem({ show, parentAction, item }) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={parentAction}>
+        <Button variant='secondary' onClick={() => parentAction()}>
           Cancel
         </Button>
         <Button variant='secondary' onClick={submit}>

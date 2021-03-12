@@ -13,7 +13,7 @@ export default function ItemImage({ imageName }) {
     />
   ) : (
     <div className={styles.emptyCatalog}>
-      <img src='/icons/list.svg' width='50' height='50' />
+      <img src='/icons/file-image.svg' width='50' height='50' />
     </div>
   )
 }

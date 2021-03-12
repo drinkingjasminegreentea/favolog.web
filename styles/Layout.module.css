@@ -132,6 +132,7 @@
   grid-gap: 5px;
   grid-template-columns: 1fr 1fr 12fr;
   justify-self: end;
+  align-items: center;
 }
 
 .search > img {

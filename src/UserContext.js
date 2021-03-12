@@ -28,16 +28,16 @@ export const UserContextProvider = ({ children }) => {
       externalId: claims.sub,
     }
 
-    user.email = claims.emails && claims.emails[0]
+    if (claims.emails && claims.emails.length > 0) user.email = claims.emails[0]
 
     acquireToken(account)
-      .then((response) => {
+      .then((accessToken) => {
         fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${response}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify(user),
         })

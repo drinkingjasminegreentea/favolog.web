@@ -32,8 +32,7 @@ export default function Layout({ children }) {
           <SettingsMenu />
         </AuthenticatedTemplate>
         <UnauthenticatedTemplate>
-          <span className='button' onClick={signIn}>
-            {' '}
+          <span className='button' onClick={() => signIn()}>
             Sign In
           </span>
         </UnauthenticatedTemplate>

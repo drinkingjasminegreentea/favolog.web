@@ -101,8 +101,8 @@ export default function Page() {
       })
         .then((response) => {
           if (response.ok) {
-            response.json()
-          } else Promise.reject(response)
+            return response.json()
+          } else return Promise.reject(response)
         })
         .then((data) => {
           setUser(data)

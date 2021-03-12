@@ -1,6 +1,6 @@
 import styles from '../../styles/Layout.module.css'
 import { useRouter } from 'next/router'
-import { useState, useRef, useContext, useEffect } from 'react'
+import { useState, useRef, useContext } from 'react'
 import Link from 'next/link'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -34,15 +34,31 @@ export default function SearchBar() {
   return (
     <div className={styles.search}>
       <Link href='/'>
-        <img className={homeStyle} src={'/icons/home.svg'} />
+        <a>
+          <img
+            src='/icons/home.svg'
+            width='25'
+            height='25'
+            layout='fixed'
+            className={homeStyle}
+          />
+        </a>
       </Link>
 
       <Link href='/explore'>
-        <img className={exploreStyle} src={'/icons/explore.svg'} />
+        <a>
+          <img
+            src='/icons/explore.svg'
+            width='25'
+            height='25'
+            layout='fixed'
+            className={exploreStyle}
+          />
+        </a>
       </Link>
 
       <Form onSubmit={handleSubmit}>
-        <img src={'/icons/search.svg'}></img>
+        <img src={'/icons/search.svg'} />
         <Form.Control
           type='text'
           placeholder='Search'
