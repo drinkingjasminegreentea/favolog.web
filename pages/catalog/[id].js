@@ -61,7 +61,7 @@ export default function Page({ catalogId }) {
             <div className={styles.catalogAuthor + ' button'}>
               <ProfileIcon
                 profileImage={catalog.user.profileImage}
-                firstName={catalog.user.firstName}
+                username={catalog.user.username}
               />
               <span>
                 {catalog.user.firstName} {catalog.user.lastName}

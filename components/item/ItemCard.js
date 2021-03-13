@@ -5,6 +5,7 @@ import AddComment from './AddComment'
 import Comment from './Comment'
 import { useState } from 'react'
 import ItemImage from './ItemImage'
+import ItemView from './ItemView'
 
 export default function ItemCard({
   item,
@@ -17,6 +18,11 @@ export default function ItemCard({
   const [showEditItem, setShowEditItem] = useState(false)
   const [showAddComment, setShowAddComment] = useState(false)
   const [itemState, setItemState] = useState(item)
+  const [showItemView, setShowItemView] = useState(false)
+
+  const toggleItemView = () => {
+    setShowItemView(!showItemView)
+  }
 
   const removeItem = (data) => {
     if (data) {
@@ -58,15 +64,15 @@ export default function ItemCard({
           />
         </span>
       )}
-      <a href={itemState.url} target='_blank'>
-        <span className='bold'> {itemState.title} </span>{' '}
-      </a>
-      <div className={styles.cardImage}>
-        <a href={item.url} target='_blank'>
-          <ItemImage imageName={itemState.imageName} />
-        </a>
+      <span className='bold button' onClick={toggleItemView}>
+        {itemState.title}
+      </span>
+      <div className={styles.cardImage + ' button'} onClick={toggleItemView}>
+        <ItemImage imageName={itemState.imageName} />
       </div>
-      {itemState.comment && <Comment item={itemState} user={user} />}
+      {itemState.comment && (
+        <Comment item={itemState} user={user} toggleItemView={toggleItemView} />
+      )}
       {!itemState.comment && isEditable && (
         <div
           className={styles.comment + ' button'}
@@ -95,6 +101,12 @@ export default function ItemCard({
         show={showAddComment}
         parentAction={addComment}
         item={itemState}
+      />
+      <ItemView
+        show={showItemView}
+        parentAction={toggleItemView}
+        item={item}
+        user={user}
       />
     </div>
   )
