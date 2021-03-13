@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { UserContext } from '../../src/UserContext'
+import Head from 'next/head'
 import {
   AuthenticatedTemplate,
   UnauthenticatedTemplate,
@@ -22,25 +23,30 @@ export default function Layout({ children }) {
   const { signIn } = useContext(UserContext)
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <Logo />
-        <SearchBar />
-      </div>
-      <div className={styles.settings}>
+    <>
+      <Head>
+        <title>Favolog</title>
+      </Head>
+      <div className={styles.wrapper}>
+        <div className={styles.header}>
+          <Logo />
+          <SearchBar />
+        </div>
+        <div className={styles.settings}>
+          <AuthenticatedTemplate>
+            <SettingsMenu />
+          </AuthenticatedTemplate>
+          <UnauthenticatedTemplate>
+            <span className='button' onClick={() => signIn()}>
+              Sign In
+            </span>
+          </UnauthenticatedTemplate>
+        </div>
+        <div className={styles.content}>{children}</div>
         <AuthenticatedTemplate>
-          <SettingsMenu />
+          <AddCatalog />
         </AuthenticatedTemplate>
-        <UnauthenticatedTemplate>
-          <span className='button' onClick={() => signIn()}>
-            Sign In
-          </span>
-        </UnauthenticatedTemplate>
       </div>
-      <div className={styles.content}>{children}</div>
-      <AuthenticatedTemplate>
-        <AddCatalog />
-      </AuthenticatedTemplate>
-    </div>
+    </>
   )
 }
