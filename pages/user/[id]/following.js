@@ -4,9 +4,7 @@ import UserCard from '../../../components/user/UserCard'
 export default function Page({ user }) {
   return (
     <>
-      <h5>
-        {user.firstName} {user.LastName || ''} is following
-      </h5>
+      <h5>{user.username} is following</h5>
       <div className={styles.userGrid}>
         {user.following.map((item) => (
           <UserCard key={item.id} user={item} />

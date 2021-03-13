@@ -12,6 +12,7 @@ export default function Comment({ item, user }) {
     user = {
       id: item.userId,
       profileImage: item.profileImage,
+      username: item.username,
       firstName: item.firstName,
       lastName: item.lastName,
     }
@@ -19,15 +20,10 @@ export default function Comment({ item, user }) {
 
   return (
     <div className={styles.comment}>
-      <ProfileIcon
-        profileImage={user.profileImage}
-        firstName={user.firstName}
-      />
+      <ProfileIcon profileImage={user.profileImage} username={user.username} />
       <div>
         <Link href={`/user/${user.id}`}>
-          <span className='link bold'>
-            {user.firstName} {user.lastName}
-          </span>
+          <span className='link bold'>{user.username}</span>
         </Link>
         <br />
         {item.comment && item.comment.length > textLimit && (

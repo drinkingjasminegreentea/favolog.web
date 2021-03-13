@@ -20,13 +20,11 @@ export default function UserCard({ user }) {
           </span>
         ) : (
           <div className={styles.profilePlaceholder}>
-            <span>{user.firstName.substring(0, 1).toUpperCase()}</span>
+            <span>{user.username.substring(0, 1).toUpperCase()}</span>
           </div>
         )}
         <div className={styles.userInfo}>
-          <span className='bold'>
-            {user.firstName} {user.lastName}
-          </span>
+          <span className='bold'>{user.username}</span>
           <span> {user.bio} </span>
         </div>
       </div>

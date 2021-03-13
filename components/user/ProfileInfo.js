@@ -76,13 +76,11 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </span>
       ) : (
         <div className={styles.profilePlaceholder}>
-          <span> {user.firstName.substring(0, 1).toUpperCase()} </span>{' '}
+          <span> {user.username.substring(0, 1).toUpperCase()} </span>{' '}
         </div>
       )}
       <div className={styles.profileDetails}>
-        <h4>
-          {user.firstName && user.firstName} {user.lastName && user.lastName}
-        </h4>
+        <h4>{user.username}</h4>
         {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
         <br />

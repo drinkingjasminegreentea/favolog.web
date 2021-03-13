@@ -53,6 +53,7 @@ const DeleteProfile = ({ userId, show, parentAction }) => {
 
 export default function Page() {
   const { user, setUser } = useContext(UserContext)
+  const [username, setUsername] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -64,6 +65,7 @@ export default function Page() {
 
   useEffect(() => {
     if (user) {
+      setUsername(user.username)
       setFirstName(user.firstName)
       setLastName(user.lastName || '')
       setEmailAddress(user.emailAddress || '')
@@ -75,6 +77,7 @@ export default function Page() {
   const update = async () => {
     const userUpdate = {
       id: user.id,
+      username,
       firstName,
       lastName,
       emailAddress,
@@ -125,6 +128,13 @@ export default function Page() {
       <h4>Edit Profile</h4>
       <Form className={styles.settingsForm}>
         <Form.Group>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <Form.Label>First name</Form.Label>
           <Form.Control
             type='text'

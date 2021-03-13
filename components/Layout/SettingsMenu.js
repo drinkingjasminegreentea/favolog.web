@@ -12,7 +12,7 @@ export default function SettingsMenu() {
     <>
       {user && (
         <Link href={`/user/${user.id}`}>
-          <span className='button'> {user.firstName} </span>
+          <span className='button'> {user.username} </span>
         </Link>
       )}
       <Dropdown className={styles.settingsIcon}>

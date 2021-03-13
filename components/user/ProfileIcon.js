@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/CatalogStyles.module.css'
 
-export default function ProfileIcon({ profileImage, firstName, userId }) {
+export default function ProfileIcon({ profileImage, username, userId }) {
   return (
     <Link href={`/user/${userId}`}>
       <div>
@@ -19,7 +19,7 @@ export default function ProfileIcon({ profileImage, firstName, userId }) {
           />
         ) : (
           <div className={styles.authorPlaceholder + ' button'}>
-            <b> {firstName.substring(0, 1).toUpperCase()} </b>{' '}
+            <b> {username.substring(0, 1).toUpperCase()} </b>{' '}
           </div>
         )}
       </div>

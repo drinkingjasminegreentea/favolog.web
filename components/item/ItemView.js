@@ -36,13 +36,11 @@ export default function ItemView({ show, parentAction, item, user }) {
           <div className={styles.comment}>
             <ProfileIcon
               profileImage={user.profileImage}
-              firstName={user.firstName}
+              username={user.username}
             />
             <div>
               <Link href={`/user/${user.id}`}>
-                <span className='link bold'>
-                  {user.firstName} {user.lastName}
-                </span>
+                <span className='link bold'>{user.username}</span>
               </Link>
               <br />
               <span>{item.comment}</span>
