@@ -29,7 +29,8 @@ export const UserContextProvider = ({ children }) => {
       externalId: claims.sub,
     }
 
-    if (claims.emails && claims.emails.length > 0) user.email = claims.emails[0]
+    if (claims.emails && claims.emails.length > 0)
+      user.emailAddress = claims.emails[0]
 
     acquireToken(account)
       .then((accessToken) => {
