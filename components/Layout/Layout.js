@@ -25,7 +25,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Head>
-        <title>Favolog</title>
+        <title>Favolog - Catalog Your Faves</title>
       </Head>
       <div className={styles.wrapper}>
         <div className={styles.header}>

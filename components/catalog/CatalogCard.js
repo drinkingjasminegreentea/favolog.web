@@ -7,12 +7,14 @@ export default function CatalogCard({ catalog, username }) {
   if (username) catalogLink += `?username=${username}`
 
   return (
-    <Link href={catalogLink}>
-      <div className={styles.catalogItem + ' button'}>
-        <h4> {catalog.name} </h4>
-        <span> {catalog.itemCount} items </span>
-        <ItemImage imageName={catalog.lastItemImage} />
-      </div>
-    </Link>
+    <div className={styles.catalogItem}>
+      <Link href={catalogLink}>
+        <h4 className='button'> {catalog.name} </h4>
+      </Link>
+      <Link href={catalogLink}>
+        <span className='button'> {catalog.itemCount} items </span>
+      </Link>
+      <ItemImage imageName={catalog.lastItemImage} />
+    </div>
   )
 }
