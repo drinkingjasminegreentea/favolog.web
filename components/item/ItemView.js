@@ -33,6 +33,9 @@ export default function ItemView({ show, parentAction, item, user }) {
               </div>
             )}
           </div>
+          <a className='link' href={item.url} target='_blank'>
+            <span>{item.urlDomain}</span>
+          </a>
           <div className={styles.comment}>
             <ProfileIcon
               profileImage={user.profileImage}

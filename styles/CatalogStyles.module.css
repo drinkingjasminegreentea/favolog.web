@@ -155,3 +155,7 @@
 .itemView {
   display: grid;
 }
+
+.itemView > a {
+  justify-self: center;
+}
