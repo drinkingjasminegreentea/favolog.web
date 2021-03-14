@@ -10,8 +10,8 @@ export default function ProfileIcon({ profileImage, username }) {
           layout='fixed'
           objectFit='cover'
           objectPosition='top'
-          width='30'
-          height='30'
+          width='35'
+          height='35'
           quality={100}
           className={styles.authorProfile + ' button'}
         />
