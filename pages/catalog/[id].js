@@ -57,7 +57,7 @@ export default function Page({ catalogId }) {
         {isEditable ? (
           <CatalogMenu catalog={catalog} setCatalog={setCatalog} />
         ) : (
-          <Link href={`/user/${catalog.user.id}`}>
+          <Link href={`/${catalog.user.username}`}>
             <div className={styles.catalogAuthor + ' button'}>
               <ProfileIcon
                 profileImage={catalog.user.profileImage}

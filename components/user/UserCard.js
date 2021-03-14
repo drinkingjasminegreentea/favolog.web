@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 export default function UserCard({ user }) {
   return (
-    <Link href={`/user/${user.id}`}>
+    <Link href={`/${user.username}`}>
       <div className={styles.userCard + ' button'}>
         {user.profileImage ? (
           <span>

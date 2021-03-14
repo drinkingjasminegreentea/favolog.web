@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/CatalogStyles.module.css'
 
-export default function ProfileIcon({ profileImage, username, userId }) {
+export default function ProfileIcon({ profileImage, username }) {
   return (
-    <Link href={`/user/${userId}`}>
+    <Link href={`/user/${username}`}>
       <div>
         {profileImage ? (
           <Image

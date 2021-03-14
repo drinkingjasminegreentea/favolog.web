@@ -1,7 +1,7 @@
-import styles from '../../styles/CatalogStyles.module.css'
-import CatalogCard from '../../components/catalog/CatalogCard'
-import ProfileInfo from '../../components/user/ProfileInfo'
-import { PageContext } from '../../src/PageContext'
+import styles from '../styles/CatalogStyles.module.css'
+import CatalogCard from '../components/catalog/CatalogCard'
+import ProfileInfo from '../components/user/ProfileInfo'
+import { PageContext } from '../src/PageContext'
 import { useContext, useEffect } from 'react'
 
 export default function Page({ userProfile }) {
@@ -32,7 +32,7 @@ export default function Page({ userProfile }) {
 
 export async function getServerSideProps({ params }) {
   const userProfile = await fetch(
-    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${params.id}/profile`
+    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${params.username}/profile`
   ).then((response) => response.json())
   return {
     props: {

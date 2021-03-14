@@ -38,7 +38,7 @@ export default function ItemView({ show, parentAction, item, user }) {
               username={user.username}
             />
             <div>
-              <Link href={`/user/${user.id}`}>
+              <Link href={`/${user.username}`}>
                 <span className='link bold'>{user.username}</span>
               </Link>
               <br />

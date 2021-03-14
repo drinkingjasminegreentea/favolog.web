@@ -11,7 +11,7 @@ export default function SettingsMenu() {
   return (
     <>
       {user && (
-        <Link href={`/user/${user.id}`}>
+        <Link href={`/${user.username}`}>
           <span className='button'> {user.username} </span>
         </Link>
       )}

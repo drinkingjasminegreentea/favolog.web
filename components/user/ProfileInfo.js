@@ -84,13 +84,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
         <br />
-        <Link href={`/user/${user.id}/following`}>
+        <Link href={`/user/${user.username}/following`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowing} following
           </span>
         </Link>
         &nbsp; | &nbsp;
-        <Link href={`/user/${user.id}/followers`}>
+        <Link href={`/user/${user.username}/followers`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowersState} followers
           </span>

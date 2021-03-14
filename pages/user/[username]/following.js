@@ -4,9 +4,9 @@ import UserCard from '../../../components/user/UserCard'
 export default function Page({ user }) {
   return (
     <>
-      <h5>People following {user.username}</h5>
+      <h5>{user.username} is following</h5>
       <div className={styles.userGrid}>
-        {user.followers.map((item) => (
+        {user.following.map((item) => (
           <UserCard key={item.id} user={item} />
         ))}
       </div>
@@ -16,7 +16,7 @@ export default function Page({ user }) {
 
 export async function getServerSideProps({ params }) {
   const user = await fetch(
-    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${params.id}/followers`
+    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${params.username}/following`
   ).then((response) => response.json())
 
   return {
