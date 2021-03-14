@@ -56,7 +56,7 @@ export const UserContextProvider = ({ children }) => {
 
   const signIn = () => {
     instance
-      .loginPopup({ scopes })
+      .loginRedirect({ scopes })
       .then((result) => {
         postUser(result)
       })
