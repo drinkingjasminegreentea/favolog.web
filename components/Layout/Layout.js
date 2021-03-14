@@ -1,15 +1,12 @@
 import styles from '../../styles/Layout.module.css'
-import SettingsMenu from './SettingsMenu'
+import NavigationMenu from './NavigationMenu'
 import AddCatalog from '../catalog/AddCatalog'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
 import { useContext } from 'react'
 import { UserContext } from '../../src/UserContext'
 import Head from 'next/head'
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-} from '@azure/msal-react'
+import { AuthenticatedTemplate } from '@azure/msal-react'
 
 const Logo = () => {
   return (
@@ -31,16 +28,7 @@ export default function Layout({ children }) {
         <div className={styles.header}>
           <Logo />
           <SearchBar />
-        </div>
-        <div className={styles.settings}>
-          <AuthenticatedTemplate>
-            <SettingsMenu />
-          </AuthenticatedTemplate>
-          <UnauthenticatedTemplate>
-            <span className='button' onClick={() => signIn()}>
-              Sign In
-            </span>
-          </UnauthenticatedTemplate>
+          <NavigationMenu />
         </div>
         <div className={styles.content}>{children}</div>
         <AuthenticatedTemplate>

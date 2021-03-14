@@ -18,9 +18,11 @@
   margin-bottom: 5px;
 }
 
-.settingsForm {
-  width: 500px;
-  align-self: center;
+@media (min-width: 500px) {
+  .settingsForm {
+    width: 500px;
+    align-self: center;
+  }
 }
 
 .settingsPage,
