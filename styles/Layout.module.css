@@ -82,7 +82,7 @@
   }
 
   .search {
-    width: 95%;
+    width: 100%;
     grid-row-start: 2;
     grid-column: 1/3;
   }

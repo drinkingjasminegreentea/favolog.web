@@ -35,7 +35,7 @@ export default function NavigationMenu() {
         </span>
       </Link>
       {user && (
-        <Dropdown drop='left down'>
+        <Dropdown drop='left'>
           <Dropdown.Toggle as='a' bsPrefix='custom'>
             <ProfileIcon
               className='button'
