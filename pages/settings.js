@@ -1,55 +1,12 @@
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useContext, useEffect, useState } from 'react'
 import styles from '../styles/Settings.module.css'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { UserContext } from '../src/UserContext'
 import { useRouter } from 'next/router'
 import uploadImage from '../src/UploadImage'
-
-const DeleteProfile = ({ userId, show, parentAction }) => {
-  const { signOut, acquireToken } = useContext(UserContext)
-
-  async function deleteProfile() {
-    acquireToken().then((accessToken) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) {
-            signOut()
-            parentAction()
-          } else return Promise.reject(response)
-        })
-        .catch((error) => {
-          console.log('Something went wrong.', error)
-        })
-    })
-  }
-
-  return (
-    <Modal show={show} onHide={parentAction} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete profile</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <input placeholder='Enter delete here'></input>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant='secondary' onClick={parentAction}>
-          Cancel
-        </Button>
-        <Button variant='secondary' onClick={() => deleteProfile()}>
-          Delete
-        </Button>
-      </Modal.Footer>
-    </Modal>
-  )
-}
+import DeleteProfile from '../components/user/DeleteProfile'
 
 export default function Page() {
   const { user, setUser } = useContext(UserContext)
@@ -63,6 +20,10 @@ export default function Page() {
   const router = useRouter()
   const { acquireToken } = useContext(UserContext)
 
+  const [errors, setErrors] = useState({})
+  const usernameRef = useRef(null)
+  const emailAddressRef = useRef(null)
+
   useEffect(() => {
     if (user) {
       setUsername(user.username)
@@ -72,9 +33,42 @@ export default function Page() {
       setBio(user.bio || '')
       setWebsite(user.website || '')
     }
+    setErrors({})
   }, [user])
 
   const update = async () => {
+    setErrors({})
+    if (!username) {
+      setErrors({ username: 'Username is required' })
+      usernameRef.current.focus()
+      return
+    }
+
+    if (username.length > 30) {
+      setErrors({
+        username:
+          'Please enter unique username that is less than 30 characters',
+      })
+      usernameRef.current.focus()
+      return
+    }
+
+    if (!/^[a-zA-Z0-9_]*$/.test(username)) {
+      setErrors({
+        username: 'Username can contain only letters, numbers and underscore.',
+      })
+      usernameRef.current.focus()
+      return
+    }
+
+    if (!/\S+@\S+\.\S+/.test(emailAddress)) {
+      setErrors({
+        emailAddress: 'Please enter valid email address',
+      })
+      emailAddressRef.current.focus()
+      return
+    }
+
     const userUpdate = {
       id: user.id,
       username,
@@ -130,11 +124,15 @@ export default function Page() {
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
+            ref={usernameRef}
             type='text'
             placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {errors && errors.username && (
+            <p className={styles.error}>{errors.username}</p>
+          )}
           <Form.Label>First name</Form.Label>
           <Form.Control
             type='text'
@@ -153,12 +151,15 @@ export default function Page() {
 
           <Form.Label>Email address</Form.Label>
           <Form.Control
+            ref={emailAddressRef}
             type='email'
             placeholder='Enter email'
             value={emailAddress}
             onChange={(e) => setEmailAddress(e.target.value)}
           />
-
+          {errors && errors.emailAddress && (
+            <p className={styles.error}>{errors.emailAddress}</p>
+          )}
           <Form.Label>Bio</Form.Label>
           <Form.Control
             type='text'
