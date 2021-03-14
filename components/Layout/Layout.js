@@ -3,8 +3,6 @@ import NavigationMenu from './NavigationMenu'
 import AddCatalog from '../catalog/AddCatalog'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
-import { useContext } from 'react'
-import { UserContext } from '../../src/UserContext'
 import Head from 'next/head'
 import { AuthenticatedTemplate } from '@azure/msal-react'
 
@@ -17,8 +15,6 @@ const Logo = () => {
 }
 
 export default function Layout({ children }) {
-  const { signIn } = useContext(UserContext)
-
   return (
     <>
       <Head>

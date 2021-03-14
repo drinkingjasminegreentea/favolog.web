@@ -9,7 +9,7 @@ import ProfileIcon from '../user/ProfileIcon'
 import { ActivePages, PageContext } from '../../src/PageContext'
 
 export default function NavigationMenu() {
-  const { user, signOut } = useContext(UserContext)
+  const { user, signIn, signOut } = useContext(UserContext)
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'
   let exploreStyle = 'button'
@@ -34,6 +34,16 @@ export default function NavigationMenu() {
           <Image src='/icons/home.svg' width='25' height='25' layout='fixed' />
         </span>
       </Link>
+      {!user && (
+        <Image
+          src='/icons/person-circle.svg'
+          width='25'
+          height='25'
+          layout='fixed'
+          className='button'
+          onClick={signIn}
+        />
+      )}
       {user && (
         <Dropdown drop='left'>
           <Dropdown.Toggle as='a' bsPrefix='custom'>
