@@ -159,10 +159,9 @@
   align-items: center;
 }
 
-.dropDownMenu img {
-  padding-right: 10px;
-}
-
-.dropDownMenu a {
-  margin-bottom: 10px;
+.dropDownMenuItem {
+  display: grid !important;
+  grid-template-columns: 30px 1fr;
+  justify-items: start;
+  align-items: center;
 }

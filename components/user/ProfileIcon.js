@@ -3,7 +3,7 @@ import styles from '../../styles/CatalogStyles.module.css'
 
 export default function ProfileIcon({ profileImage, username }) {
   return (
-    <>
+    <div className='button'>
       {profileImage ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${profileImage}`}
@@ -20,6 +20,6 @@ export default function ProfileIcon({ profileImage, username }) {
           <b> {username.substring(0, 1).toUpperCase()} </b>{' '}
         </div>
       )}
-    </>
+    </div>
   )
 }

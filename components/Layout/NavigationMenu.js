@@ -35,40 +35,64 @@ export default function NavigationMenu() {
         </span>
       </Link>
       {!user && (
-        <Image
-          src='/icons/person-circle.svg'
-          width='25'
-          height='25'
-          layout='fixed'
-          className='button'
-          onClick={signIn}
-        />
+        <Dropdown drop='bottom'>
+          <Dropdown.Toggle as='a' bsPrefix='custom'>
+            <Image
+              src='/icons/person-circle.svg'
+              width='25'
+              height='25'
+              layout='fixed'
+              className='button'
+            />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu align='right'>
+            <Dropdown.Item className={styles.dropDownMenuItem} onClick={signIn}>
+              <Image
+                src='/icons/box-arrow-in-right.svg'
+                width='20'
+                height='20'
+              />
+              <span>Sing Up /Sign In</span>
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       )}
       {user && (
         <Dropdown drop='bottom'>
           <Dropdown.Toggle as='a' bsPrefix='custom'>
             <ProfileIcon
-              className='button'
               src={'/icons/settings.svg'}
               profileImage={user.profileImage}
               username={user.username}
             />
           </Dropdown.Toggle>
 
-          <Dropdown.Menu className={styles.dropDownMenu} align='right'>
-            <Dropdown.Item href={`/${user.username}`}>
-              <img src='/icons/person.svg' /> Profile
+          <Dropdown.Menu align='right'>
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              href={`/${user.username}`}
+            >
+              <Image src='/icons/person.svg' width='20' height='20' />
+              <span>Profile</span>
             </Dropdown.Item>
-            <Dropdown.Item href='/settings'>
-              <img src='/icons/gear-wide.svg' /> Settings
+            <Dropdown.Item className={styles.dropDownMenuItem} href='/settings'>
+              <Image src='/icons/gear-wide.svg' width='20' height='20' />
+              <span>Settings</span>
             </Dropdown.Item>
-            <Dropdown.Item href='/privacypolicy'>
-              <img src='/icons/shield-check.svg' />
-              Privacy Policy
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              href='/privacypolicy'
+            >
+              <Image src='/icons/shield-check.svg' width='20' height='20' />
+              <span>Privacy Policy</span>
             </Dropdown.Item>
-            <Dropdown.Item onClick={signOut}>
-              <img src='/icons/box-arrow-left.svg' />
-              Sign out
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              onClick={signOut}
+            >
+              <Image src='/icons/box-arrow-left.svg' width='20' height='20' />
+              <span>Sign out</span>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
