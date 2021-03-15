@@ -1,3 +1,5 @@
+import Dropdown from 'react-bootstrap/Dropdown'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import EditCatalog from './EditCatalog'
 import DeleteCatalog from './DeleteCatalog'
 import { useState } from 'react'
@@ -19,16 +21,23 @@ export default function CatalogMenu({ catalog, setCatalog }) {
 
   return (
     <span className={styles.addEdit}>
-      <img
-        src='/icons/pencil-fill.svg'
-        className='button'
-        onClick={() => setShowEditCatalog(!showEditCatalog)}
-      />
-      <img
-        src='/icons/trash.svg'
-        className='button'
-        onClick={() => setShowDeleteCatalog(!showDeleteCatalog)}
-      />
+      <Dropdown drop='bottom'>
+        <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
+          <img src='/icons/dotdotdot.png' />
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu className={styles.dropDownMenu} align='right'>
+          <Dropdown.Item onClick={() => setShowEditCatalog(!showEditCatalog)}>
+            Edit catalog
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => setShowDeleteCatalog(!showDeleteCatalog)}
+          >
+            Delete catalog
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
       <EditCatalog
         show={showEditCatalog}
         parentAction={updateCatalog}

@@ -1,3 +1,5 @@
+import Dropdown from 'react-bootstrap/Dropdown'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/CatalogStyles.module.css'
 import DeleteItem from './DeleteItem'
 import EditItem from './EditItem'
@@ -32,7 +34,6 @@ export default function ItemCard({
   }
 
   const updateItem = (data) => {
-    console.log('data', data)
     if (data) {
       const copy = { ...itemState, ...data }
       setItemState(copy)
@@ -52,16 +53,20 @@ export default function ItemCard({
     <div className={styles.catalogItem}>
       {isEditable && (
         <span className={styles.itemEditIcons}>
-          <img
-            src='/icons/pencil.svg'
-            className='button'
-            onClick={() => setShowEditItem(!showEditItem)}
-          />
-          <img
-            src='/icons/x.svg'
-            className='button'
-            onClick={() => setShowDeleteItem(!showDeleteItem)}
-          />
+          <Dropdown drop='bottom'>
+            <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
+              <img src='/icons/dotdotdot.png' />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className={styles.dropDownMenu} align='right'>
+              <Dropdown.Item onClick={() => setShowEditItem(!showEditItem)}>
+                Edit item
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => setShowDeleteItem(!showDeleteItem)}>
+                Delete item
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </span>
       )}
       <span className='bold button' onClick={toggleItemView}>

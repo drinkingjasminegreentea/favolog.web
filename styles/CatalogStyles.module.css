@@ -1,7 +1,7 @@
 .catalogHeader {
   margin-bottom: 30px;
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1fr 50px;
   align-items: center;
 }
 

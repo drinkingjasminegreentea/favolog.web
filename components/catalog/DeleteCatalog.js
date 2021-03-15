@@ -24,7 +24,7 @@ export default function DeleteCatalog({ show, parentAction, catalogId }) {
         .then((response) => {
           if (response.ok) {
             parentAction()
-            router.push(`/user/${user.id}`)
+            router.push(`/${user.username}`)
           } else Promise.reject(response)
         })
         .catch((error) => {

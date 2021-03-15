@@ -1,7 +1,6 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import ItemCard from '../../components/item/ItemCard'
 import AddItemCard from '../../components/item/AddItemCard'
-import ProfileIcon from '../../components/user/ProfileIcon'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
@@ -54,15 +53,14 @@ export default function Page({ catalogId }) {
     <>
       <div className={styles.catalogHeader}>
         <h4> {catalog.name} </h4>
-        {isEditable ? (
+        <Link href={`/${catalog.user.username}`}>
+          <span className='button'>
+            Back to {catalog.user.username}
+            <img src='/icons/reply-24px.svg' />
+          </span>
+        </Link>
+        {isEditable && (
           <CatalogMenu catalog={catalog} setCatalog={setCatalog} />
-        ) : (
-          <Link href={`/${catalog.user.username}`}>
-            <span className='link'>
-              Back to {catalog.user.username}{' '}
-              <img src='/icons/keyboard_return-24px.svg' />
-            </span>
-          </Link>
         )}
       </div>
       <div className={styles.catalog}>
