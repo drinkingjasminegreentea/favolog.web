@@ -13,10 +13,10 @@ export default function ProfileIcon({ profileImage, username }) {
           width='35'
           height='35'
           quality={100}
-          className={styles.authorProfile + ' button'}
+          className={styles.authorProfile}
         />
       ) : (
-        <div className={styles.authorPlaceholder + ' button'}>
+        <div className={styles.authorPlaceholder}>
           <b> {username.substring(0, 1).toUpperCase()} </b>{' '}
         </div>
       )}
