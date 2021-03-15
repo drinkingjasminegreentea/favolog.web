@@ -44,7 +44,7 @@
     grid-template-columns: 1fr;
   }
   .header {
-    grid-template-columns: 180px 1fr 100px;
+    grid-template-columns: 180px 1fr 120px;
   }
   .search {
     width: 400px;
@@ -74,7 +74,7 @@
     grid-template-columns: 1fr;
   }
   .header {
-    grid-template-columns: 1fr 100px;
+    grid-template-columns: 1fr 150px;
   }
   .navigation {
     grid-row-start: 1;
@@ -160,4 +160,8 @@
 
 .dropDownMenu img {
   padding-right: 10px;
+}
+
+.dropDownMenu a {
+  margin-bottom: 10px;
 }

@@ -14,7 +14,11 @@ export default function CatalogCard({ catalog, username }) {
       <Link href={catalogLink}>
         <span className='button'> {catalog.itemCount} items </span>
       </Link>
-      <ItemImage imageName={catalog.lastItemImage} />
+      <Link href={catalogLink}>
+        <a className={styles.cardImage + ' button'}>
+          <ItemImage imageName={catalog.lastItemImage} />
+        </a>
+      </Link>
     </div>
   )
 }

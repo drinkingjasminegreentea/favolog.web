@@ -58,15 +58,10 @@ export default function Page({ catalogId }) {
           <CatalogMenu catalog={catalog} setCatalog={setCatalog} />
         ) : (
           <Link href={`/${catalog.user.username}`}>
-            <div className={styles.catalogAuthor + ' button'}>
-              <ProfileIcon
-                profileImage={catalog.user.profileImage}
-                username={catalog.user.username}
-              />
-              <span>
-                {catalog.user.firstName} {catalog.user.lastName}
-              </span>
-            </div>
+            <span className='link'>
+              Back to {catalog.user.username}{' '}
+              <img src='/icons/keyboard_return-24px.svg' />
+            </span>
           </Link>
         )}
       </div>

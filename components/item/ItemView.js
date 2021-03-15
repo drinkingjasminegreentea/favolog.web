@@ -9,26 +9,30 @@ export default function ItemView({ show, parentAction, item, user }) {
   return (
     <Modal show={show} onHide={parentAction} centered>
       <Modal.Header closeButton>
-        <Modal.Title>{item.title}</Modal.Title>
+        <a className='link' href={item.url} target='_blank'>
+          <Modal.Title>{item.title}</Modal.Title>
+        </a>
       </Modal.Header>
       <Modal.Body>
         <div className={styles.itemView}>
-          <div className={styles.cardImage}>
-            {item.imageName ? (
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-                layout='fixed'
-                objectFit='contain'
-                width='200'
-                height='200'
-                quality={100}
-              />
-            ) : (
-              <div className={styles.emptyCatalog}>
-                <img src='/icons/file-image.svg' width='50' height='50' />
-              </div>
-            )}
-          </div>
+          <a className='link' href={item.url} target='_blank'>
+            <div className={styles.cardImage}>
+              {item.imageName ? (
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+                  layout='fixed'
+                  objectFit='contain'
+                  width='200'
+                  height='200'
+                  quality={100}
+                />
+              ) : (
+                <div className={styles.emptyCatalog}>
+                  <img src='/icons/file-image.svg' width='50' height='50' />
+                </div>
+              )}
+            </div>
+          </a>
           <a className='link' href={item.url} target='_blank'>
             <span>{item.urlDomain}</span>
           </a>

@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.catalogHeader span {
+  justify-self: end;
+}
+
 .addEdit,
 .catalogAuthor {
   justify-self: right;
@@ -19,7 +23,7 @@
 .catalogAuthor {
   grid-column-start: 2;
   display: grid;
-  grid-template-columns: 35px 1fr;
+  grid-template-columns: 40px 1fr;
   width: fit-content;
 }
 
@@ -54,7 +58,7 @@
   display: grid;
   width: fit-content;
   align-items: center;
-  width: 250px;
+  width: 300px;
 }
 
 .itemAddCard {
