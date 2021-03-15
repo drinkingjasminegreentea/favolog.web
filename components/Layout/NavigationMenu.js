@@ -53,7 +53,7 @@ export default function NavigationMenu() {
                 width='20'
                 height='20'
               />
-              <span>Sing Up /Sign In</span>
+              <span>Sing Up / Sign In</span>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
