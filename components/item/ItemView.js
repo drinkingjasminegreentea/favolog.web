@@ -9,8 +9,8 @@ export default function ItemView({ show, parentAction, item, user }) {
   return (
     <Modal show={show} onHide={parentAction} centered>
       <Modal.Header closeButton>
-        <a className='link' href={item.url} target='_blank'>
-          <Modal.Title>{item.title}</Modal.Title>
+        <a className='button' href={item.url} target='_blank'>
+          <h5>{item.title}</h5>
         </a>
       </Modal.Header>
       <Modal.Body>
