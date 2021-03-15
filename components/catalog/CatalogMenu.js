@@ -23,7 +23,7 @@ export default function CatalogMenu({ catalog, setCatalog }) {
     <span className={styles.addEdit}>
       <Dropdown drop='bottom'>
         <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
-          <img src='/icons/dotdotdot.png' />
+          <img src='/icons/more_horiz-24px.svg' />
         </Dropdown.Toggle>
 
         <Dropdown.Menu className={styles.dropDownMenu} align='right'>
