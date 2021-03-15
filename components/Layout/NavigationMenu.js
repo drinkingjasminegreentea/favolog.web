@@ -45,7 +45,7 @@ export default function NavigationMenu() {
         />
       )}
       {user && (
-        <Dropdown drop='bottom' navbar='true'>
+        <Dropdown drop='bottom'>
           <Dropdown.Toggle as='a' bsPrefix='custom'>
             <ProfileIcon
               className='button'
@@ -55,7 +55,7 @@ export default function NavigationMenu() {
             />
           </Dropdown.Toggle>
 
-          <Dropdown.Menu className={styles.dropDownMenu}>
+          <Dropdown.Menu className={styles.dropDownMenu} align='right'>
             <Dropdown.Item href={`/${user.username}`}>
               <img src='/icons/person.svg' /> Profile
             </Dropdown.Item>
