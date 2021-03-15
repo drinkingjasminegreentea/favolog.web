@@ -7,7 +7,14 @@ export default function Comment({ item, user, toggleItemView }) {
 
   return (
     <div className={styles.comment}>
-      <ProfileIcon profileImage={user.profileImage} username={user.username} />
+      <Link href={`/${user.username}`}>
+        <a className='button'>
+          <ProfileIcon
+            profileImage={user.profileImage}
+            username={user.username}
+          />
+        </a>
+      </Link>
       <div>
         <Link href={`/${user.username}`}>
           <span className='link bold'>{user.username}</span>
