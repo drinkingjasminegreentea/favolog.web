@@ -13,8 +13,10 @@ const AddItem = ({ show, parentAction, catalogId, addItemToCatalog }) => {
   const { acquireToken } = useContext(UserContext)
 
   const submit = async () => {
+    const originalUrl = url.substring(url.indexOf('https://'), url.length)
+
     const item = {
-      originalUrl: url,
+      originalUrl,
       catalogId,
     }
 
