@@ -3,7 +3,7 @@ import styles from '../../styles/CatalogStyles.module.css'
 import Link from 'next/link'
 
 export default function Comment({ item, user, toggleItemView }) {
-  const textLimit = 20
+  const textLimit = 25
 
   return (
     <div className={styles.comment}>

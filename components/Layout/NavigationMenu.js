@@ -45,7 +45,7 @@ export default function NavigationMenu() {
         />
       )}
       {user && (
-        <Dropdown drop='left'>
+        <Dropdown drop='bottom' navbar='true'>
           <Dropdown.Toggle as='a' bsPrefix='custom'>
             <ProfileIcon
               className='button'
