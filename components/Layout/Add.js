@@ -50,12 +50,6 @@ const AddItemDialog = ({ show, parentAction }) => {
   }
 
   const submit = async () => {
-    if (!originalUrl) {
-      setErrors({
-        originalUrl: 'Please enter item page URL',
-      })
-      return
-    }
     if (!catalogId && !catalogName) {
       setErrors({
         catalog: 'Please choose a catalog or create a new one',
@@ -139,11 +133,10 @@ const AddItemDialog = ({ show, parentAction }) => {
             onChange={handleUrlChange}
           />
           <br />
-          {errors && errors.originalUrl && (
-            <p className='error'>{errors.originalUrl}</p>
-          )}
         </Form.Group>
-        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
+        {errors && errors.catalog && (
+          <span className='error'>{errors.catalog}</span>
+        )}
         <Form.Group>
           <Form.Control
             as='select'
