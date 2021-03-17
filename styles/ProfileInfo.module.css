@@ -64,28 +64,18 @@ span.followInfo {
     grid-template-columns: 1fr 1fr;
   }
   .profileInfo {
-    grid-template-columns: 0.8fr 1fr 0.5fr;
+    grid-template-columns: 150px 1.5fr 1fr;
+    grid-gap: 20px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .userGrid {
     grid-template-columns: 1fr;
   }
   .profileInfo {
-    grid-template-columns: 0.5fr 1fr;
-  }
-  .followUnfollow {
-    grid-column-start: 2;
-  }
-}
-
-@media (max-width: 900px) {
-  .userGrid {
-    grid-template-columns: 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 150px 1fr;
+    grid-gap: 20px;
   }
   .followUnfollow {
     grid-column-start: 2;
