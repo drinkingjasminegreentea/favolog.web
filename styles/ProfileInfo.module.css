@@ -54,8 +54,8 @@ span.followInfo {
     grid-template-columns: 1fr 1fr;
   }
   .profileInfo {
-    grid-template-columns: 0.5fr 1fr 1fr;
-    grid-gap: 10px;
+    grid-template-columns: 150px 1.5fr 1fr;
+    grid-gap: 20px;
   }
 }
 

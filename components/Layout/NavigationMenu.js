@@ -55,6 +55,13 @@ export default function NavigationMenu() {
               />
               <span>Sing Up / Sign In</span>
             </Dropdown.Item>
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              href='/privacypolicy'
+            >
+              <Image src='/icons/shield-check.svg' width='20' height='20' />
+              <span>Privacy Policy</span>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       )}
@@ -76,9 +83,12 @@ export default function NavigationMenu() {
               <Image src='/icons/person.svg' width='20' height='20' />
               <span>Profile</span>
             </Dropdown.Item>
-            <Dropdown.Item className={styles.dropDownMenuItem} href='/settings'>
-              <Image src='/icons/gear-wide.svg' width='20' height='20' />
-              <span>Settings</span>
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              onClick={signOut}
+            >
+              <Image src='/icons/box-arrow-left.svg' width='20' height='20' />
+              <span>Sign out</span>
             </Dropdown.Item>
             <Dropdown.Item
               className={styles.dropDownMenuItem}
@@ -86,13 +96,6 @@ export default function NavigationMenu() {
             >
               <Image src='/icons/shield-check.svg' width='20' height='20' />
               <span>Privacy Policy</span>
-            </Dropdown.Item>
-            <Dropdown.Item
-              className={styles.dropDownMenuItem}
-              onClick={signOut}
-            >
-              <Image src='/icons/box-arrow-left.svg' width='20' height='20' />
-              <span>Sign out</span>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

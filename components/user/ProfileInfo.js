@@ -76,16 +76,22 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </span>
       ) : (
         <div className={styles.profilePlaceholder}>
-          <span> {user.username.substring(0, 1).toUpperCase()} </span>{' '}
+          <span> {user.username.substring(0, 1).toUpperCase()} </span>
         </div>
       )}
       <div className={styles.profileDetails}>
         <h4>{user.username}</h4>
         <span>
-          {user.firstName} {user.lastName}
+          <b>
+            {user.firstName} {user.lastName}
+          </b>
         </span>
-        {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
+        {user.website && (
+          <a href={user.website}>
+            <span> {user.website} </span>
+          </a>
+        )}
         <br />
         <Link href={`/user/${user.username}/following`}>
           <span className={styles.followInfo + ' button'}>
@@ -104,6 +110,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
           <Button size='sm' variant='secondary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
+        )}
+        {self && (
+          <Link href='/settings'>
+            <Button size='sm' variant='secondary'>
+              Edit profile
+            </Button>
+          </Link>
         )}
       </div>
     </div>
