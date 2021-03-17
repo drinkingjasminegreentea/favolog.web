@@ -11,8 +11,7 @@ import useSWR from 'swr'
 const AddItemDialog = ({ show, parentAction }) => {
   const [catalogName, setCatalogName] = useState('')
   const [catalogId, setCatalogId] = useState('')
-  const [itemUrl, setItemUrl] = useState('')
-  const [dataType, setDataType] = useState('item')
+  const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
   const { user, acquireToken } = useContext(UserContext)
   const [errors, setErrors] = useState({})
@@ -46,44 +45,30 @@ const AddItemDialog = ({ show, parentAction }) => {
     parentAction()
     setCatalogName('')
     setCatalogId('')
-    setItemUrl('')
+    setOriginalUrl('')
     setErrors({})
-    setDataType('item')
   }
 
   const submit = async () => {
-    let postData, url
-    if (dataType == 'item') {
-      if (!itemUrl) {
-        setErrors({
-          itemUrl: 'Please enter item page URL',
-        })
-        return
-      }
-      if (!catalogId) {
-        setErrors({ ...errors, catalogId: 'Please choose a catalog' })
-        return
-      }
-
-      postData = {
-        catalogId,
-        originalUrl: itemUrl,
-      }
-      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
-    } else {
-      if (!catalogName) {
-        setErrors({
-          catalogName: 'Please enter new catalog name',
-        })
-        return
-      }
-
-      postData = {
-        name: catalogName,
-      }
-      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`
+    if (!originalUrl) {
+      setErrors({
+        originalUrl: 'Please enter item page URL',
+      })
+      return
+    }
+    if (!catalogId && !catalogName) {
+      setErrors({
+        catalog: 'Please choose a catalog or create a new one',
+      })
+      return
     }
 
+    const postData = {
+      catalogId,
+      catalogName,
+      originalUrl,
+    }
+    const url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
     const accessToken = await acquireToken()
 
     fetch(url, {
@@ -102,18 +87,13 @@ const AddItemDialog = ({ show, parentAction }) => {
       })
       .then((data) => {
         closeModal()
-        let id = catalogId
-        if (dataType === 'catalog') id = data.id
-        router.push(`/catalog/${id}?refreshKey=${Date.now()}`)
+        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
+        closeModal()
+        router.push('/item/add')
         console.error(error)
       })
-  }
-
-  const handleDataTypeChange = (e) => {
-    setErrors({})
-    setDataType(e.target.value)
   }
 
   const handleCatalogNameChange = (e) => {
@@ -132,10 +112,10 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const handleItemUrlChange = (e) => {
+  const handleUrlChange = (e) => {
     const value = e.target.value
     if (value) {
-      setItemUrl(value)
+      setOriginalUrl(value)
       setErrors({})
     }
   }
@@ -150,35 +130,25 @@ const AddItemDialog = ({ show, parentAction }) => {
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
-          <Form.Check
-            defaultChecked
-            type='radio'
-            label='New Item'
-            name='dataType'
-            id='item'
-            value='item'
-            className={styles.checkbox}
-            onChange={handleDataTypeChange}
-          />
           <Form.Control
             as='textarea'
             rows={3}
             type='text'
             placeholder='Item page link'
-            value={itemUrl}
-            disabled={dataType !== 'item'}
-            onChange={handleItemUrlChange}
+            value={originalUrl}
+            onChange={handleUrlChange}
           />
-          {errors && errors.itemUrl && (
-            <p className='error'>{errors.itemUrl}</p>
+          <br />
+          {errors && errors.originalUrl && (
+            <p className='error'>{errors.originalUrl}</p>
           )}
         </Form.Group>
+        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
         <Form.Group>
           <Form.Control
             as='select'
             custom
             defaultValue='unselected'
-            disabled={dataType !== 'item'}
             onChange={handleCatalogIdChange}
           >
             <option value='unselected' disabled='disabled'>
@@ -190,30 +160,15 @@ const AddItemDialog = ({ show, parentAction }) => {
               </option>
             ))}
           </Form.Control>
-          {errors && errors.catalogId && (
-            <p className='error'>{errors.catalogId}</p>
-          )}
         </Form.Group>
         <Form.Group>
-          <Form.Check
-            type='radio'
-            label='New Catalog'
-            name='dataType'
-            id='catalog'
-            value='catalog'
-            className={styles.checkbox}
-            onChange={handleDataTypeChange}
-          />
+          <Form.Label>Or create a new catalog</Form.Label>
           <Form.Control
             type='text'
             placeholder='Catalog name'
             value={catalogName}
-            disabled={dataType === 'item'}
             onChange={handleCatalogNameChange}
           />
-          {errors && errors.catalogName && (
-            <p className='error'>{errors.catalogName}</p>
-          )}
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
