@@ -27,15 +27,13 @@ export default function EditCatalog({ show, parentAction, catalog }) {
         body: JSON.stringify(data),
       })
         .then((response) => {
-          if (response.ok) return response.json()
-          else return Promise.reject(response)
-        })
-        .then((data) => {
-          parentAction(data)
-          router.push(`/catalog/${catalog.id}`)
+          if (response.ok) {
+            parentAction()
+            router.push(`/catalog/${catalog.id}?refreshKey=${Date.now()}`)
+          } else return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }

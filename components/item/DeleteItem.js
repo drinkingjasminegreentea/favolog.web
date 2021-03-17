@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -6,6 +7,7 @@ import { UserContext } from '../../src/UserContext'
 
 export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
   const { acquireToken } = useContext(UserContext)
+  const router = useRouter()
 
   const submit = async () => {
     acquireToken().then((accessToken) => {
@@ -19,11 +21,10 @@ export default function DeleteItem({ show, parentAction, catalogId, itemId }) {
         }
       )
         .then((response) => {
-          if (response.ok) return response.json()
-          else return Promise.reject(response)
-        })
-        .then((data) => {
-          parentAction(data)
+          if (response.ok) {
+            parentAction()
+            router.push(`/catalog/${catalogId}?refreshKey=${Date.now()}`)
+          } else return Promise.reject(response)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)

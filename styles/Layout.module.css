@@ -165,3 +165,7 @@
   justify-items: start;
   align-items: center;
 }
+
+.checkbox {
+  font-weight: bold;
+}

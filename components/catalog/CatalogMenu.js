@@ -5,19 +5,9 @@ import DeleteCatalog from './DeleteCatalog'
 import { useState } from 'react'
 import styles from '../../styles/CatalogStyles.module.css'
 
-export default function CatalogMenu({ catalog, setCatalog }) {
+export default function CatalogMenu({ catalog }) {
   const [showEditCatalog, setShowEditCatalog] = useState(false)
   const [showDeleteCatalog, setShowDeleteCatalog] = useState(false)
-
-  function updateCatalog(update) {
-    if (update) {
-      const items = catalog.items
-      const updatedCatalog = { ...catalog, ...update }
-      updatedCatalog.items = items
-      setCatalog(updatedCatalog)
-    }
-    setShowEditCatalog(false)
-  }
 
   return (
     <span className={styles.addEdit}>
@@ -40,7 +30,7 @@ export default function CatalogMenu({ catalog, setCatalog }) {
 
       <EditCatalog
         show={showEditCatalog}
-        parentAction={updateCatalog}
+        parentAction={() => setShowEditCatalog(!showEditCatalog)}
         catalog={catalog}
       />
       <DeleteCatalog

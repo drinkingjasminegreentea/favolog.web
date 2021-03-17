@@ -7,9 +7,12 @@ import FeedItemCard from '../components/item/FeedItemCard'
 import useSWR from 'swr'
 
 export default function Page() {
-  const { user } = useContext(UserContext)
   const { setActivePage } = useContext(PageContext)
-  const { acquireToken } = useContext(UserContext)
+  const { user, acquireToken } = useContext(UserContext)
+
+  useEffect(() => {
+    setActivePage(ActivePages.home)
+  }, [])
 
   const fetchDiscoverFeed = (url) => {
     return fetch(url, {
@@ -55,10 +58,6 @@ export default function Page() {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/`
     fetcher = fetchDiscoverFeed
   }
-
-  useEffect(() => {
-    setActivePage(ActivePages.home)
-  })
 
   const { data, error } = useSWR(url, fetcher)
 

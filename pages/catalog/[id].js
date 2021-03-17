@@ -1,100 +1,111 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import ItemCard from '../../components/item/ItemCard'
-import AddItemCard from '../../components/item/AddItemCard'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
 import ProfileIcon from '../../components/user/ProfileIcon'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../src/UserContext'
 import { PageContext } from '../../src/PageContext'
+import useSWR from 'swr'
 
-export default function Page({ catalogId }) {
-  const [isEditable, setIsEditable] = useState(false)
-  const [catalog, setCatalog] = useState(null)
-  const { user } = useContext(UserContext)
+export default function Page({ catalogId, refreshKey }) {
   const { setActivePage } = useContext(PageContext)
+  const { user, acquireToken } = useContext(UserContext)
+  const [key, setKey] = useState(refreshKey)
 
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`, {
+  const fetchPublic = (url) => {
+    return fetch(url, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setCatalog(data)
+      .then((response) => {
+        if (response.ok) return response.json()
+        return Promise.reject(response)
       })
-  }, [])
+      .catch((error) => {
+        console.log('Something went wrong.', error)
+      })
+  }
+
+  const fetchPrivate = (url) => {
+    return acquireToken().then((accessToken) => {
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) return response.json()
+          return Promise.reject(response)
+        })
+        .catch((error) => {
+          console.log('Something went wrong.', error)
+        })
+    })
+  }
+
+  let url = null
+  let fetcher = null
+
+  if (user) {
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`
+    fetcher = fetchPrivate
+  } else {
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}/public`
+    fetcher = fetchPublic
+  }
+
+  const { data, error, mutate } = useSWR(url, fetcher)
 
   useEffect(() => {
-    if (user && catalog) {
-      setIsEditable(user.id === catalog.userId)
-    }
-    setActivePage(null)
-  }, [user, catalog])
+    setActivePage('')
+  }, [])
 
-  const addItemToCatalog = (item) => {
-    const updatedCatalog = { ...catalog }
-    updatedCatalog.items.unshift(item)
-    setCatalog(updatedCatalog)
-  }
+  if (key != refreshKey) mutate()
 
-  const removeItemFromCatalog = (item) => {
-    const updatedCatalog = { ...catalog }
-    const index = updatedCatalog.items.findIndex(({ id }) => id === item.id)
-    if (index === -1) {
-      throw 'Could not find item to delete from the catalog'
-    }
-    updatedCatalog.items.splice(index, 1)
-    setCatalog(updatedCatalog)
-  }
-
-  return catalog ? (
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+  return (
     <>
       <div className={styles.catalogHeader}>
-        <h4> {catalog.name} </h4>
-        {isEditable ? (
-          <CatalogMenu catalog={catalog} setCatalog={setCatalog} />
+        <h4> {data.name} </h4>
+        {data.isEditable ? (
+          <CatalogMenu catalog={data} />
         ) : (
-          <Link href={`/${catalog.user.username}`}>
+          <Link href={`/${data.user.username}`}>
             <a className='button'>
               <ProfileIcon
-                profileImage={catalog.user.profileImage}
-                username={catalog.user.username}
+                profileImage={data.user.profileImage}
+                username={data.user.username}
               />
             </a>
           </Link>
         )}
       </div>
       <div className={styles.catalog}>
-        {isEditable && (
-          <AddItemCard
-            catalogId={catalog.id}
-            addItemToCatalog={addItemToCatalog}
-          />
-        )}
-        {catalog.items.map((item) => (
+        {data.items.map((item) => (
           <ItemCard
             key={item.id}
             item={item}
-            catalogId={catalog.id}
-            isEditable={isEditable}
-            user={catalog.user}
-            removeItemFromCatalog={removeItemFromCatalog}
+            catalogId={data.id}
+            isEditable={data.isEditable}
+            user={data.user}
           />
         ))}
       </div>
     </>
-  ) : (
-    <span> loading </span>
   )
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params, query }) {
   return {
     props: {
       catalogId: params.id,
+      refreshKey: query.refreshKey || '',
     },
   }
 }

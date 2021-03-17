@@ -131,7 +131,7 @@ export default function Page() {
             onChange={(e) => setUsername(e.target.value)}
           />
           {errors && errors.username && (
-            <p className={styles.error}>{errors.username}</p>
+            <p className='error'>{errors.username}</p>
           )}
           <Form.Label>First name</Form.Label>
           <Form.Control
@@ -158,7 +158,7 @@ export default function Page() {
             onChange={(e) => setEmailAddress(e.target.value)}
           />
           {errors && errors.emailAddress && (
-            <p className={styles.error}>{errors.emailAddress}</p>
+            <p className='error'>{errors.emailAddress}</p>
           )}
           <Form.Label>Bio</Form.Label>
           <Form.Control

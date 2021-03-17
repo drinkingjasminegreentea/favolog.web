@@ -16,7 +16,8 @@ body {
   src: url(../public/fonts/Gilroy-Light.otf);
 }
 
-span {
+span,
+.modal {
   font-family: Gilroy-Light;
 }
 
@@ -52,4 +53,8 @@ input.form-control:focus {
 
 .active {
   border-bottom: solid 2px;
+}
+
+.error {
+  color: red;
 }

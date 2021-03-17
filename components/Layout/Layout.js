@@ -1,6 +1,6 @@
 import styles from '../../styles/Layout.module.css'
 import NavigationMenu from './NavigationMenu'
-import AddCatalog from '../catalog/AddCatalog'
+import Add from './Add'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
 import Head from 'next/head'
@@ -28,7 +28,7 @@ export default function Layout({ children }) {
         </div>
         <div className={styles.content}>{children}</div>
         <AuthenticatedTemplate>
-          <AddCatalog />
+          <Add />
         </AuthenticatedTemplate>
       </div>
     </>
