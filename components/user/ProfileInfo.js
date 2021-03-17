@@ -81,6 +81,9 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       )}
       <div className={styles.profileDetails}>
         <h4>{user.username}</h4>
+        <span>
+          {user.firstName} {user.lastName}
+        </span>
         {user.website && <a href={user.website}> {user.website} </a>}
         {user.bio && <span> {user.bio} </span>}
         <br />

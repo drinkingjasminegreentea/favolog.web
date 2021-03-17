@@ -103,7 +103,7 @@ export default function Page() {
         })
         .then((data) => {
           setUser(data)
-          router.push(`/${user.username}`)
+          router.push(`/${username}`)
         })
         .catch((error) => {
           console.log('Something went wrong.', error)
