@@ -47,13 +47,6 @@ export default function NavigationMenu() {
           </Dropdown.Toggle>
 
           <Dropdown.Menu align='right'>
-            <Dropdown.Item
-              className={styles.dropDownMenuItem}
-              href='/privacypolicy'
-            >
-              <Image src='/icons/shield-check.svg' width='20' height='20' />
-              <span>Privacy Policy</span>
-            </Dropdown.Item>
             <Dropdown.Item className={styles.dropDownMenuItem} onClick={signIn}>
               <Image
                 src='/icons/box-arrow-in-right.svg'
@@ -61,6 +54,13 @@ export default function NavigationMenu() {
                 height='20'
               />
               <span>Sing Up / Sign In</span>
+            </Dropdown.Item>
+            <Dropdown.Item
+              className={styles.dropDownMenuItem}
+              href='/privacypolicy'
+            >
+              <Image src='/icons/shield-check.svg' width='20' height='20' />
+              <span>Privacy Policy</span>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
