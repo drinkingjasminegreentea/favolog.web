@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
@@ -7,11 +7,17 @@ import { UserContext } from '../../src/UserContext'
 import uploadImage from '../../src/UploadImage'
 
 export default function EditItem({ show, parentAction, item }) {
-  const [title, setTitle] = useState(item.title)
-  const [url, setUrl] = useState(item.url)
-  const [comment, setComment] = useState(item.comment || '')
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
+  const [comment, setComment] = useState('')
   const [file, setFile] = useState()
   const { acquireToken } = useContext(UserContext)
+
+  useEffect(() => {
+    setTitle(item.title)
+    setUrl(item.url)
+    setComment(item.comment)
+  }, [item.comment])
 
   const submit = async () => {
     item.title = title

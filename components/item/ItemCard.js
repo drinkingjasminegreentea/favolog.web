@@ -35,16 +35,14 @@ export default function ItemCard({
 
   const updateItem = (data) => {
     if (data) {
-      const copy = { ...itemState, ...data }
-      setItemState(copy)
+      setItemState(data)
     }
     setShowEditItem(!showEditItem)
   }
 
   const addComment = (data) => {
     if (data) {
-      const copy = { ...itemState, ...data }
-      setItemState(copy)
+      setItemState(data)
     }
     setShowAddComment(!showAddComment)
   }
@@ -110,7 +108,7 @@ export default function ItemCard({
       <ItemView
         show={showItemView}
         parentAction={toggleItemView}
-        item={item}
+        item={itemState}
         user={user}
       />
     </div>
