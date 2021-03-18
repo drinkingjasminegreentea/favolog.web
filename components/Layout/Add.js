@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/Layout.module.css'
 import { UserContext } from '../../src/UserContext'
 import useSWR from 'swr'
+import Spinner from 'react-bootstrap/Spinner'
 
 const AddItemDialog = ({ show, parentAction }) => {
   const [catalogName, setCatalogName] = useState('')
@@ -15,6 +16,7 @@ const AddItemDialog = ({ show, parentAction }) => {
   const router = useRouter()
   const { user, acquireToken } = useContext(UserContext)
   const [errors, setErrors] = useState({})
+  const [addInProgress, setAddInProgress] = useState(false)
 
   const fetcher = (url) => {
     return acquireToken().then((accessToken) => {
@@ -57,6 +59,8 @@ const AddItemDialog = ({ show, parentAction }) => {
       return
     }
 
+    setAddInProgress(true)
+
     const postData = {
       catalogId,
       catalogName,
@@ -80,10 +84,12 @@ const AddItemDialog = ({ show, parentAction }) => {
         return Promise.reject(response)
       })
       .then((data) => {
+        setAddInProgress(false)
         closeModal()
         router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
+        setAddInProgress(false)
         closeModal()
         router.push('/item/add')
         console.error(error)
@@ -168,9 +174,10 @@ const AddItemDialog = ({ show, parentAction }) => {
         <Button variant='secondary' onClick={closeModal}>
           Cancel
         </Button>
-        <Button variant='secondary' onClick={submit}>
+        <Button variant='secondary' disabled={addInProgress} onClick={submit}>
           Add
         </Button>
+        {addInProgress && <Spinner animation='grow' />}
       </Modal.Footer>
     </Modal>
   )

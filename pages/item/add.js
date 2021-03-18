@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useState, useContext } from 'react'
 import { UserContext } from '../../src/UserContext'
 import useSWR from 'swr'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page() {
   const [file, setFile] = useState()
@@ -17,6 +18,7 @@ export default function Page() {
   const router = useRouter()
   const { user, acquireToken } = useContext(UserContext)
   const [errors, setErrors] = useState({})
+  const [addInProgress, setAddInProgress] = useState(false)
 
   const fetcher = (url) => {
     return acquireToken().then((accessToken) => {
@@ -78,6 +80,8 @@ export default function Page() {
       return
     }
 
+    setAddInProgress(true)
+
     const itemPost = {
       catalogId,
       catalogName,
@@ -106,8 +110,10 @@ export default function Page() {
         })
         .then((data) => {
           router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+          setAddInProgress(false)
         })
         .catch((error) => {
+          setAddInProgress(false)
           console.error(error)
         })
     })
@@ -206,9 +212,10 @@ export default function Page() {
             onChange={(e) => setFile(e.target.files[0])}
           />
         </Form.Group>
-        <Button variant='secondary' onClick={addItem}>
+        <Button variant='secondary' disabled={addInProgress} onClick={addItem}>
           Add
         </Button>
+        {addInProgress && <Spinner animation='grow' />}
       </Form>
     </div>
   )
