@@ -70,7 +70,8 @@ export default function Page() {
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
             Create your favorites catalogs by clicking on the plus button.
-            Search and find people to follow.
+            Discover, search and find people to follow. Here are few of the
+            latest added favorites.
           </span>
         </Alert>
       )}

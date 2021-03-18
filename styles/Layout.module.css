@@ -169,3 +169,7 @@
 .checkbox {
   font-weight: bold;
 }
+
+.signIn {
+  justify-self: end;
+}
