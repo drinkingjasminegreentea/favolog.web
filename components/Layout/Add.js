@@ -146,7 +146,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             as='textarea'
             rows={3}
             type='text'
-            placeholder='https:// Just enter the web page link here for your favorite item and we will handle the rest. Alternatively click on the link below to enter it manually.'
+            placeholder='https:// Just enter your favorite item web page link here and we will handle the rest. Alternatively, click on the link below to enter it manually.'
             value={originalUrl}
             onChange={handleUrlChange}
           />
@@ -154,7 +154,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             <p className='error'>{errors.originalUrl}</p>
           )}
           <span className='link' onClick={manualEnterHandler}>
-            I want to enter it manually instead
+            I want to enter it manually
           </span>
         </Form.Group>
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}

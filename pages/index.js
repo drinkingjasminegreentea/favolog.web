@@ -69,7 +69,7 @@ export default function Page() {
         <Alert variant='info'>
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
-            Create your favorites catalogs by clicking on the plus button.
+            Add your favorite item to a catalog by clicking on the plus button.
             Discover, search and find people to follow. Here are few of the
             latest added favorites.
           </span>
