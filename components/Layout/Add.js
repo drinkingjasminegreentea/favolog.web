@@ -52,6 +52,13 @@ const AddItemDialog = ({ show, parentAction }) => {
   }
 
   const submit = async () => {
+    if (!originalUrl) {
+      setErrors({
+        originalUrl: 'Please enter link to your item',
+      })
+      return
+    }
+
     if (!catalogId && !catalogName) {
       setErrors({
         catalog: 'Please choose a catalog or create a new one',
@@ -143,13 +150,14 @@ const AddItemDialog = ({ show, parentAction }) => {
             value={originalUrl}
             onChange={handleUrlChange}
           />
+          {errors && errors.originalUrl && (
+            <p className='error'>{errors.originalUrl}</p>
+          )}
           <span className='link' onClick={manualEnterHandler}>
-            I want to enter manual instead
+            I want to enter it manually instead
           </span>
         </Form.Group>
-        {errors && errors.catalog && (
-          <span className='error'>{errors.catalog}</span>
-        )}
+        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
         <Form.Group>
           <Form.Control
             as='select'
