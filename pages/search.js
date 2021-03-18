@@ -33,11 +33,9 @@ export default function Page({ searchQuery, results }) {
               <div className={styles.catalogAuthor + ' link'}>
                 <ProfileIcon
                   profileImage={item.user.profileImage}
-                  firstName={item.user.firstName}
+                  username={item.user.username}
                 />
-                <span>
-                  {item.user.firstName} {item.user.lastName}
-                </span>
+                <span>{item.user.username}</span>
               </div>
             </Link>
           </div>

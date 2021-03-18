@@ -19,16 +19,18 @@ export default function NavigationMenu() {
 
   return (
     <div className={styles.navigation}>
-      <Link href='/explore'>
-        <span className={exploreStyle}>
-          <Image
-            src='/icons/explore.svg'
-            width='25'
-            height='25'
-            layout='fixed'
-          />
-        </span>
-      </Link>
+      {user && (
+        <Link href='/explore'>
+          <span className={exploreStyle}>
+            <Image
+              src='/icons/explore.svg'
+              width='25'
+              height='25'
+              layout='fixed'
+            />
+          </span>
+        </Link>
+      )}
       <Link href='/'>
         <span className={homeStyle}>
           <Image src='/icons/home.svg' width='25' height='25' layout='fixed' />
