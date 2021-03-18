@@ -92,24 +92,24 @@ const AddItemDialog = ({ show, parentAction }) => {
 
   const handleCatalogNameChange = (e) => {
     const value = e.target.value
+    setCatalogName(value)
     if (value) {
-      setCatalogName(value)
       setErrors({})
     }
   }
 
   const handleCatalogIdChange = (e) => {
     const value = e.target.value
+    setCatalogId(value)
     if (value) {
-      setCatalogId(value)
       setErrors({})
     }
   }
 
   const handleUrlChange = (e) => {
     const value = e.target.value
+    setOriginalUrl(value)
     if (value) {
-      setOriginalUrl(value)
       setErrors({})
     }
   }

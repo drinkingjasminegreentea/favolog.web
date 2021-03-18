@@ -64,6 +64,20 @@ export default function Page() {
   }
 
   const addItem = async () => {
+    if (!title) {
+      setErrors({
+        title: 'Please enter a title for your favorite item',
+      })
+      return
+    }
+
+    if (!catalogId && !catalogName) {
+      setErrors({
+        catalog: 'Please choose a catalog or create a new one',
+      })
+      return
+    }
+
     const itemPost = {
       catalogId,
       catalogName,
@@ -101,24 +115,24 @@ export default function Page() {
 
   const handleCatalogNameChange = (e) => {
     const value = e.target.value
+    setCatalogName(value)
     if (value) {
-      setCatalogName(value)
       setErrors({})
     }
   }
 
   const handleCatalogIdChange = (e) => {
     const value = e.target.value
+    setCatalogId(value)
     if (value) {
-      setCatalogId(value)
       setErrors({})
     }
   }
 
   const handleUrlChange = (e) => {
     const value = e.target.value
+    setUrl(value)
     if (value) {
-      setUrl(value)
       setErrors({})
     }
   }
@@ -142,6 +156,7 @@ export default function Page() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+            {errors && errors.title && <p className='error'>{errors.title}</p>}
           </Form.Group>
           <Form.Group>
             <Form.Control
@@ -152,7 +167,6 @@ export default function Page() {
               value={url}
               onChange={handleUrlChange}
             />
-            <br />
             {errors && errors.url && <p className='error'>{errors.url}</p>}
           </Form.Group>
 
