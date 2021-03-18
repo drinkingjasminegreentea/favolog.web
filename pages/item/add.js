@@ -9,7 +9,7 @@ import { UserContext } from '../../src/UserContext'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
-export default function Page() {
+export default function Page({ redirected }) {
   const [file, setFile] = useState()
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
@@ -149,68 +149,67 @@ export default function Page() {
   return (
     <div>
       <h4>Add Item</h4>
-      <span>
-        We apologize - the source URL is not letting us retrive information
-        about the item. Please add it manually.
-      </span>
+      {redirected && (
+        <span>
+          We apologize - the source URL is not letting us retrive information
+          about the item. Please add it manually.
+        </span>
+      )}
       <Form>
         <Form.Group>
-          <Form.Group>
-            <Form.Control
-              type='text'
-              placeholder='Item title'
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            {errors && errors.title && <p className='error'>{errors.title}</p>}
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              as='textarea'
-              rows={3}
-              type='text'
-              placeholder='Item page link'
-              value={url}
-              onChange={handleUrlChange}
-            />
-            {errors && errors.url && <p className='error'>{errors.url}</p>}
-          </Form.Group>
+          <Form.Control
+            type='text'
+            placeholder='Item title'
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          {errors && errors.title && <p className='error'>{errors.title}</p>}
+        </Form.Group>
 
-          {errors && errors.catalog && (
-            <p className='error'>{errors.catalog}</p>
-          )}
-          <Form.Group>
-            <Form.Control
-              as='select'
-              custom
-              defaultValue={catalogId || 'unselected'}
-              onChange={handleCatalogIdChange}
-            >
-              <option value='unselected' disabled='disabled'>
-                Choose a catalog
+        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
+        <Form.Group>
+          <Form.Control
+            as='select'
+            custom
+            defaultValue={catalogId || 'unselected'}
+            onChange={handleCatalogIdChange}
+          >
+            <option value='unselected' disabled='disabled'>
+              Choose a catalog
+            </option>
+            {data.map((catalog) => (
+              <option key={catalog.id} value={catalog.id}>
+                {catalog.name}
               </option>
-              {data.map((catalog) => (
-                <option key={catalog.id} value={catalog.id}>
-                  {catalog.name}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Or create a new catalog</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Catalog name'
-              value={catalogName}
-              onChange={handleCatalogNameChange}
-            />
-          </Form.Group>
-
+            ))}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Or create a new catalog</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Catalog name'
+            value={catalogName}
+            onChange={handleCatalogNameChange}
+          />
+        </Form.Group>
+        <Form.Group>
           <Form.File
             accept='image/*'
             label='Item image'
             onChange={(e) => setFile(e.target.files[0])}
           />
+        </Form.Group>
+        <Form.Group>
+          <Form.Control
+            as='textarea'
+            rows={3}
+            type='text'
+            placeholder='Item page link'
+            value={url}
+            onChange={handleUrlChange}
+          />
+          {errors && errors.url && <p className='error'>{errors.url}</p>}
         </Form.Group>
         <Button variant='secondary' disabled={addInProgress} onClick={addItem}>
           Add
@@ -219,4 +218,12 @@ export default function Page() {
       </Form>
     </div>
   )
+}
+
+export async function getServerSideProps({ query }) {
+  return {
+    props: {
+      redirected: query.redirected || '',
+    },
+  }
 }

@@ -91,7 +91,7 @@ const AddItemDialog = ({ show, parentAction }) => {
       .catch((error) => {
         setAddInProgress(false)
         closeModal()
-        router.push('/item/add')
+        router.push('/item/add?redirected=yes')
         console.error(error)
       })
   }
@@ -120,6 +120,11 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
+  const manualEnterHandler = () => {
+    closeModal()
+    router.push('/item/add')
+  }
+
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
@@ -134,11 +139,13 @@ const AddItemDialog = ({ show, parentAction }) => {
             as='textarea'
             rows={3}
             type='text'
-            placeholder='Item page link'
+            placeholder='https:// Just enter the web page link here for your favorite item and we will handle the rest. Alternatively click on the link below to enter it manually.'
             value={originalUrl}
             onChange={handleUrlChange}
           />
-          <br />
+          <span className='link' onClick={manualEnterHandler}>
+            I want to enter manual instead
+          </span>
         </Form.Group>
         {errors && errors.catalog && (
           <span className='error'>{errors.catalog}</span>
@@ -171,9 +178,6 @@ const AddItemDialog = ({ show, parentAction }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={closeModal}>
-          Cancel
-        </Button>
         <Button variant='secondary' disabled={addInProgress} onClick={submit}>
           Add
         </Button>
