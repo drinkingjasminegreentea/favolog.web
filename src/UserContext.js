@@ -22,6 +22,7 @@ export const UserContextProvider = ({ children }) => {
 
   const postUser = async (account) => {
     const claims = account.idTokenClaims
+    console.log('claims', claims)
     const user = {
       username: claims.name,
       firstName: claims.given_name,
