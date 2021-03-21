@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../src/UserContext'
 import { PageContext } from '../../src/PageContext'
 import useSWR from 'swr'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ catalogId, refreshKey }) {
   const { setActivePage } = useContext(PageContext)
@@ -71,7 +72,7 @@ export default function Page({ catalogId, refreshKey }) {
   }
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Spinner animation='grow' />
   return (
     <>
       <div className={styles.catalogHeader}>

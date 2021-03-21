@@ -69,8 +69,8 @@ const AddItemDialog = ({ show, parentAction }) => {
       .then((data) => {
         setAddInProgress(false)
         closeModal()
-        setCatalogRefresh(true)
         router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+        setCatalogRefresh(true)
       })
       .catch((error) => {
         setAddInProgress(false)

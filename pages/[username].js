@@ -4,6 +4,7 @@ import ProfileInfo from '../components/user/ProfileInfo'
 import { PageContext } from '../src/PageContext'
 import { useContext, useEffect } from 'react'
 import useSWR from 'swr'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ username }) {
   const { setActivePage } = useContext(PageContext)
@@ -31,7 +32,7 @@ export default function Page({ username }) {
   const { data, error } = useSWR(url, fetcher)
 
   if (error) return <div>failed to load </div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Spinner animation='grow' />
 
   return (
     <>

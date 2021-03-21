@@ -5,6 +5,7 @@ import { ActivePages, PageContext } from '../src/PageContext'
 import Alert from 'react-bootstrap/Alert'
 import FeedItemCard from '../components/item/FeedItemCard'
 import useSWR from 'swr'
+import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
@@ -44,7 +45,7 @@ export default function Page() {
           return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
@@ -62,7 +63,7 @@ export default function Page() {
   const { data, error } = useSWR(url, fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (!data) return <Spinner animation='grow' />
   return (
     <>
       {data.newUser && (
