@@ -65,7 +65,10 @@ export default function Page({ catalogId, refreshKey }) {
     setActivePage('')
   }, [])
 
-  if (key != refreshKey) mutate()
+  if (key != refreshKey) {
+    setKey(refreshKey)
+    mutate()
+  }
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>

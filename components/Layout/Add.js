@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/Layout.module.css'
 import { UserContext } from '../../src/UserContext'
-import useSWR from 'swr'
+import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
 
 const AddItemDialog = ({ show, parentAction }) => {
@@ -14,34 +14,10 @@ const AddItemDialog = ({ show, parentAction }) => {
   const [catalogId, setCatalogId] = useState('')
   const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
-  const { user, acquireToken } = useContext(UserContext)
+  const { acquireToken } = useContext(UserContext)
+  const { catalogs, setCatalogRefresh } = useContext(PageContext)
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
-
-  const fetcher = (url) => {
-    return acquireToken().then((accessToken) => {
-      return fetch(url, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) return response.json()
-          return Promise.reject(response)
-        })
-        .catch((error) => {
-          console.log('Something went wrong.', error)
-        })
-    })
-  }
-
-  const url = user
-    ? `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`
-    : null
-
-  const { data, error } = useSWR(url, fetcher)
 
   const closeModal = () => {
     parentAction()
@@ -93,6 +69,7 @@ const AddItemDialog = ({ show, parentAction }) => {
       .then((data) => {
         setAddInProgress(false)
         closeModal()
+        setCatalogRefresh(true)
         router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
@@ -132,9 +109,6 @@ const AddItemDialog = ({ show, parentAction }) => {
     router.push('/item/add')
   }
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-
   return (
     <Modal show={show} onHide={closeModal} centered>
       <Modal.Header closeButton>
@@ -154,7 +128,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             <p className='error'>{errors.originalUrl}</p>
           )}
           <span className='link' onClick={manualEnterHandler}>
-            Enter manually
+            I want to enter it manually
           </span>
         </Form.Group>
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
@@ -168,11 +142,12 @@ const AddItemDialog = ({ show, parentAction }) => {
             <option value='unselected' disabled='disabled'>
               Choose a catalog
             </option>
-            {data.map((catalog) => (
-              <option key={catalog.id} value={catalog.id}>
-                {catalog.name}
-              </option>
-            ))}
+            {catalogs &&
+              catalogs.map((catalog) => (
+                <option key={catalog.id} value={catalog.id}>
+                  {catalog.name}
+                </option>
+              ))}
           </Form.Control>
         </Form.Group>
         <Form.Group>

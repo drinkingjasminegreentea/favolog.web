@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useContext, useEffect } from 'react'
+import { UserContext } from './UserContext'
 
 export const PageContext = createContext()
 
@@ -9,9 +10,43 @@ export const ActivePages = {
 
 export const PageContextProvider = ({ children }) => {
   const [activePage, setActivePage] = useState(null)
+  const { user, acquireToken } = useContext(UserContext)
+  const [catalogs, setCatalogs] = useState(null)
+  const [catalogRefresh, setCatalogRefresh] = useState(false)
+
+  const loadCatalogs = () => {
+    if (user) {
+      acquireToken().then((accessToken) => {
+        fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+          .then((response) => {
+            if (response.ok) return response.json()
+            return Promise.reject(response)
+          })
+          .then((data) => setCatalogs(data))
+          .catch((error) => {
+            console.log('Something went wrong.', error)
+          })
+      })
+    }
+  }
+
+  useEffect(() => {
+    setCatalogRefresh(false)
+    loadCatalogs()
+  }, [catalogRefresh])
+
+  if (!catalogs) loadCatalogs()
 
   return (
-    <PageContext.Provider value={{ activePage, setActivePage }}>
+    <PageContext.Provider
+      value={{ activePage, setActivePage, catalogs, setCatalogRefresh }}
+    >
       {children}
     </PageContext.Provider>
   )
