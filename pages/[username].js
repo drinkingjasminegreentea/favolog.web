@@ -39,7 +39,8 @@ export default function Page({ username }) {
       setOpenGraphInfo({
         ...openGraphInfo,
         image,
-        title: `${data.user.username} Favolog`,
+        title: `${data.user.username} - Favolog`,
+        url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/${data.user.username}`,
       })
     }
   }, [data])

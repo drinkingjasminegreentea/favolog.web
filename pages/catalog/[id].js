@@ -80,6 +80,7 @@ export default function Page({ catalogId, refreshKey }) {
         ...openGraphInfo,
         image,
         title: `${data.user.username} - ${data.name}`,
+        url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/catalog/${data.id}`,
       })
     }
   }, [data])
