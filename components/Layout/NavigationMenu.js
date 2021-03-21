@@ -1,5 +1,6 @@
 import styles from '../../styles/Layout.module.css'
 import { useContext } from 'react'
+import { useRouter } from 'next/router'
 import { UserContext } from '../../src/UserContext'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
@@ -11,6 +12,7 @@ import { ActivePages, PageContext } from '../../src/PageContext'
 
 export default function NavigationMenu() {
   const { user, signIn, signOut } = useContext(UserContext)
+  const router = useRouter()
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'
   let exploreStyle = 'button'
@@ -57,14 +59,15 @@ export default function NavigationMenu() {
         <Dropdown.Menu align='right'>
           <Dropdown.Item
             className={styles.dropDownMenuItem}
-            href={`/${user.username}`}
+            onClick={() => router.push(`/${user.username}`)}
           >
             <Image src='/icons/person.svg' width='20' height='20' />
             <span>Profile</span>
           </Dropdown.Item>
+
           <Dropdown.Item
             className={styles.dropDownMenuItem}
-            href='/privacypolicy'
+            onClick={() => router.push('/privacypolicy')}
           >
             <Image src='/icons/shield-check.svg' width='20' height='20' />
             <span>Privacy Policy</span>
