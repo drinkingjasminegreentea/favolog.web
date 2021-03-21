@@ -31,6 +31,8 @@ export default function Layout({ children }) {
           content={openGraphInfo.description}
           key='ogdesc'
         />
+        <meta property='og:image:width' content='300' />
+        <meta property='og:image:height' content='300' />
         <title>Favolog</title>
       </Head>
       <div className={styles.wrapper}>

@@ -12,7 +12,7 @@ export const PageContextProvider = ({ children }) => {
   const defaulOGInfo = {
     url: process.env.NEXT_PUBLIC_REDIRECTURI,
     image: 'https://favolog.blob.core.windows.net/appimages/Logo.png',
-    title: 'Favolog',
+    title: 'Favolog - Catalog and Share Your Favorite Things',
     description: 'Catalog and Share Your Favorite Things',
   }
   const [activePage, setActivePage] = useState(null)
