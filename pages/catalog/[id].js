@@ -10,7 +10,9 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ catalogId, refreshKey }) {
-  const { setActivePage } = useContext(PageContext)
+  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
+    PageContext
+  )
   const { user, acquireToken } = useContext(UserContext)
   const [key, setKey] = useState(refreshKey)
 
@@ -70,6 +72,17 @@ export default function Page({ catalogId, refreshKey }) {
     setKey(refreshKey)
     mutate()
   }
+
+  useEffect(() => {
+    if (data) {
+      const image = `${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${data.user.profileImage}`
+      setOpenGraphInfo({
+        ...openGraphInfo,
+        image,
+        title: `${data.user.username} - ${data.name}`,
+      })
+    }
+  }, [data])
 
   if (error) return <div>failed to load</div>
   if (!data) return <Spinner animation='grow' />

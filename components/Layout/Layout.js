@@ -5,6 +5,8 @@ import SearchBar from './SearchBar'
 import Link from 'next/link'
 import Head from 'next/head'
 import { AuthenticatedTemplate } from '@azure/msal-react'
+import { PageContext } from '../../src/PageContext'
+import { useContext } from 'react'
 
 const Logo = () => {
   return (
@@ -15,9 +17,20 @@ const Logo = () => {
 }
 
 export default function Layout({ children }) {
+  const { openGraphInfo } = useContext(PageContext)
+
   return (
     <>
       <Head>
+        {/* Open Graph */}
+        <meta property='og:url' content={openGraphInfo.url} key='ogurl' />
+        <meta property='og:image' content={openGraphInfo.image} key='ogimage' />
+        <meta property='og:title' content={openGraphInfo.title} key='ogtitle' />
+        <meta
+          property='og:description'
+          content={openGraphInfo.description}
+          key='ogdesc'
+        />
         <title>Favolog</title>
       </Head>
       <div className={styles.wrapper}>

@@ -7,7 +7,9 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ username }) {
-  const { setActivePage } = useContext(PageContext)
+  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
+    PageContext
+  )
 
   useEffect(() => {
     setActivePage(null)
@@ -30,6 +32,17 @@ export default function Page({ username }) {
   }
   const url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/profile`
   const { data, error } = useSWR(url, fetcher)
+
+  useEffect(() => {
+    if (data) {
+      const image = `${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${data.user.profileImage}`
+      setOpenGraphInfo({
+        ...openGraphInfo,
+        image,
+        title: `${data.user.username} Favolog`,
+      })
+    }
+  }, [data])
 
   if (error) return <div>failed to load </div>
   if (!data) return <Spinner animation='grow' />
