@@ -5,8 +5,17 @@ export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {
   const { instance, accounts } = useMsal()
-  const [user, setUser] = useState()
+  const [user, setUser] = useState(null)
   const scopes = [process.env.NEXT_PUBLIC_API_SCOPE]
+
+  const updateUser = (data) => {
+    if (!data) {
+      localStorage.removeItem('user')
+    } else {
+      localStorage.setItem('user', JSON.stringify(data))
+    }
+    setUser(data)
+  }
 
   const acquireToken = async (account) => {
     const response = await instance.acquireTokenSilent({
@@ -44,13 +53,15 @@ export const UserContextProvider = ({ children }) => {
           body: JSON.stringify(user),
         })
           .then((response) => {
-            if (response.ok) return response.json()
-            else return Promise.reject(response)
+            if (response.ok) {
+              return response.json()
+            } else return Promise.reject(response)
           })
-          .then((data) => setUser(data))
+          .then((data) => updateUser(data))
       })
       .catch((error) => {
-        console.error('Something went wrong.', error)
+        console.error(error)
+        instance.logout()
       })
   }
 
@@ -61,24 +72,26 @@ export const UserContextProvider = ({ children }) => {
         postUser(result)
       })
       .catch((error) => {
-        console.error('error:', error)
+        console.error(error)
       })
   }
 
   const signOut = () => {
-    instance
-      .logout()
-      .then(() => setUser())
-      .then(() => router.push(`/`))
+    updateUser(null)
+    instance.logout()
   }
 
   useEffect(() => {
-    if (accounts.length > 0 && !user) postUser(accounts[0])
+    if (accounts.length > 0 && !user) {
+      const localUser = JSON.parse(localStorage.getItem('user'))
+      if (localUser) setUser(localUser)
+      else postUser(accounts[0])
+    }
   }, [accounts])
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, signIn, signOut, acquireToken }}
+      value={{ user, updateUser, signIn, signOut, acquireToken }}
     >
       {children}
     </UserContext.Provider>

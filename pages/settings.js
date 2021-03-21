@@ -9,7 +9,7 @@ import uploadImage from '../src/UploadImage'
 import DeleteProfile from '../components/user/DeleteProfile'
 
 export default function Page() {
-  const { user, setUser } = useContext(UserContext)
+  const { user, updateUser } = useContext(UserContext)
   const [username, setUsername] = useState('')
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -102,7 +102,7 @@ export default function Page() {
           } else return Promise.reject(response)
         })
         .then((data) => {
-          setUser(data)
+          updateUser(data)
           router.push(`/${username}`)
         })
         .catch((error) => {

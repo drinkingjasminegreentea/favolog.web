@@ -154,7 +154,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             <p className='error'>{errors.originalUrl}</p>
           )}
           <span className='link' onClick={manualEnterHandler}>
-            I want to enter it manually
+            Enter manually
           </span>
         </Form.Group>
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
