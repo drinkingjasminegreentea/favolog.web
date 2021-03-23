@@ -74,7 +74,7 @@ export default function Page() {
     setPageIndex(pageIndex + 1)
   }
 
-  if (error) return <div>failed to load</div>
+  if (error) return <div>Failed to load. Please refresh.</div>
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
@@ -102,7 +102,7 @@ export default function Page() {
           <FeedItemCard key={item.id} item={item} />
         ))}
       </div>
-      {user && data.page.hasNextPage && (
+      {!data.newUser && !data.guestUser && data.page.hasNextPage && (
         <Button
           variant='secondary'
           className={styles.loadMore}
