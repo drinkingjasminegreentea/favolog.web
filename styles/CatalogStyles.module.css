@@ -172,3 +172,8 @@
   right: 50%;
   bottom: 50%;
 }
+
+.loadMore {
+  justify-self: center;
+  margin-top: 10px;
+}
