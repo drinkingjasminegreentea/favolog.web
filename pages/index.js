@@ -63,7 +63,7 @@ export default function Page() {
   const { data, error } = useSWR(url, fetcher)
 
   if (error) return <div>failed to load</div>
-  if (!data) return <Spinner animation='grow' />
+  if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
       {data.newUser && (

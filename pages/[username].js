@@ -46,7 +46,7 @@ export default function Page({ username }) {
   }, [data])
 
   if (error) return <div>failed to load </div>
-  if (!data) return <Spinner animation='grow' />
+  if (!data) return <Spinner className={styles.loading} animation='grow' />
 
   return (
     <>

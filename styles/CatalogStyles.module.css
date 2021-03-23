@@ -166,3 +166,9 @@
 .itemView > a {
   justify-self: center;
 }
+
+.loading {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+}
