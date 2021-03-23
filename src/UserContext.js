@@ -17,16 +17,26 @@ export const UserContextProvider = ({ children }) => {
     setUser(data)
   }
 
+  const signOut = () => {
+    updateUser(null)
+    instance.logout()
+  }
+
   const acquireToken = async (account) => {
-    const response = await instance.acquireTokenSilent({
-      account: account || accounts[0],
-      scopes,
-    })
+    try {
+      const response = await instance.acquireTokenSilent({
+        account: account || accounts[0],
+        scopes,
+      })
 
-    if (!response || !response.accessToken)
-      throw new Error('Unable to acquire token', response)
+      if (!response || !response.accessToken)
+        throw new Error('Unable to acquire token', response)
 
-    return response.accessToken
+      return response.accessToken
+    } catch (err) {
+      console.error(err)
+      signOut()
+    }
   }
 
   const postUser = async (account) => {
@@ -63,22 +73,6 @@ export const UserContextProvider = ({ children }) => {
         console.error(error)
         instance.logout()
       })
-  }
-
-  const signIn = () => {
-    instance
-      .loginRedirect({ scopes })
-      .then((result) => {
-        postUser(result)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  const signOut = () => {
-    updateUser(null)
-    instance.logout()
   }
 
   useEffect(() => {
