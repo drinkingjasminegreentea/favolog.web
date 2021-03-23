@@ -89,8 +89,8 @@ export default function Page() {
       {data.guestUser && (
         <Alert variant='info'>
           <span>
-            Catalog all of your favorite things, and share them with your
-            followers. Sign in to get started!
+            Favolog let's you catalog all your favorite things and share them
+            with your followers. Sign in to get started!
           </span>
         </Alert>
       )}
