@@ -8,6 +8,17 @@ export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const scopes = [process.env.NEXT_PUBLIC_API_SCOPE]
 
+  const signIn = () => {
+    instance
+      .loginRedirect({ scopes })
+      .then((result) => {
+        postUser(result)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   const updateUser = (data) => {
     if (!data) {
       localStorage.removeItem('user')
