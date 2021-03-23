@@ -81,19 +81,16 @@ export default function Page() {
       {data.newUser && (
         <Alert variant='info'>
           <span>
-            Add your favorite item to a catalog by clicking on the plus button.
-            Discover, search and find people to follow. Here are few of the
-            latest added favorites by our users.
+            Create your first catalog and share your favorites by clicking on
+            the plus button.
           </span>
         </Alert>
       )}
       {data.guestUser && (
         <Alert variant='info'>
           <span>
-            Favolog is a place where you can catalog all of your favorite things
-            in the world, which may include products, places, books, movies, or
-            anything else, and share them with your followers. Sign in to start
-            creating, sharing, and discovering.
+            Catalog all of your favorite things, and share them with your
+            followers. Sign in to get started!
           </span>
         </Alert>
       )}
