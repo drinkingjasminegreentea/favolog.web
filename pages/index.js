@@ -90,10 +90,10 @@ export default function Page() {
       {data.guestUser && (
         <Alert variant='info'>
           <span>
-            Favolog is a place where you can catalog all your favorite things in
-            the world, which may include items such as products, places, books
-            or movies and share them with your followers. Sign in to start
-            creating, sharing and discovering.
+            Favolog is a place where you can catalog all of your favorite things
+            in the world, which may include products, places, books, movies, or
+            anything else, and share them with your followers. Sign in to start
+            creating, sharing, and discovering.
           </span>
         </Alert>
       )}
