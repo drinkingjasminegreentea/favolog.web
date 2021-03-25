@@ -33,7 +33,7 @@ export default function Page() {
 
   const PAGE_SIZE = 12
 
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+  const { data, error, size, setSize } = useSWRInfinite(
     (index) =>
       `${
         process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL

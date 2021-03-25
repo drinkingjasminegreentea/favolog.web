@@ -67,7 +67,7 @@ export default function Page() {
     fetcher = fetchDiscoverFeed
   }
 
-  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+  const { data, error, size, setSize } = useSWRInfinite(
     (index) => `${url}?pageSize=${PAGE_SIZE}&pageIndex=${index + 1}`,
     fetcher
   )
