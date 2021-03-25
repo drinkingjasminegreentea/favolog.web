@@ -1,17 +1,17 @@
 import styles from '../styles/CatalogStyles.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { UserContext } from '../src/UserContext'
 import { ActivePages, PageContext } from '../src/PageContext'
-import Alert from 'react-bootstrap/Alert'
 import FeedItemCard from '../components/item/FeedItemCard'
-import useSWR from 'swr'
+import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
+import { UnauthenticatedTemplate } from '@azure/msal-react'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
   const { user, acquireToken } = useContext(UserContext)
-  const [pageIndex, setPageIndex] = useState(1)
 
   useEffect(() => {
     setActivePage(ActivePages.home)
@@ -26,7 +26,6 @@ export default function Page() {
     })
       .then((response) => {
         if (response.ok) {
-          window.scrollTo(0, 0)
           return response.json()
         }
         return Promise.reject(response)
@@ -47,7 +46,6 @@ export default function Page() {
       })
         .then((response) => {
           if (response.ok) {
-            window.scrollTo(0, 0)
             return response.json()
           }
           return Promise.reject(response)
@@ -59,53 +57,64 @@ export default function Page() {
   }
   let url = null
   let fetcher = null
+  const PAGE_SIZE = 12
 
   if (user) {
-    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.id}?pageIndex=${pageIndex}`
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.id}`
     fetcher = fetchUserFeed
   } else {
-    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/?pageIndex=${pageIndex}`
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed`
     fetcher = fetchDiscoverFeed
   }
 
-  const { data, error } = useSWR(url, fetcher)
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+    (index) => `${url}?pageSize=${PAGE_SIZE}&pageIndex=${index + 1}`,
+    fetcher
+  )
 
-  const loadMore = () => {
-    setPageIndex(pageIndex + 1)
-  }
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === 'undefined')
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
 
+  const feed = data ? [].concat(...data) : []
   if (error) return <div>Failed to load. Please refresh.</div>
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      {data.newUser && (
-        <Alert variant='info'>
-          <span>
-            Create your first catalog and share your favorites by clicking on
-            the plus button.
-          </span>
-        </Alert>
-      )}
-      {data.guestUser && (
+      <UnauthenticatedTemplate>
         <Alert variant='info'>
           <span>
             Favolog let's you catalog all your favorite things and share them
             with your followers. Sign in to get started!
           </span>
         </Alert>
+      </UnauthenticatedTemplate>
+      {isEmpty && (
+        <Alert variant='info'>
+          <Alert.Heading>Welcome!</Alert.Heading>
+          <span>
+            Create your first catalog and share your favorites by clicking on
+            the plus button. Explore and find people to follow.
+          </span>
+        </Alert>
       )}
       <div className={styles.catalog}>
-        {data.page.items.map((item) => (
+        {feed.map((item) => (
           <FeedItemCard key={item.id} item={item} />
         ))}
       </div>
-      {!data.newUser && !data.guestUser && data.page.hasNextPage && (
+      {!isReachingEnd && (
         <Button
+          disabled={isLoadingMore || isReachingEnd}
           variant='secondary'
           className={styles.loadMore}
-          onClick={loadMore}
+          onClick={() => setSize(size + 1)}
         >
-          Load more
+          {isLoadingMore ? 'loading...' : 'load more'}
         </Button>
       )}
     </>

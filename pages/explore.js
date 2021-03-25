@@ -2,13 +2,12 @@ import styles from '../styles/CatalogStyles.module.css'
 import { useEffect, useContext, useState } from 'react'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { ActivePages, PageContext } from '../src/PageContext'
-import useSWR from 'swr'
+import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
-  const [pageIndex, setPageIndex] = useState(1)
 
   useEffect(() => {
     setActivePage(ActivePages.explore)
@@ -23,7 +22,6 @@ export default function Page() {
     })
       .then((response) => {
         if (response.ok) {
-          window.scrollTo(0, 0)
           return response.json()
         }
         return Promise.reject(response)
@@ -33,31 +31,43 @@ export default function Page() {
       })
   }
 
-  const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed?pageIndex=${pageIndex}`,
+  const PAGE_SIZE = 12
+
+  const { data, error, mutate, size, setSize, isValidating } = useSWRInfinite(
+    (index) =>
+      `${
+        process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL
+      }/feed?pageSize=${PAGE_SIZE}&pageIndex=${index + 1}`,
     fetcher
   )
 
-  const loadMore = () => {
-    setPageIndex(pageIndex + 1)
-  }
+  const isLoadingInitialData = !data && !error
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === 'undefined')
+  const isEmpty = data?.[0]?.length === 0
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
+
+  const feed = data ? [].concat(...data) : []
 
   if (error) return <div>failed to load</div>
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
       <div className={styles.catalog}>
-        {data.page.items.map((item) => (
+        {feed.map((item) => (
           <FeedItemCard key={item.id} item={item} />
         ))}
       </div>
-      {data.page.hasNextPage && (
+      {!isReachingEnd && (
         <Button
+          disabled={isLoadingMore || isReachingEnd}
           variant='secondary'
           className={styles.loadMore}
-          onClick={loadMore}
+          onClick={() => setSize(size + 1)}
         >
-          Load more
+          {isLoadingMore ? 'loading...' : 'load more'}
         </Button>
       )}
     </>
