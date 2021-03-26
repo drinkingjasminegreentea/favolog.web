@@ -73,3 +73,7 @@ input.form-control:focus {
 .center {
   justify-self: center;
 }
+
+button {
+  width: 150px;
+}

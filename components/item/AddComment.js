@@ -51,7 +51,7 @@ export default function AddComment({ show, parentAction, item }) {
         <Button variant='secondary' onClick={parentAction}>
           Cancel
         </Button>
-        <Button variant='secondary' onClick={submit}>
+        <Button variant='primary' onClick={submit}>
           Add
         </Button>
       </Modal.Footer>

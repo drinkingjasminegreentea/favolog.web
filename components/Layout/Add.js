@@ -8,6 +8,8 @@ import styles from '../../styles/Layout.module.css'
 import { UserContext } from '../../src/UserContext'
 import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 const AddItemDialog = ({ show, parentAction }) => {
   const [catalogName, setCatalogName] = useState('')
@@ -110,59 +112,75 @@ const AddItemDialog = ({ show, parentAction }) => {
   }
 
   return (
-    <Modal show={show} onHide={closeModal} centered>
+    <Modal show={show} onHide={closeModal} centered size='lg'>
       <Modal.Header closeButton>
-        <Modal.Title>Add your favorite</Modal.Title>
+        <Modal.Title className='extraBold'>Adding new item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            rows={3}
-            type='text'
-            placeholder='https:// Just enter your favorite item web page link here and we will handle the rest. Alternatively, click on the link below to enter it manually.'
-            value={originalUrl}
-            onChange={handleUrlChange}
-          />
-          {errors && errors.originalUrl && (
-            <p className='error'>{errors.originalUrl}</p>
-          )}
-          <span className='link' onClick={manualEnterHandler}>
-            Enter manually
-          </span>
+        <Form.Group as={Row}>
+          <Form.Label column md='3'>
+            Paste item link
+          </Form.Label>
+          <Col md='9'>
+            <Form.Control
+              type='text'
+              placeholder='https://'
+              value={originalUrl}
+              onChange={handleUrlChange}
+            />
+          </Col>
         </Form.Group>
+        {errors && errors.originalUrl && (
+          <p className='error'>{errors.originalUrl}</p>
+        )}
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
-        <Form.Group>
-          <Form.Control
-            as='select'
-            custom
-            defaultValue='unselected'
-            onChange={handleCatalogIdChange}
-          >
-            <option value='unselected' disabled='disabled'>
-              Choose a catalog
-            </option>
-            {catalogs &&
-              catalogs.map((catalog) => (
-                <option key={catalog.id} value={catalog.id}>
-                  {catalog.name}
-                </option>
-              ))}
-          </Form.Control>
+        <Form.Group as={Row}>
+          <Form.Label column md='3'>
+            Catalog
+          </Form.Label>
+          <Col md='9'>
+            <Form.Control
+              as='select'
+              custom
+              defaultValue='unselected'
+              onChange={handleCatalogIdChange}
+            >
+              <option value='unselected' disabled='disabled'>
+                Choose from existing catalogs
+              </option>
+              {catalogs &&
+                catalogs.map((catalog) => (
+                  <option key={catalog.id} value={catalog.id}>
+                    {catalog.name}
+                  </option>
+                ))}
+            </Form.Control>
+          </Col>
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Or create a new catalog</Form.Label>
-          <Form.Control
-            type='text'
-            placeholder='Catalog name'
-            value={catalogName}
-            onChange={handleCatalogNameChange}
-          />
+        <Form.Group Group as={Row}>
+          <Form.Label column md='3'>
+            Create a new catalog
+          </Form.Label>
+          <Col md='9'>
+            <Form.Control
+              type='text'
+              placeholder='Enter name of a new catalog for this item'
+              value={catalogName}
+              onChange={handleCatalogNameChange}
+            />
+          </Col>
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' disabled={addInProgress} onClick={submit}>
-          Add
+        <Button
+          variant='secondary'
+          disabled={addInProgress}
+          onClick={closeModal}
+        >
+          Cancel
+        </Button>
+        <Button variant='primary' disabled={addInProgress} onClick={submit}>
+          Ready
         </Button>
         {addInProgress && <Spinner animation='grow' />}
       </Modal.Footer>
