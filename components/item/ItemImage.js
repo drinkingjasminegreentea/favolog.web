@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import styles from '../../styles/CatalogStyles.module.css'
 
-export default function ItemImage({ imageName }) {
+export default function ItemImage({ imageName, clickHandler }) {
   return (
-    <div className='center'>
+    <div className='button center' onClick={clickHandler}>
       {imageName ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${imageName}`}

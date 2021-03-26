@@ -70,7 +70,10 @@ export default function ItemCard({
       <span className='button' onClick={toggleItemView}>
         {itemState.title}
       </span>
-      <ItemImage imageName={itemState.imageName} onClick={toggleItemView} />
+      <ItemImage
+        imageName={itemState.imageName}
+        clickHandler={toggleItemView}
+      />
       {itemState.comment && (
         <Comment item={itemState} user={user} toggleItemView={toggleItemView} />
       )}

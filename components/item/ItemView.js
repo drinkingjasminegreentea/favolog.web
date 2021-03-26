@@ -20,7 +20,10 @@ export default function ItemView({ show, parentAction, item, user }) {
       </Modal.Header>
       <Modal.Body>
         <div className={styles.itemView}>
-          <ItemImage imageName={item.imageName} onClick={imageClickHandler} />
+          <ItemImage
+            imageName={item.imageName}
+            clickHandler={imageClickHandler}
+          />
           {item.urlDomain && (
             <a href={item.url} target='_blank'>
               <span className='link'>{item.urlDomain}</span>
