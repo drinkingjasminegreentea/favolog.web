@@ -57,7 +57,7 @@
 .catalogItem {
   display: grid;
   align-items: center;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 10px 0px;
   width: 100%;
 }

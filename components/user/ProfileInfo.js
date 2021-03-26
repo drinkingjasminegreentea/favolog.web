@@ -80,7 +80,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </div>
       )}
       <div className={styles.profileDetails}>
-        <h2>{user.username}</h2>
+        <h2 className='light'>{user.username}</h2>
         <h5>
           {user.firstName} {user.lastName}
         </h5>

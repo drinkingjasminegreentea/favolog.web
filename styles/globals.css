@@ -56,7 +56,7 @@ input.form-control:focus {
 }
 
 .active {
-  border-bottom: solid 2px;
+  border-bottom: solid 2px #535353;
 }
 
 .error {

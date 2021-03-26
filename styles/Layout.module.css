@@ -9,6 +9,8 @@
   height: fit-content;
   align-items: center;
   grid-gap: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
 }
 
 .content {
