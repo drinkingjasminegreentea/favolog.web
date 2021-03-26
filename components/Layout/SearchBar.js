@@ -1,8 +1,9 @@
 import styles from '../../styles/Layout.module.css'
 import { useRouter } from 'next/router'
-import { useState, useRef, useContext } from 'react'
+import { useState, useRef } from 'react'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Image from 'next/image'
 
 export default function SearchBar() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function SearchBar() {
 
   return (
     <Form className={styles.search} onSubmit={handleSubmit}>
-      <img src={'/icons/search.svg'} />
+      <Image src='/icons/search.svg' width='25' height='25' layout='fixed' />
       <Form.Control
         type='text'
         placeholder='Search users, catalogs'
