@@ -19,7 +19,7 @@ const Logo = () => {
           height='20'
           layout='fixed'
         />
-        &nbsp;favolog
+        favolog
       </span>
     </Link>
   )
