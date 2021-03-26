@@ -80,7 +80,10 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </div>
       )}
       <div className={styles.profileDetails}>
-        <h4 className='light'>{user.username}</h4>
+        <h4 className='light'>
+          {user.firstName} {user.lastName}
+        </h4>
+        <h5>{user.username}</h5>
         <Link href={`/user/${user.username}/following`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowing} following
@@ -92,10 +95,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
             {totalFollowersState} followers
           </span>
         </Link>
-        <br /> <br />
-        <span className='extraBold'>
-          {user.firstName} {user.lastName}
-        </span>
+        <br />
         {user.bio && <span> {user.bio} </span>}
         {user.website && (
           <a href={user.website} className='link'>
