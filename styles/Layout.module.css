@@ -33,9 +33,6 @@
   .header {
     grid-column-start: 2;
   }
-  .addCatalog {
-    grid-column-start: 3;
-  }
 }
 
 @media (max-width: 1200px) {
@@ -59,12 +56,6 @@
   .content,
   .header {
     grid-column-start: 1;
-  }
-  .addCatalog {
-    grid-column-start: 1;
-  }
-  .addButton {
-    right: 10px;
   }
 }
 
@@ -95,13 +86,6 @@
   .content,
   .header {
     grid-column-start: 1;
-  }
-  .addCatalog {
-    grid-column-start: 1;
-    right: 10px;
-  }
-  .addButton {
-    right: 10px;
   }
 }
 
@@ -144,6 +128,7 @@
   font-size: 30px;
   position: fixed;
   bottom: 50px;
+  right: 50px;
   margin-left: 30px;
 }
 
@@ -171,4 +156,22 @@
 
 .signIn {
   justify-self: end;
+}
+
+.addOverlay {
+  width: 350px;
+  height: 350px;
+  background-color: #f1f1f1;
+  position: fixed;
+  bottom: -100px;
+  right: -100px;
+  border-radius: 90%;
+  border-top: 2px solid #e5e5e5;
+  border-left: 2px solid #e5e5e5;
+}
+
+.addText {
+  position: fixed;
+  right: 10px;
+  bottom: 150px;
 }
