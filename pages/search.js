@@ -27,7 +27,7 @@ export default function Page({ searchQuery, results }) {
         {results.catalogs.map((item) => (
           <div key={item.id}>
             <Link href={`/catalog/${item.id}`} key={item.id}>
-              <span className='bold link'>{item.name}</span>
+              <span className='link'>{item.name}</span>
             </Link>
             <Link href={`/user/${item.user.id}`}>
               <div className={styles.catalogAuthor + ' link'}>

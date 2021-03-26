@@ -104,9 +104,8 @@
 }
 
 .logo {
-  letter-spacing: 5px;
-  font-size: 30px;
-  font-weight: 800;
+  font-size: 28px;
+  font-family: 'Gilroy-ExtraBold';
   color: #535353;
 }
 
@@ -120,17 +119,11 @@
   border: 1px solid lightgray;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 15fr;
+  grid-template-columns: 40px 1fr;
 }
 
 .search > input {
   border: none;
-}
-
-.search > form > input:focus {
-  outline: none;
-  border: none;
-  box-shadow: none;
 }
 
 .addButton {

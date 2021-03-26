@@ -22,14 +22,13 @@ export default function FeedItemCard({ item }) {
 
   return (
     <div className={styles.catalogItem}>
-      <span className='bold button' onClick={toggleItemView}>
+      <ItemImage imageName={item.imageName} onClick={toggleItemView} />
+
+      <span className='button' onClick={toggleItemView}>
         {item.title}
       </span>
-      <div className={styles.cardImage + ' button'} onClick={toggleItemView}>
-        <ItemImage imageName={item.imageName} />
-      </div>
       <Link href={`catalog/${item.catalogId}`}>
-        <h5 className='link'> {item.catalogName} </h5>
+        <h5 className='button'> {item.catalogName} </h5>
       </Link>
       <Comment item={item} user={user} toggleItemView={toggleItemView} />
       <ItemView

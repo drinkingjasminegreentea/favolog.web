@@ -27,7 +27,7 @@ export default function SearchBar() {
       <img src={'/icons/search.svg'} />
       <Form.Control
         type='text'
-        placeholder='Search'
+        placeholder='Search users, catalogs'
         value={query}
         onChange={handleParam}
         ref={inputRef}

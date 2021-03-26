@@ -80,19 +80,10 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </div>
       )}
       <div className={styles.profileDetails}>
-        <h4>{user.username}</h4>
-        <span>
-          <b>
-            {user.firstName} {user.lastName}
-          </b>
-        </span>
-        {user.bio && <span> {user.bio} </span>}
-        {user.website && (
-          <a href={user.website}>
-            <span> {user.website} </span>
-          </a>
-        )}
-        <br />
+        <h2>{user.username}</h2>
+        <h5>
+          {user.firstName} {user.lastName}
+        </h5>
         <Link href={`/user/${user.username}/following`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowing} following
@@ -104,8 +95,15 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
             {totalFollowersState} followers
           </span>
         </Link>
+        {user.bio && <span> {user.bio} </span>}
+        {user.website && (
+          <a href={user.website} className='link'>
+            {user.website}
+          </a>
+        )}
+        <br />
       </div>
-      <div className={styles.followUnfollow}>
+      <div className={styles.profileButtons}>
         {!self && loggedInUser && (
           <Button size='sm' variant='secondary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}

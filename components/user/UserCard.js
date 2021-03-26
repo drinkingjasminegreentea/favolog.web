@@ -24,7 +24,7 @@ export default function UserCard({ user }) {
           </div>
         )}
         <div className={styles.userInfo}>
-          <span className='bold'>{user.username}</span>
+          <span>{user.username}</span>
           <span> {user.bio} </span>
         </div>
       </div>

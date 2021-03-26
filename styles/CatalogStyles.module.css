@@ -54,23 +54,12 @@
   }
 }
 
-.catalogItem,
-.itemAddCard {
+.catalogItem {
   display: grid;
-  width: fit-content;
   align-items: center;
-  width: 300px;
-}
-
-.itemAddCard {
-  border: solid 1px lightgrey;
-  width: 160px;
-  height: 190px;
-  margin-top: 25%;
-  border-radius: 5%;
-  display: grid;
-  justify-content: center;
-  justify-self: center;
+  border-bottom: 2px solid #ddd;
+  padding: 10px 0px;
+  width: 100%;
 }
 
 .catalogItem h2 {
@@ -144,7 +133,6 @@
   border-radius: 5%;
 }
 
-.cardImage,
 .comment {
   justify-self: center;
 }

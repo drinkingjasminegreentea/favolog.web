@@ -67,7 +67,7 @@ export default function Page() {
           className={styles.loadMore}
           onClick={() => setSize(size + 1)}
         >
-          {isLoadingMore ? 'loading...' : 'load more'}
+          {isLoadingMore ? 'Loading...' : 'Load more'}
         </Button>
       )}
     </>

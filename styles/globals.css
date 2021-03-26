@@ -16,11 +16,6 @@ body {
   src: url(../public/fonts/Gilroy-Light.otf);
 }
 
-span,
-.modal {
-  font-family: Gilroy-Light;
-}
-
 a,
 a:hover {
   color: inherit;
@@ -28,27 +23,36 @@ a:hover {
 }
 
 * {
-  box-sizing: border-box;
+  font-family: Gilroy-Light;
+  font-weight: bold;
 }
 
-.button:hover {
-  cursor: pointer;
-  color: #535353;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Gilroy-ExtraBold;
 }
 
+.light {
+  font-family: Gilroy-Light;
+  font-weight: bold;
+}
+
+.button:hover,
 .link:hover {
   cursor: pointer;
-  color: #535353;
+  color: black;
+}
+
+.link {
   text-decoration: underline;
 }
 
 input.form-control:focus {
   border-color: #ced4da;
   box-shadow: none;
-}
-
-.bold {
-  font-weight: bold;
 }
 
 .active {
@@ -60,4 +64,8 @@ input.form-control:focus {
 }
 .error2 {
   color: red;
+}
+
+.center {
+  justify-self: center;
 }

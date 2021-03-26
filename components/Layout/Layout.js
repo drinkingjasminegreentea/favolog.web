@@ -7,11 +7,16 @@ import Head from 'next/head'
 import { AuthenticatedTemplate } from '@azure/msal-react'
 import { PageContext } from '../../src/PageContext'
 import { useContext } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 const Logo = () => {
   return (
     <Link href='/'>
-      <span className={'button ' + styles.logo}> FAVOLOG </span>
+      <span className={'button ' + styles.logo}>
+        <FontAwesomeIcon icon={faHeart} size='xs' />
+        &nbsp;favolog
+      </span>
     </Link>
   )
 }

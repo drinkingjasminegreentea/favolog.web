@@ -67,12 +67,10 @@ export default function ItemCard({
           </Dropdown>
         </span>
       )}
-      <span className='bold button' onClick={toggleItemView}>
+      <span className='button' onClick={toggleItemView}>
         {itemState.title}
       </span>
-      <div className={styles.cardImage + ' button'} onClick={toggleItemView}>
-        <ItemImage imageName={itemState.imageName} />
-      </div>
+      <ItemImage imageName={itemState.imageName} onClick={toggleItemView} />
       {itemState.comment && (
         <Comment item={itemState} user={user} toggleItemView={toggleItemView} />
       )}
