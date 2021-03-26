@@ -38,7 +38,6 @@ export default function ItemView({ show, parentAction, item, user }) {
               <Link href={`/${user.username}`}>
                 <h5 className='button'>{user.username}</h5>
               </Link>
-              <br />
               <span>{item.comment}</span>
             </div>
           </div>

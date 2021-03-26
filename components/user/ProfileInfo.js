@@ -105,15 +105,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       </div>
       <div className={styles.profileButtons}>
         {!self && loggedInUser && (
-          <Button size='sm' variant='secondary' onClick={onButtonClick}>
+          <Button variant='secondary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>
         )}
         {self && (
           <Link href='/settings'>
-            <Button size='sm' variant='secondary'>
-              Edit profile
-            </Button>
+            <Button variant='secondary'>Edit profile</Button>
           </Link>
         )}
       </div>
