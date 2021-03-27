@@ -131,6 +131,7 @@ const AddItemDialog = ({ show, parentAction }) => {
           </Form.Label>
           <Col md='9'>
             <Form.Control
+              autoComplete='off'
               ref={textAreaRef}
               type='text'
               placeholder='https://'
@@ -149,6 +150,7 @@ const AddItemDialog = ({ show, parentAction }) => {
           </Form.Label>
           <Col md='9'>
             <Form.Control
+              autoComplete='off'
               as='select'
               custom
               defaultValue='unselected'
@@ -172,6 +174,7 @@ const AddItemDialog = ({ show, parentAction }) => {
           </Form.Label>
           <Col md='9'>
             <Form.Control
+              autoComplete='off'
               type='text'
               placeholder='Enter name of a new catalog for this item'
               value={catalogName}
