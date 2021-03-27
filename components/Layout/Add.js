@@ -172,14 +172,7 @@ const AddItemDialog = ({ show, parentAction }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant='secondary'
-          disabled={addInProgress}
-          onClick={closeModal}
-        >
-          Cancel
-        </Button>
-        <Button variant='primary' disabled={addInProgress} onClick={submit}>
+        <Button variant='secondary' disabled={addInProgress} onClick={submit}>
           Ready
         </Button>
         {addInProgress && <Spinner animation='grow' />}

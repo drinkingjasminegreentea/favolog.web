@@ -82,6 +82,10 @@ button {
   width: 150px;
 }
 
+button.close {
+  width: 50px;
+}
+
 .nav.nav-tabs,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link:hover {
