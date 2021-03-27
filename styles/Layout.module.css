@@ -100,13 +100,11 @@
 }
 
 .logo {
-  font-size: 28px;
+  font-size: 36px;
   font-family: 'Gilroy-ExtraBold';
   color: #535353;
-  align-items: center;
-  display: grid;
-  grid-template-columns: 25px 1fr;
 }
+
 .search {
   border-radius: 2px;
   border: 1px solid lightgray;
