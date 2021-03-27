@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
@@ -106,10 +106,18 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const manualEnterHandler = () => {
-    closeModal()
-    router.push('/item/add')
+  const textAreaRef = useRef()
+
+  function paste() {
+    textAreaRef.current.focus()
+    navigator.clipboard
+      .readText()
+      .then((clipText) => (textAreaRef.current.value += clipText))
   }
+
+  useEffect(() => {
+    if (textAreaRef.current) paste()
+  }, [textAreaRef.current])
 
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
@@ -123,6 +131,7 @@ const AddItemDialog = ({ show, parentAction }) => {
           </Form.Label>
           <Col md='9'>
             <Form.Control
+              ref={textAreaRef}
               type='text'
               placeholder='https://'
               value={originalUrl}
@@ -157,7 +166,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             </Form.Control>
           </Col>
         </Form.Group>
-        <Form.Group Group as={Row}>
+        <Form.Group as={Row}>
           <Form.Label column md='3'>
             Create a new catalog
           </Form.Label>
