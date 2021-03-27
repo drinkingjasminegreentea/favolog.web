@@ -21,8 +21,9 @@ export default function NavigationMenu() {
   let homeStyle = 'button'
   let exploreStyle = 'button'
 
-  if (activePage == ActivePages.home) homeStyle = homeStyle + ' active'
-  if (activePage == ActivePages.explore) exploreStyle = exploreStyle + ' active'
+  if (activePage == ActivePages.home) homeStyle = homeStyle + ' activePage'
+  if (activePage == ActivePages.explore)
+    exploreStyle = exploreStyle + ' activePage'
 
   return (
     <>

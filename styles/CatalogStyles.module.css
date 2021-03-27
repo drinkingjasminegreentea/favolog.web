@@ -30,7 +30,7 @@
 
 .catalog {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 40px;
   text-align: left;
   justify-items: left;
 }
@@ -164,4 +164,17 @@
 .loadMore {
   justify-self: center;
   margin-top: 40px;
+}
+
+.catalogImages {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.catalogImages:first-child {
+  grid-row: 1/3;
+}
+
+.catalogImages:last-child {
+  row-gap: 2;
 }

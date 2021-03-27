@@ -5,6 +5,8 @@ import { PageContext } from '../src/PageContext'
 import { useContext, useEffect } from 'react'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 
 export default function Page({ username }) {
   const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
@@ -55,12 +57,21 @@ export default function Page({ username }) {
         totalFollowing={data.totalFollowing}
         totalFollowers={data.totalFollowers}
       />
-      <div className={styles.catalog}>
-        {data.catalogs &&
-          data.catalogs.map((catalog) => (
-            <CatalogCard key={catalog.id} catalog={catalog} />
-          ))}
-      </div>
+
+      <Tabs
+        defaultActiveKey='catalogs'
+        transition={false}
+        id='noanim-tab-example'
+      >
+        <Tab eventKey='catalogs' title='Catalogs' tabClassName='extraBold'>
+          <div className={styles.catalog}>
+            {data.catalogs &&
+              data.catalogs.map((catalog) => (
+                <CatalogCard key={catalog.id} catalog={catalog} />
+              ))}
+          </div>
+        </Tab>
+      </Tabs>
     </>
   )
 }

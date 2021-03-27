@@ -59,7 +59,7 @@ input.form-control:focus {
   box-shadow: none;
 }
 
-.active {
+.activePage {
   border-bottom: solid 2px #535353;
 }
 
