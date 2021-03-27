@@ -1,5 +1,5 @@
 import styles from '../styles/CatalogStyles.module.css'
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext } from 'react'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { ActivePages, PageContext } from '../src/PageContext'
 import { useSWRInfinite } from 'swr'

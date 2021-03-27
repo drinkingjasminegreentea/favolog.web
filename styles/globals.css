@@ -74,6 +74,10 @@ input.form-control:focus {
   justify-self: center;
 }
 
+.grid {
+  display: grid;
+}
+
 button {
   width: 150px;
 }
