@@ -110,9 +110,9 @@ const AddItemDialog = ({ show, parentAction }) => {
 
   function paste() {
     textAreaRef.current.focus()
-    navigator.clipboard
-      .readText()
-      .then((clipText) => (textAreaRef.current.value += clipText))
+    navigator.clipboard.readText().then((clipText) => {
+      if (clipText.includes('https://')) textAreaRef.current.value += clipText
+    })
   }
 
   useEffect(() => {
