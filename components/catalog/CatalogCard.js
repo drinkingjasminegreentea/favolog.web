@@ -17,7 +17,7 @@ export default function CatalogCard({ catalog, username }) {
               className={styles.catalogFirstImage}
               layout='fixed'
               objectFit='contain'
-              width='200'
+              width='150'
               height='200'
               quality={100}
             />
