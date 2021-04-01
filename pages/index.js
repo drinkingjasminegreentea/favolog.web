@@ -88,8 +88,8 @@ export default function Page() {
       <UnauthenticatedTemplate>
         <Alert variant='info'>
           <span>
-            Favolog let's you catalog all your favorite things and share them
-            with your followers. Sign in to get started!
+            Catalog all your favorite things and share them with your followers.
+            Sign in to get started!
           </span>
         </Alert>
       </UnauthenticatedTemplate>
