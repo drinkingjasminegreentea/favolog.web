@@ -122,7 +122,7 @@ const AddItemDialog = ({ show, parentAction }) => {
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
       <Modal.Header closeButton>
-        <Modal.Title className='extraBold'>Adding new item</Modal.Title>
+        <Modal.Title>Adding new item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form.Group as={Row}>

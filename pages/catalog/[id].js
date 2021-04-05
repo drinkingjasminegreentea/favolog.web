@@ -90,7 +90,7 @@ export default function Page({ catalogId, refreshKey }) {
   return (
     <>
       <div className={styles.catalogHeader}>
-        <h4> {data.name} </h4>
+        <h1> {data.name} </h1>
         {data.isEditable ? (
           <CatalogMenu catalog={data} />
         ) : (

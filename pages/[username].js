@@ -87,7 +87,7 @@ export default function Page({ username }) {
         transition={false}
         id='noanim-tab-example'
       >
-        <Tab eventKey='catalogs' title='Catalogs' tabClassName='extraBold'>
+        <Tab eventKey='catalogs' title='Catalogs'>
           <div className={styles.catalog}>
             {data.catalogs &&
               data.catalogs.map((catalog) => (
@@ -96,7 +96,7 @@ export default function Page({ username }) {
           </div>
         </Tab>
         {feed && (
-          <Tab eventKey='items' title='All items' tabClassName='extraBold'>
+          <Tab eventKey='items' title='All items'>
             <div className='grid'>
               <div className={styles.catalog}>
                 {feed.map((item) => (

@@ -27,7 +27,7 @@ export default function FeedItemCard({ item }) {
         {item.title}
       </span>
       <Link href={`catalog/${item.catalogId}`}>
-        <h5 className='button'> {item.catalogName} </h5>
+        <h6 className='button'> {item.catalogName} </h6>
       </Link>
       <Comment item={item} user={user} toggleItemView={toggleItemView} />
       <ItemView
