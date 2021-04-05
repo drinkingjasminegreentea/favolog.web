@@ -17,9 +17,8 @@ export default function Comment({ item, user, toggleItemView }) {
       </Link>
       <div>
         <Link href={`/${user.username}`}>
-          <span className='button'>{user.username}</span>
+          <h6 className='button'>{user.username}</h6>
         </Link>
-        <br />
         {item.comment && item.comment.length > textLimit && (
           <div className='button' onClick={toggleItemView}>
             <span>{item.comment.substring(0, textLimit)} ..</span>
