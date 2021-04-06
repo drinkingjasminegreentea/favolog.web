@@ -80,10 +80,10 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </div>
       )}
       <div className={styles.profileDetails}>
-        <h1>
+        <h4>{user.username}</h4>
+        <h6>
           {user.firstName} {user.lastName}
-        </h1>
-        <h6>{user.username}</h6>
+        </h6>
         <Link href={`/user/${user.username}/following`}>
           <span className={styles.followInfo + ' button'}>
             {totalFollowing} following

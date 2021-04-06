@@ -7,13 +7,33 @@ body {
 }
 
 @font-face {
-  font-family: Gilroy-ExtraBold;
-  src: url(../public/fonts/Gilroy-ExtraBold.otf);
+  font-family: Poppins-Light;
+  src: url(../public/fonts/Poppins-Light.ttf);
 }
 
 @font-face {
-  font-family: Gilroy-Light;
-  src: url(../public/fonts/Gilroy-Light.otf);
+  font-family: Poppins-Regular;
+  src: url(../public/fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+  font-family: Poppins-Medium;
+  src: url(../public/fonts/Poppins-Medium.ttf);
+}
+
+@font-face {
+  font-family: Poppins-Bold;
+  src: url(../public/fonts/Poppins-Bold.ttf);
+}
+
+@font-face {
+  font-family: Poppins-ExtraBold;
+  src: url(../public/fonts/Poppins-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: Poppins-Black;
+  src: url(../public/fonts/Poppins-Black.ttf);
 }
 
 a,
@@ -23,32 +43,20 @@ a:hover {
 }
 
 * {
-  font-family: Gilroy-Light;
-  font-weight: bold;
+  font-family: Poppins-Regular;
 }
 
+h1 {
+  font-size: 22px;
+}
+
+h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: Gilroy-ExtraBold;
-  color: #535353;
-}
-
-h1 {
-  font-size: 22px;
-  font-family: Gilroy-Light;
-  font-weight: bold;
-}
-
-.light {
-  font-family: Gilroy-Light;
-  font-weight: bold;
-}
-
-.extraBold {
-  font-family: Gilroy-ExtraBold;
+  font-family: Poppins-Medium;
 }
 
 .button:hover,
