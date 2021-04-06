@@ -23,7 +23,7 @@ export default function FeedItemCard({ item }) {
   return (
     <div className={styles.catalogItem}>
       <ItemImage imageName={item.imageName} clickHandler={toggleItemView} />
-      <span className='button' onClick={toggleItemView}>
+      <span className='button medium-font' onClick={toggleItemView}>
         {item.title}
       </span>
       <Link href={`catalog/${item.catalogId}`}>
