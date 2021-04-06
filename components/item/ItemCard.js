@@ -71,7 +71,7 @@ export default function ItemCard({
         imageName={itemState.imageName}
         clickHandler={toggleItemView}
       />
-      <span className='button' onClick={toggleItemView}>
+      <span className='button medium-font' onClick={toggleItemView}>
         {itemState.title}
       </span>
       {itemState.comment && (
