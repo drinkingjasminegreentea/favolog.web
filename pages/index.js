@@ -88,8 +88,7 @@ export default function Page() {
       <UnauthenticatedTemplate>
         <Alert variant='info'>
           <span>
-            Share your favorite products with your followers and discover new
-            ones. Sign in to get started!
+            Share your favorites and discover new ones. Sign in to get started!
           </span>
         </Alert>
       </UnauthenticatedTemplate>
