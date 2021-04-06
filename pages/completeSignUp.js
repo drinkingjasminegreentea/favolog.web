@@ -9,14 +9,7 @@ import uploadImage from '../src/UploadImage'
 import DeleteProfile from '../components/user/DeleteProfile'
 
 export default function Page() {
-  const { currentUser, getToken } = useContext(AuthContext)
-  const [username, setUsername] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [emailAddress, setEmailAddress] = useState('')
-  const [bio, setBio] = useState('')
-  const [website, setWebsite] = useState('')
-  const [file, setFile] = useState()
+  const { getToken } = useContext(AuthContext)
   const router = useRouter()
 
   const [errors, setErrors] = useState({})

@@ -1,13 +1,13 @@
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { useContext } from 'react'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function DeleteProfile({ userId, show, parentAction }) {
-  const { signOut, acquireToken } = useContext(UserContext)
+  const { logOut, getToken } = useContext(AuthContext)
 
   async function deleteProfile() {
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${userId}`, {
         method: 'DELETE',
         headers: {
@@ -16,7 +16,7 @@ export default function DeleteProfile({ userId, show, parentAction }) {
       })
         .then((response) => {
           if (response.ok) {
-            signOut()
+            logOut()
             parentAction()
           } else return Promise.reject(response)
         })

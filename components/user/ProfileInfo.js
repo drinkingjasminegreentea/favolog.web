@@ -6,7 +6,7 @@ import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, getToken } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
@@ -17,7 +17,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         setIsSelf(true)
         setIsFollowing(false)
       } else {
-        acquireToken().then((accessToken) => {
+        getToken().then((accessToken) => {
           fetch(
             `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.id}/isFollowing/${user.id}`,
             {
@@ -33,15 +33,15 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         })
       }
     }
-  }, [loggedInUser])
+  }, [currentUser])
 
   const onButtonClick = async () => {
     const userFollow = {
       userId: user.id,
-      followerId: loggedInUser.id,
+      followerId: currentUser.id,
     }
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
         method: 'POST',
         headers: {
@@ -103,7 +103,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         )}
       </div>
       <div className={styles.profileButtons}>
-        {!self && loggedInUser && (
+        {!self && currentUser && (
           <Button variant='secondary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}
           </Button>

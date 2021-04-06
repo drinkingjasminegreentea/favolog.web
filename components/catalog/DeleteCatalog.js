@@ -7,8 +7,7 @@ import { AuthContext } from '../../src/AuthContext'
 
 export default function DeleteCatalog({ show, parentAction, catalogId }) {
   const router = useRouter()
-  const { user } = useContext(UserContext)
-  const { getToken } = useContext(AuthContext)
+  const { currentUser, getToken } = useContext(AuthContext)
 
   const submit = async () => {
     getToken().then((accessToken) => {

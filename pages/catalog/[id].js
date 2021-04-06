@@ -54,7 +54,7 @@ export default function Page({ catalogId, refreshKey }) {
   let url = null
   let fetcher = null
 
-  if (user) {
+  if (currentUser) {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`
     fetcher = fetchPrivate
   } else {

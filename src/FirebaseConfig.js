@@ -20,11 +20,49 @@ export default app
 
 // Configure FirebaseUI.
 export const uiConfig = {
-  // Popup signin flow rather than redirect flow.
   signInFlow: 'popup',
-  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
-  signInSuccessUrl: '/',
-  // We will display Google and Facebook as auth providers.
+  callbacks: {
+    signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+      console.log({ authResult })
+      const user = {
+        displayName: authResult.user.displayName,
+        emailAddress: authResult.user.email,
+        externalId: authResult.user.uid,
+        profileImage: authResult.user.photoURL,
+      }
+      authResult.user.getIdToken(true).then((token) => {
+        fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(user),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json()
+            }
+            return Promise.reject(response)
+          })
+          .then((data) => {
+            if (data.username !== authResult.user.displayName) {
+              authResult.user
+                .updateProfile({
+                  displayName: data.username,
+                })
+                .then(() => {
+                  return
+                })
+            }
+          })
+          .catch((error) => {
+            throw error
+          })
+      })
+      return true
+    },
+  },
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
