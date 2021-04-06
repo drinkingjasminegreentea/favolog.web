@@ -1,11 +1,11 @@
 import { useState, useContext, useRef, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/Layout.module.css'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
 import Col from 'react-bootstrap/Col'
@@ -16,7 +16,7 @@ const AddItemDialog = ({ show, parentAction }) => {
   const [catalogId, setCatalogId] = useState('')
   const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
-  const { acquireToken } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   const { catalogs, setCatalogRefresh } = useContext(PageContext)
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)

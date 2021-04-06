@@ -3,24 +3,23 @@ import Link from 'next/link'
 import styles from '../../styles/ProfileInfo.module.css'
 import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
-  const { user: loggedInUser } = useContext(UserContext)
+  const { currentUser } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
-  const { acquireToken } = useContext(UserContext)
 
   useEffect(() => {
-    if (loggedInUser) {
-      if (user.id == loggedInUser.id) {
+    if (currentUser) {
+      if (user.id == currentUser.id) {
         setIsSelf(true)
         setIsFollowing(false)
       } else {
         acquireToken().then((accessToken) => {
           fetch(
-            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${loggedInUser.id}/isFollowing/${user.id}`,
+            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.id}/isFollowing/${user.id}`,
             {
               method: 'GET',
               headers: {

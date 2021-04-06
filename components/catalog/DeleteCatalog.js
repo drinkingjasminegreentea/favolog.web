@@ -3,15 +3,15 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContext } from 'react'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function DeleteCatalog({ show, parentAction, catalogId }) {
   const router = useRouter()
   const { user } = useContext(UserContext)
-  const { acquireToken } = useContext(UserContext)
+  const { getToken } = useContext(AuthContext)
 
   const submit = async () => {
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(
         `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`,
         {

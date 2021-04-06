@@ -1,7 +1,7 @@
 import styles from '../../styles/Layout.module.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -9,13 +9,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ProfileIcon from '../user/ProfileIcon'
 import { ActivePages, PageContext } from '../../src/PageContext'
-import {
-  AuthenticatedTemplate,
-  UnauthenticatedTemplate,
-} from '@azure/msal-react'
+import { SignInModal } from '../../src/AuthContext'
 
 export default function NavigationMenu() {
-  const { user, signIn, signOut } = useContext(UserContext)
+  const { currentUser, logOut } = useContext(AuthContext)
+  console.log({ currentUser })
   const router = useRouter()
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'
@@ -25,80 +23,73 @@ export default function NavigationMenu() {
   if (activePage == ActivePages.explore)
     exploreStyle = exploreStyle + ' activePage'
 
-  return (
-    <>
-      <UnauthenticatedTemplate>
+  const [showModal, setShowModal] = useState(false)
+
+  const toggleModalWindow = () => {
+    setShowModal(!showModal)
+  }
+
+  if (!currentUser)
+    return (
+      <>
         <div className={styles.signIn}>
-          <Button variant='secondary' onClick={signIn}>
-            Sign In
+          <Button variant='secondary' onClick={toggleModalWindow}>
+            Log In
           </Button>
         </div>
-      </UnauthenticatedTemplate>
-      {user && (
-        <AuthenticatedTemplate>
-          <div className={styles.navigation}>
-            <Link href='/explore'>
-              <span className={exploreStyle}>
-                <Image
-                  src='/icons/explore.svg'
-                  width='25'
-                  height='25'
-                  layout='fixed'
-                />
-              </span>
-            </Link>
-            <Link href='/'>
-              <span className={homeStyle}>
-                <Image
-                  src='/icons/home.svg'
-                  width='25'
-                  height='25'
-                  layout='fixed'
-                />
-              </span>
-            </Link>
+        <SignInModal show={showModal} parentAction={toggleModalWindow} />
+      </>
+    )
 
-            <Dropdown drop='bottom'>
-              <Dropdown.Toggle as='a' bsPrefix='custom'>
-                <ProfileIcon
-                  src={'/icons/settings.svg'}
-                  profileImage={user.profileImage}
-                  username={user.username}
-                />
-              </Dropdown.Toggle>
+  return (
+    <div className={styles.navigation}>
+      <Link href='/explore'>
+        <span className={exploreStyle}>
+          <Image
+            src='/icons/explore.svg'
+            width='25'
+            height='25'
+            layout='fixed'
+          />
+        </span>
+      </Link>
+      <Link href='/'>
+        <span className={homeStyle}>
+          <Image src='/icons/home.svg' width='25' height='25' layout='fixed' />
+        </span>
+      </Link>
 
-              <Dropdown.Menu align='right'>
-                <Dropdown.Item
-                  className={styles.dropDownMenuItem}
-                  onClick={() => router.push(`/${user.username}`)}
-                >
-                  <Image src='/icons/person.svg' width='20' height='20' />
-                  <span>Profile</span>
-                </Dropdown.Item>
+      <Dropdown drop='bottom'>
+        <Dropdown.Toggle as='a' bsPrefix='custom'>
+          <ProfileIcon
+            src={'/icons/settings.svg'}
+            profileImage={currentUser.photoURL}
+            username={currentUser.displayName}
+          />
+        </Dropdown.Toggle>
 
-                <Dropdown.Item
-                  className={styles.dropDownMenuItem}
-                  onClick={() => router.push('/privacypolicy')}
-                >
-                  <Image src='/icons/shield-check.svg' width='20' height='20' />
-                  <span>Privacy Policy</span>
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className={styles.dropDownMenuItem}
-                  onClick={signOut}
-                >
-                  <Image
-                    src='/icons/box-arrow-left.svg'
-                    width='20'
-                    height='20'
-                  />
-                  <span>Sign out</span>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </AuthenticatedTemplate>
-      )}
-    </>
+        <Dropdown.Menu align='right'>
+          <Dropdown.Item
+            className={styles.dropDownMenuItem}
+            onClick={() => router.push(`/${currentUser.displayName}`)}
+          >
+            <Image src='/icons/person.svg' width='20' height='20' />
+            <span>Profile</span>
+          </Dropdown.Item>
+
+          <Dropdown.Item
+            className={styles.dropDownMenuItem}
+            onClick={() => router.push('/privacypolicy')}
+          >
+            <Image src='/icons/shield-check.svg' width='20' height='20' />
+            <span>Privacy Policy</span>
+          </Dropdown.Item>
+          <Dropdown.Item className={styles.dropDownMenuItem} onClick={logOut}>
+            <Image src='/icons/box-arrow-left.svg' width='20' height='20' />
+            <span>Log out</span>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
   )
 }

@@ -4,12 +4,12 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function EditCatalog({ show, parentAction, catalog }) {
   const [name, setName] = useState(catalog.name)
   const router = useRouter()
-  const { acquireToken } = useContext(UserContext)
+  const { getToken } = useContext(AuthContext)
 
   const submit = async () => {
     const data = {
@@ -17,7 +17,7 @@ export default function EditCatalog({ show, parentAction, catalog }) {
       id: catalog.id,
     }
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`, {
         method: 'PUT',
         headers: {
