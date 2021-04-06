@@ -82,8 +82,7 @@ export default function Page() {
       {!currentUser && (
         <Alert variant='info'>
           <span>
-            Catalog all your favorite things and share them with your followers.
-            Sign in to get started!
+            Share your favorites and discover new ones. Sign in to get started!
           </span>
         </Alert>
       )}
@@ -91,8 +90,8 @@ export default function Page() {
         <Alert variant='info'>
           <Alert.Heading>Welcome!</Alert.Heading>
           <span>
-            Create your first catalog and share your favorites by clicking on
-            the plus button. Explore and find people to follow.
+            Create your own favorites catalog by clicking on the plus button.
+            Explore and find people to follow.
           </span>
         </Alert>
       )}

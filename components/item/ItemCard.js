@@ -67,13 +67,13 @@ export default function ItemCard({
           </Dropdown>
         </span>
       )}
-      <span className='button' onClick={toggleItemView}>
-        {itemState.title}
-      </span>
       <ItemImage
         imageName={itemState.imageName}
         clickHandler={toggleItemView}
       />
+      <span className='button medium-font' onClick={toggleItemView}>
+        {itemState.title}
+      </span>
       {itemState.comment && (
         <Comment item={itemState} user={user} toggleItemView={toggleItemView} />
       )}

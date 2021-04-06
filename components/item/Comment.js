@@ -3,7 +3,7 @@ import styles from '../../styles/CatalogStyles.module.css'
 import Link from 'next/link'
 
 export default function Comment({ item, user, toggleItemView }) {
-  const textLimit = 25
+  const textLimit = 50
 
   return (
     <div className={styles.comment}>
@@ -17,14 +17,15 @@ export default function Comment({ item, user, toggleItemView }) {
       </Link>
       <div>
         <Link href={`/${user.username}`}>
-          <span className='button'>{user.username}</span>
+          <h6 className='button '>{user.username}</h6>
         </Link>
-        <br />
         {item.comment && item.comment.length > textLimit && (
-          <div className='button' onClick={toggleItemView}>
-            <span>{item.comment.substring(0, textLimit)} ..</span>
-            <img src='/icons/expand_more-24px.svg' />
-          </div>
+          <>
+            <span>{item.comment.substring(0, textLimit)}... </span>
+            <span className='button text-muted' onClick={toggleItemView}>
+              more
+            </span>
+          </>
         )}
         {item.comment && item.comment.length <= textLimit && (
           <span>{item.comment} </span>

@@ -43,7 +43,7 @@ export default function CatalogCard({ catalog, username }) {
         ) : (
           <ItemImage imageName={catalog.lastThreeImages[0]} />
         )}
-        <h4> {catalog.name} </h4>
+        <h5> {catalog.name} </h5>
         <span> {catalog.itemCount} items </span>
       </div>
     </Link>
