@@ -24,7 +24,10 @@ const AddItemDialog = ({ show, parentAction }) => {
   const [defaultCatalog, setDefaultCatalog] = useState('unselected')
 
   useEffect(() => {
-    if (currentCatalogId) setDefaultCatalog(currentCatalogId)
+    if (currentCatalogId) {
+      setDefaultCatalog(currentCatalogId)
+      setCatalogId(currentCatalogId)
+    }
   }, [currentCatalogId])
 
   const closeModal = () => {

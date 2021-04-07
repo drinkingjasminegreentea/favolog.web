@@ -23,11 +23,11 @@ export default function DeleteCatalog({ show, parentAction, catalogId }) {
         .then((response) => {
           if (response.ok) {
             parentAction()
-            router.push(`/${user.username}`)
+            router.push(`/${currentUser.displayName}`)
           } else Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
