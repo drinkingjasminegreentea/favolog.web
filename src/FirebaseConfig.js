@@ -11,9 +11,10 @@ const config = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 }
 
-const app = !firebase.apps.length
-  ? firebase.initializeApp(config)
-  : firebase.app()
+if (!firebase.apps.length || firebase.apps.length == 0)
+  firebase.initializeApp(config)
+
+const app = firebase.app()
 
 export const auth = app.auth()
 export default app
