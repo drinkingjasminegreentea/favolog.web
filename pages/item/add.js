@@ -5,7 +5,7 @@ import { BlobServiceClient } from '@azure/storage-blob'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/router'
 import { useState, useContext } from 'react'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
@@ -16,12 +16,12 @@ export default function Page({ redirected }) {
   const [catalogId, setCatalogId] = useState('')
   const [catalogName, setCatalogName] = useState('')
   const router = useRouter()
-  const { user, acquireToken } = useContext(UserContext)
+  const { currentUser, getToken } = useContext(AuthContext)
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
 
   const fetcher = (url) => {
-    return acquireToken().then((accessToken) => {
+    return getToken().then((accessToken) => {
       return fetch(url, {
         method: 'GET',
         headers: {
@@ -34,12 +34,12 @@ export default function Page({ redirected }) {
           return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
 
-  const fetchUrl = user
+  const fetchUrl = currentUser
     ? `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`
     : null
 

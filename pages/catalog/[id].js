@@ -4,17 +4,24 @@ import CatalogMenu from '../../components/catalog/CatalogMenu'
 import ProfileIcon from '../../components/user/ProfileIcon'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ catalogId, refreshKey }) {
-  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
-    PageContext
-  )
-  const { user, acquireToken } = useContext(UserContext)
+  const {
+    setActivePage,
+    setOpenGraphInfo,
+    openGraphInfo,
+    setCurrentCatalogId,
+  } = useContext(PageContext)
+  const { currentUser, getToken } = useContext(AuthContext)
   const [key, setKey] = useState(refreshKey)
+
+  useEffect(() => {
+    setCurrentCatalogId(catalogId)
+  }, [catalogId])
 
   const fetchPublic = (url) => {
     return fetch(url, {
@@ -33,7 +40,7 @@ export default function Page({ catalogId, refreshKey }) {
   }
 
   const fetchPrivate = (url) => {
-    return acquireToken().then((accessToken) => {
+    return getToken().then((accessToken) => {
       return fetch(url, {
         method: 'GET',
         headers: {
@@ -54,7 +61,7 @@ export default function Page({ catalogId, refreshKey }) {
   let url = null
   let fetcher = null
 
-  if (user) {
+  if (currentUser) {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog/${catalogId}`
     fetcher = fetchPrivate
   } else {

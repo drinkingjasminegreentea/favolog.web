@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import uploadImage from '../../src/UploadImage'
 
 export default function EditItem({ show, parentAction, item }) {
@@ -11,7 +11,7 @@ export default function EditItem({ show, parentAction, item }) {
   const [url, setUrl] = useState('')
   const [comment, setComment] = useState('')
   const [file, setFile] = useState()
-  const { acquireToken } = useContext(UserContext)
+  const { getToken } = useContext(AuthContext)
 
   useEffect(() => {
     setTitle(item.title)
@@ -31,7 +31,7 @@ export default function EditItem({ show, parentAction, item }) {
       )
     }
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
         method: 'PUT',
         headers: {

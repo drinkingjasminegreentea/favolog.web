@@ -24,7 +24,7 @@ export default function UserCard({ user }) {
           </div>
         )}
         <div className={styles.userInfo}>
-          <span>{user.username}</span>
+          <h5>{user.username}</h5>
           <span> {user.bio} </span>
         </div>
       </div>

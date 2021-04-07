@@ -9,14 +9,7 @@ import uploadImage from '../src/UploadImage'
 import DeleteProfile from '../components/user/DeleteProfile'
 
 export default function Page() {
-  const { currentUser, getToken } = useContext(AuthContext)
-  const [username, setUsername] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [emailAddress, setEmailAddress] = useState('')
-  const [bio, setBio] = useState('')
-  const [website, setWebsite] = useState('')
-  const [file, setFile] = useState()
+  const { getToken } = useContext(AuthContext)
   const router = useRouter()
 
   const [errors, setErrors] = useState({})
@@ -24,32 +17,16 @@ export default function Page() {
   const emailAddressRef = useRef(null)
 
   useEffect(() => {
-    getToken().then((token) => {
-      fetch(
-        `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.displayName}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-        .then((response) => {
-          if (response.ok) return response.json()
-          else Promise.reject()
-        })
-        .then((data) => {
-          setUsername(data.username)
-          setFirstName(data.firstName || '')
-          setLastName(data.lastName || '')
-          setEmailAddress(data.emailAddress || '')
-          setBio(data.bio || '')
-          setWebsite(data.website || '')
-        })
-        .catch((error) => console.error(error))
-    })
-  }, [])
+    if (user) {
+      setUsername(user.username)
+      setFirstName(user.firstName || '')
+      setLastName(user.lastName || '')
+      setEmailAddress(user.emailAddress || '')
+      setBio(user.bio || '')
+      setWebsite(user.website || '')
+    }
+    setErrors({})
+  }, [user])
 
   const update = async () => {
     setErrors({})
@@ -85,12 +62,14 @@ export default function Page() {
     }
 
     const userUpdate = {
+      id: user.id,
       username,
       firstName,
       lastName,
       emailAddress,
       bio,
       website,
+      externalId: user.externalId,
     }
 
     if (file) {
@@ -100,7 +79,7 @@ export default function Page() {
       )
     }
 
-    getToken().then((accessToken) => {
+    acquireToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
         method: 'PUT',
         headers: {
@@ -115,23 +94,11 @@ export default function Page() {
           } else return Promise.reject(response)
         })
         .then((data) => {
-          if (
-            data.username !== currentUser.displayName ||
-            data.emailAddress !== currentUser.email
-          ) {
-            currentUser
-              .updateProfile({
-                displayName: data.username,
-                email: data.emailAddress,
-              })
-              .then(() => {
-                router.push(`/${currentUser.displayName}`)
-              })
-          }
-          router.push(`/${currentUser.displayName}`)
+          updateUser(data)
+          router.push(`/${username}`)
         })
         .catch((error) => {
-          console.error(error)
+          console.log('Something went wrong.', error)
         })
     })
   }
@@ -218,11 +185,13 @@ export default function Page() {
       >
         Delete profile
       </span>
-      <DeleteProfile
-        username={currentUser.displayName}
-        show={showDeleteProfile}
-        parentAction={toggleDeleteProfileModal}
-      />
+      {user && (
+        <DeleteProfile
+          userId={user.id}
+          show={showDeleteProfile}
+          parentAction={toggleDeleteProfileModal}
+        />
+      )}
     </div>
   )
 }

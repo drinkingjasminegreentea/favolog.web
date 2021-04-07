@@ -4,8 +4,8 @@ import Add from './Add'
 import SearchBar from './SearchBar'
 import Link from 'next/link'
 import Head from 'next/head'
-import { AuthenticatedTemplate } from '@azure/msal-react'
 import { PageContext } from '../../src/PageContext'
+import { AuthContext } from '../../src/AuthContext'
 import { useContext } from 'react'
 
 const Logo = () => {
@@ -18,6 +18,7 @@ const Logo = () => {
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
+  const { currentUser } = useContext(AuthContext)
 
   return (
     <>
@@ -42,9 +43,7 @@ export default function Layout({ children }) {
           <NavigationMenu />
         </div>
         <div className={styles.content}>{children}</div>
-        <AuthenticatedTemplate>
-          <Add />
-        </AuthenticatedTemplate>
+        {currentUser && <Add />}
       </div>
     </>
   )

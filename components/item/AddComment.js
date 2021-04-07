@@ -3,16 +3,16 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function AddComment({ show, parentAction, item }) {
   const [comment, setComment] = useState('')
-  const { acquireToken } = useContext(UserContext)
+  const { getToken } = useContext(AuthContext)
 
   const submit = async () => {
     item.comment = comment
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
         method: 'PUT',
         headers: {

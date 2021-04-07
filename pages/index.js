@@ -1,29 +1,23 @@
 import styles from '../styles/CatalogStyles.module.css'
 import { useContext, useEffect } from 'react'
-import { UserContext } from '../src/UserContext'
+import { AuthContext } from '../src/AuthContext'
 import { ActivePages, PageContext } from '../src/PageContext'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
-import { UnauthenticatedTemplate } from '@azure/msal-react'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
-  const { user, acquireToken } = useContext(UserContext)
+  const { currentUser, getToken } = useContext(AuthContext)
 
   useEffect(() => {
     setActivePage(ActivePages.home)
   }, [])
 
-  const fetchDiscoverFeed = (url) => {
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-      },
-    })
+  const fetchGuestFeed = (url) => {
+    return fetch(url)
       .then((response) => {
         if (response.ok) {
           return response.json()
@@ -31,17 +25,17 @@ export default function Page() {
         return Promise.reject(response)
       })
       .catch((error) => {
-        console.log('Something went wrong.', error)
+        console.error(error)
       })
   }
 
   const fetchUserFeed = (url) => {
-    return acquireToken().then((accessToken) => {
+    return getToken().then((token) => {
       return fetch(url, {
         method: 'GET',
         headers: {
           Accept: 'application/json',
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => {
@@ -59,12 +53,12 @@ export default function Page() {
   let fetcher = null
   const PAGE_SIZE = 12
 
-  if (user) {
-    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user/${user.id}`
+  if (currentUser) {
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed/user`
     fetcher = fetchUserFeed
   } else {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/feed`
-    fetcher = fetchDiscoverFeed
+    fetcher = fetchGuestFeed
   }
 
   const { data, error, size, setSize } = useSWRInfinite(
@@ -85,13 +79,13 @@ export default function Page() {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <UnauthenticatedTemplate>
+      {!currentUser && (
         <Alert variant='info'>
           <span>
             Share your favorites and discover new ones. Sign in to get started!
           </span>
         </Alert>
-      </UnauthenticatedTemplate>
+      )}
       {isEmpty && (
         <Alert variant='info'>
           <Alert.Heading>Welcome!</Alert.Heading>

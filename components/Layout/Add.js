@@ -1,58 +1,80 @@
-import { useState, useContext, useRef, useEffect } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/Layout.module.css'
-import { UserContext } from '../../src/UserContext'
+import { AuthContext } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
 
 const AddItemDialog = ({ show, parentAction }) => {
   const [catalogName, setCatalogName] = useState('')
   const [catalogId, setCatalogId] = useState('')
   const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
-  const { acquireToken } = useContext(UserContext)
-  const { catalogs, setCatalogRefresh } = useContext(PageContext)
+  const { getToken } = useContext(AuthContext)
+  const { catalogs, setCatalogRefresh, currentCatalogId } = useContext(
+    PageContext
+  )
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
+  const [addDataType, setAddDataType] = useState('item')
+  const [defaultCatalog, setDefaultCatalog] = useState('unselected')
+
+  useEffect(() => {
+    if (currentCatalogId) setDefaultCatalog(currentCatalogId)
+  }, [currentCatalogId])
 
   const closeModal = () => {
     parentAction()
     setCatalogName('')
     setCatalogId('')
     setOriginalUrl('')
+    setAddDataType('item')
     setErrors({})
   }
 
   const submit = async () => {
-    if (!originalUrl) {
-      setErrors({
-        originalUrl: 'Please enter link to your item',
-      })
-      return
-    }
+    let postData, url
 
-    if (!catalogId && !catalogName) {
-      setErrors({
-        catalog: 'Please choose a catalog or create a new one',
-      })
-      return
+    if (addDataType === 'item') {
+      if (!originalUrl) {
+        setErrors({
+          originalUrl: 'Please enter link to your item',
+        })
+        return
+      }
+
+      if (!catalogId) {
+        setErrors({
+          catalog: 'Please choose a catalog',
+        })
+        return
+      }
+
+      postData = {
+        catalogId,
+        originalUrl,
+      }
+      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
+    } else {
+      if (!catalogName) {
+        setErrors({
+          catalog: 'Please enter catalog name',
+        })
+        return
+      }
+
+      postData = {
+        name: catalogName,
+      }
+      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`
     }
 
     setAddInProgress(true)
-
-    const postData = {
-      catalogId,
-      catalogName,
-      originalUrl,
-    }
-    const url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
-    const accessToken = await acquireToken()
+    const accessToken = await getToken()
 
     fetch(url, {
       method: 'POST',
@@ -71,8 +93,11 @@ const AddItemDialog = ({ show, parentAction }) => {
       .then((data) => {
         setAddInProgress(false)
         closeModal()
-        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+        let redirectCatalogId
+        if (addDataType === 'item') redirectCatalogId = data.catalogId
+        else redirectCatalogId = data.id
         setCatalogRefresh(true)
+        router.push(`/catalog/${redirectCatalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
         setAddInProgress(false)
@@ -82,7 +107,7 @@ const AddItemDialog = ({ show, parentAction }) => {
       })
   }
 
-  const handleCatalogNameChange = (e) => {
+  const updateCatalogName = (e) => {
     const value = e.target.value
     setCatalogName(value)
     if (value) {
@@ -90,7 +115,7 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const handleCatalogIdChange = (e) => {
+  const updateCatalogId = (e) => {
     const value = e.target.value
     setCatalogId(value)
     if (value) {
@@ -98,7 +123,7 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const handleUrlChange = (e) => {
+  const updateUrl = (e) => {
     const value = e.target.value
     setOriginalUrl(value)
     if (value) {
@@ -106,85 +131,93 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const textAreaRef = useRef()
-
-  function paste() {
-    textAreaRef.current.focus()
-    navigator.clipboard.readText().then((clipText) => {
-      if (clipText.includes('https://')) textAreaRef.current.value += clipText
-    })
+  const changeAddDataType = (e) => {
+    setAddDataType(e.target.value)
+    setErrors({})
   }
-
-  useEffect(() => {
-    if (textAreaRef.current) paste()
-  }, [textAreaRef.current])
 
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
-      <Modal.Header closeButton>
-        <Modal.Title>Adding new item</Modal.Title>
-      </Modal.Header>
       <Modal.Body>
-        <Form.Group as={Row}>
-          <Form.Label column md='3'>
-            Paste item link
-          </Form.Label>
-          <Col md='9'>
-            <Form.Control
-              autoComplete='off'
-              ref={textAreaRef}
-              type='text'
-              placeholder='https://'
-              value={originalUrl}
-              onChange={handleUrlChange}
-            />
-          </Col>
+        <Form.Group>
+          <Form.Check
+            defaultChecked
+            type='radio'
+            label='New Item'
+            name='dataType'
+            id='item'
+            value='item'
+            className={styles.checkbox}
+            onChange={changeAddDataType}
+          />
         </Form.Group>
         {errors && errors.originalUrl && (
           <p className='error'>{errors.originalUrl}</p>
         )}
-        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
-        <Form.Group as={Row}>
-          <Form.Label column md='3'>
-            Catalog
-          </Form.Label>
-          <Col md='9'>
-            <Form.Control
-              autoComplete='off'
-              as='select'
-              custom
-              defaultValue='unselected'
-              onChange={handleCatalogIdChange}
-            >
-              <option value='unselected' disabled='disabled'>
-                Choose from existing catalogs
-              </option>
-              {catalogs &&
-                catalogs.map((catalog) => (
-                  <option key={catalog.id} value={catalog.id}>
-                    {catalog.name}
-                  </option>
-                ))}
-            </Form.Control>
-          </Col>
+        <Form.Group>
+          <Form.Control
+            as='textarea'
+            rows={3}
+            autoComplete='off'
+            type='text'
+            placeholder='https:// Enter item link here'
+            value={originalUrl}
+            onChange={updateUrl}
+            disabled={addDataType !== 'item'}
+          />
         </Form.Group>
-        <Form.Group as={Row}>
-          <Form.Label column md='3'>
-            Create a new catalog
-          </Form.Label>
-          <Col md='9'>
-            <Form.Control
-              autoComplete='off'
-              type='text'
-              placeholder='Enter name of a new catalog for this item'
-              value={catalogName}
-              onChange={handleCatalogNameChange}
-            />
-          </Col>
+        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
+        <Form.Group>
+          <Form.Control
+            autoComplete='off'
+            as='select'
+            custom
+            defaultValue={defaultCatalog}
+            onChange={updateCatalogId}
+            disabled={addDataType !== 'item'}
+          >
+            <option value='unselected' disabled='disabled'>
+              Choose from existing catalogs
+            </option>
+            {catalogs &&
+              catalogs.map((catalog) => (
+                <option key={catalog.id} value={catalog.id}>
+                  {catalog.name}
+                </option>
+              ))}
+          </Form.Control>
+        </Form.Group>
+        <Form.Group>
+          <Form.Check
+            type='radio'
+            label='New Catalog'
+            name='dataType'
+            id='catalog'
+            value='catalog'
+            className={styles.checkbox}
+            onChange={changeAddDataType}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Control
+            autoComplete='off'
+            type='text'
+            placeholder='Catalog name'
+            value={catalogName}
+            onChange={updateCatalogName}
+            disabled={addDataType !== 'catalog'}
+          />
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' disabled={addInProgress} onClick={submit}>
+        <Button
+          variant='secondary'
+          disabled={addInProgress}
+          onClick={closeModal}
+        >
+          Cancel
+        </Button>
+        <Button variant='primary' disabled={addInProgress} onClick={submit}>
           Ready
         </Button>
         {addInProgress && <Spinner animation='grow' />}

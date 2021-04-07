@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react'
-import { UserContext } from './UserContext'
+import { AuthContext } from './AuthContext'
 
 export const PageContext = createContext()
 
@@ -16,14 +16,15 @@ export const PageContextProvider = ({ children }) => {
     description: 'Catalog and Share Your Favorite Things',
   }
   const [activePage, setActivePage] = useState(null)
-  const { user, acquireToken } = useContext(UserContext)
+  const { currentUser, getToken } = useContext(AuthContext)
   const [catalogs, setCatalogs] = useState(null)
   const [openGraphInfo, setOpenGraphInfo] = useState(defaulOGInfo)
   const [catalogRefresh, setCatalogRefresh] = useState(false)
+  const [currentCatalogId, setCurrentCatalogId] = useState(null)
 
   const loadCatalogs = () => {
-    if (user) {
-      acquireToken().then((accessToken) => {
+    if (currentUser) {
+      getToken().then((accessToken) => {
         fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`, {
           method: 'GET',
           headers: {
@@ -37,7 +38,7 @@ export const PageContextProvider = ({ children }) => {
           })
           .then((data) => setCatalogs(data))
           .catch((error) => {
-            console.log('Something went wrong.', error)
+            console.error(error)
           })
       })
     }
@@ -59,6 +60,8 @@ export const PageContextProvider = ({ children }) => {
         setCatalogRefresh,
         openGraphInfo,
         setOpenGraphInfo,
+        currentCatalogId,
+        setCurrentCatalogId,
       }}
     >
       {children}
