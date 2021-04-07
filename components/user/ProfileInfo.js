@@ -13,13 +13,13 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
 
   useEffect(() => {
     if (currentUser) {
-      if (user.id == currentUser.id) {
+      if (user.username == currentUser.displayName) {
         setIsSelf(true)
         setIsFollowing(false)
       } else {
         getToken().then((accessToken) => {
           fetch(
-            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.id}/isFollowing/${user.id}`,
+            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.displayName}/isFollowing/${user.username}`,
             {
               method: 'GET',
               headers: {
@@ -37,8 +37,8 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
 
   const onButtonClick = async () => {
     const userFollow = {
-      userId: user.id,
-      followerId: currentUser.id,
+      username: user.userName,
+      followerUsername: currentUser.displayName,
     }
 
     getToken().then((accessToken) => {

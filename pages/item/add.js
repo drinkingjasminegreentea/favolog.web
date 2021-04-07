@@ -21,7 +21,7 @@ export default function Page({ redirected }) {
   const [addInProgress, setAddInProgress] = useState(false)
 
   const fetcher = (url) => {
-    return acquireToken().then((accessToken) => {
+    return getToken().then((accessToken) => {
       return fetch(url, {
         method: 'GET',
         headers: {
@@ -34,12 +34,12 @@ export default function Page({ redirected }) {
           return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
 
-  const fetchUrl = user
+  const fetchUrl = currentUser
     ? `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`
     : null
 

@@ -23,7 +23,6 @@ export const uiConfig = {
   signInFlow: 'popup',
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      console.log({ authResult })
       const user = {
         displayName: authResult.user.displayName,
         emailAddress: authResult.user.email,

@@ -15,27 +15,27 @@ export default function Page({ searchQuery, results }) {
         Search results <b>'{searchQuery}'</b>
       </span>
       <br />
-      <h4>Users</h4>
+      {results.users.length > 0 && <h4>Users</h4>}
       <div className={styles.catalog}>
         {results.users.map((item) => (
           <UserCard key={item.id} user={item} />
         ))}
       </div>
       <br />
-      <h4>Catalogs</h4>
+      {results.catalogs.length > 0 && <h4>Catalogs</h4>}
       <div className={styles.catalog}>
         {results.catalogs.map((item) => (
           <div key={item.id}>
             <Link href={`/catalog/${item.id}`} key={item.id}>
-              <span className='link'>{item.name}</span>
+              <h5 className='button'>{item.name}</h5>
             </Link>
             <Link href={`/user/${item.user.id}`}>
-              <div className={styles.catalogAuthor + ' link'}>
+              <div className={styles.catalogAuthor + ' button'}>
                 <ProfileIcon
                   profileImage={item.user.profileImage}
                   username={item.user.username}
                 />
-                <span>{item.user.username}</span>
+                <h6>{item.user.username}</h6>
               </div>
             </Link>
           </div>

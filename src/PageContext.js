@@ -16,14 +16,14 @@ export const PageContextProvider = ({ children }) => {
     description: 'Catalog and Share Your Favorite Things',
   }
   const [activePage, setActivePage] = useState(null)
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, getToken } = useContext(AuthContext)
   const [catalogs, setCatalogs] = useState(null)
   const [openGraphInfo, setOpenGraphInfo] = useState(defaulOGInfo)
   const [catalogRefresh, setCatalogRefresh] = useState(false)
 
   const loadCatalogs = () => {
     if (currentUser) {
-      acquireToken().then((accessToken) => {
+      getToken().then((accessToken) => {
         fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`, {
           method: 'GET',
           headers: {
@@ -37,7 +37,7 @@ export const PageContextProvider = ({ children }) => {
           })
           .then((data) => setCatalogs(data))
           .catch((error) => {
-            console.log('Something went wrong.', error)
+            console.error(error)
           })
       })
     }
@@ -45,10 +45,10 @@ export const PageContextProvider = ({ children }) => {
 
   useEffect(() => {
     setCatalogRefresh(false)
-    //loadCatalogs()
+    loadCatalogs()
   }, [catalogRefresh])
 
-  //if (!catalogs) loadCatalogs()
+  if (!catalogs) loadCatalogs()
 
   return (
     <PageContext.Provider

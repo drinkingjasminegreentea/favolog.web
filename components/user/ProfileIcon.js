@@ -2,9 +2,11 @@ import styles from '../../styles/CatalogStyles.module.css'
 
 export default function ProfileIcon({ profileImage, username }) {
   let profileUrl
-  if (profileImage.startsWith('https://')) profileUrl = profileImage
-  else
-    profileUrl = `${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${profileImage}`
+  if (profileImage) {
+    if (profileImage.startsWith('https://')) profileUrl = profileImage
+    else
+      profileUrl = `${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${profileImage}`
+  }
 
   return (
     <div className='button'>

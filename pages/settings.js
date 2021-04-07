@@ -24,16 +24,32 @@ export default function Page() {
   const emailAddressRef = useRef(null)
 
   useEffect(() => {
-    if (user) {
-      setUsername(user.username)
-      setFirstName(user.firstName || '')
-      setLastName(user.lastName || '')
-      setEmailAddress(user.emailAddress || '')
-      setBio(user.bio || '')
-      setWebsite(user.website || '')
-    }
-    setErrors({})
-  }, [user])
+    getToken().then((token) => {
+      fetch(
+        `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.displayName}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+        .then((response) => {
+          if (response.ok) return response.json()
+          else Promise.reject()
+        })
+        .then((data) => {
+          setUsername(data.username)
+          setFirstName(data.firstName || '')
+          setLastName(data.lastName || '')
+          setEmailAddress(data.emailAddress || '')
+          setBio(data.bio || '')
+          setWebsite(data.website || '')
+        })
+        .catch((error) => console.error(error))
+    })
+  }, [])
 
   const update = async () => {
     setErrors({})
@@ -69,14 +85,12 @@ export default function Page() {
     }
 
     const userUpdate = {
-      id: user.id,
       username,
       firstName,
       lastName,
       emailAddress,
       bio,
       website,
-      externalId: user.externalId,
     }
 
     if (file) {
@@ -86,7 +100,7 @@ export default function Page() {
       )
     }
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
         method: 'PUT',
         headers: {
@@ -101,11 +115,23 @@ export default function Page() {
           } else return Promise.reject(response)
         })
         .then((data) => {
-          updateUser(data)
-          router.push(`/${username}`)
+          if (
+            data.username !== currentUser.displayName ||
+            data.emailAddress !== currentUser.email
+          ) {
+            currentUser
+              .updateProfile({
+                displayName: data.username,
+                email: data.emailAddress,
+              })
+              .then(() => {
+                router.push(`/${currentUser.displayName}`)
+              })
+          }
+          router.push(`/${currentUser.displayName}`)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
@@ -192,13 +218,11 @@ export default function Page() {
       >
         Delete profile
       </span>
-      {user && (
-        <DeleteProfile
-          userId={user.id}
-          show={showDeleteProfile}
-          parentAction={toggleDeleteProfileModal}
-        />
-      )}
+      <DeleteProfile
+        username={currentUser.displayName}
+        show={showDeleteProfile}
+        parentAction={toggleDeleteProfileModal}
+      />
     </div>
   )
 }

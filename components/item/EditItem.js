@@ -31,7 +31,7 @@ export default function EditItem({ show, parentAction, item }) {
       )
     }
 
-    acquireToken().then((accessToken) => {
+    getToken().then((accessToken) => {
       fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
         method: 'PUT',
         headers: {

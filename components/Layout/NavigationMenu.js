@@ -13,7 +13,6 @@ import { SignInModal } from '../../src/AuthContext'
 
 export default function NavigationMenu() {
   const { currentUser, logOut } = useContext(AuthContext)
-  console.log({ currentUser })
   const router = useRouter()
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'

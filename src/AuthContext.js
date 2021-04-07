@@ -25,10 +25,6 @@ export const AuthContextProvider = ({ children }) => {
     return auth.signOut()
   }
 
-  function updateDisplayName(displayName) {
-    return currentUser.updateDisplayName(displayName)
-  }
-
   const getToken = async () => {
     if (!currentUser) throw 'user is not logged in'
 
@@ -52,7 +48,6 @@ export const AuthContextProvider = ({ children }) => {
     currentUser,
     getToken,
     logOut,
-    updateDisplayName,
   }
 
   return (

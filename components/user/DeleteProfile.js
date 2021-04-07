@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button'
 import { useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 
-export default function DeleteProfile({ userId, show, parentAction }) {
+export default function DeleteProfile({ username, show, parentAction }) {
   const { logOut, getToken } = useContext(AuthContext)
 
   async function deleteProfile() {
     getToken().then((accessToken) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${userId}`, {
+      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -38,7 +38,7 @@ export default function DeleteProfile({ userId, show, parentAction }) {
         <Button variant='secondary' onClick={parentAction}>
           Cancel
         </Button>
-        <Button variant='secondary' onClick={() => deleteProfile()}>
+        <Button variant='primary' onClick={() => deleteProfile()}>
           Delete
         </Button>
       </Modal.Footer>
