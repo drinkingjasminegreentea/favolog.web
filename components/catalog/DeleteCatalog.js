@@ -4,10 +4,12 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
+import { PageContext } from '../../src/PageContext'
 
 export default function DeleteCatalog({ show, parentAction, catalogId }) {
   const router = useRouter()
   const { currentUser, getToken } = useContext(AuthContext)
+  const { setCatalogRefresh, setCurrentCatalogId } = useContext(PageContext)
 
   const submit = async () => {
     getToken().then((accessToken) => {
@@ -23,6 +25,8 @@ export default function DeleteCatalog({ show, parentAction, catalogId }) {
         .then((response) => {
           if (response.ok) {
             parentAction()
+            setCatalogRefresh(true)
+            setCurrentCatalogId(null)
             router.push(`/${currentUser.displayName}`)
           } else Promise.reject(response)
         })

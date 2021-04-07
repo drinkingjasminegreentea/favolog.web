@@ -10,9 +10,9 @@ import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
 
 const AddItemDialog = ({ show, parentAction }) => {
-  const [catalogName, setCatalogName] = useState('')
-  const [catalogId, setCatalogId] = useState('')
-  const [originalUrl, setOriginalUrl] = useState('')
+  const [catalogName, setCatalogName] = useState(null)
+  const [catalogId, setCatalogId] = useState(null)
+  const [originalUrl, setOriginalUrl] = useState(null)
   const router = useRouter()
   const { getToken } = useContext(AuthContext)
   const { catalogs, setCatalogRefresh, currentCatalogId } = useContext(
@@ -27,6 +27,9 @@ const AddItemDialog = ({ show, parentAction }) => {
     if (currentCatalogId) {
       setDefaultCatalog(currentCatalogId)
       setCatalogId(currentCatalogId)
+    } else {
+      setDefaultCatalog('unselected')
+      setCatalogId(null)
     }
   }, [currentCatalogId])
 
@@ -98,8 +101,10 @@ const AddItemDialog = ({ show, parentAction }) => {
         closeModal()
         let redirectCatalogId
         if (addDataType === 'item') redirectCatalogId = data.catalogId
-        else redirectCatalogId = data.id
-        setCatalogRefresh(true)
+        else {
+          redirectCatalogId = data.id
+          setCatalogRefresh(true)
+        }
         router.push(`/catalog/${redirectCatalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
