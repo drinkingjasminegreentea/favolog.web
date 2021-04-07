@@ -20,6 +20,7 @@ export const PageContextProvider = ({ children }) => {
   const [catalogs, setCatalogs] = useState(null)
   const [openGraphInfo, setOpenGraphInfo] = useState(defaulOGInfo)
   const [catalogRefresh, setCatalogRefresh] = useState(false)
+  const [currentCatalogId, setCurrentCatalogId] = useState(null)
 
   const loadCatalogs = () => {
     if (currentUser) {
@@ -59,6 +60,8 @@ export const PageContextProvider = ({ children }) => {
         setCatalogRefresh,
         openGraphInfo,
         setOpenGraphInfo,
+        currentCatalogId,
+        setCurrentCatalogId,
       }}
     >
       {children}

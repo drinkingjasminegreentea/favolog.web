@@ -10,11 +10,18 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page({ catalogId, refreshKey }) {
-  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
-    PageContext
-  )
+  const {
+    setActivePage,
+    setOpenGraphInfo,
+    openGraphInfo,
+    setCurrentCatalogId,
+  } = useContext(PageContext)
   const { currentUser, getToken } = useContext(AuthContext)
   const [key, setKey] = useState(refreshKey)
+
+  useEffect(() => {
+    setCurrentCatalogId(catalogId)
+  }, [catalogId])
 
   const fetchPublic = (url) => {
     return fetch(url, {

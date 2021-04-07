@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -15,10 +15,17 @@ const AddItemDialog = ({ show, parentAction }) => {
   const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
   const { getToken } = useContext(AuthContext)
-  const { catalogs, setCatalogRefresh } = useContext(PageContext)
+  const { catalogs, setCatalogRefresh, currentCatalogId } = useContext(
+    PageContext
+  )
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
   const [addDataType, setAddDataType] = useState('item')
+  const [defaultCatalog, setDefaultCatalog] = useState('unselected')
+
+  useEffect(() => {
+    if (currentCatalogId) setDefaultCatalog(currentCatalogId)
+  }, [currentCatalogId])
 
   const closeModal = () => {
     parentAction()
@@ -89,8 +96,8 @@ const AddItemDialog = ({ show, parentAction }) => {
         let redirectCatalogId
         if (addDataType === 'item') redirectCatalogId = data.catalogId
         else redirectCatalogId = data.id
-        router.push(`/catalog/${redirectCatalogId}?refreshKey=${Date.now()}`)
         setCatalogRefresh(true)
+        router.push(`/catalog/${redirectCatalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
         setAddInProgress(false)
@@ -165,7 +172,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             autoComplete='off'
             as='select'
             custom
-            defaultValue='unselected'
+            defaultValue={defaultCatalog}
             onChange={updateCatalogId}
             disabled={addDataType !== 'item'}
           >

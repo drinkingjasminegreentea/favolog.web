@@ -32,12 +32,14 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
             .then((data) => setIsFollowing(data))
         })
       }
+    } else {
+      setIsSelf(false)
     }
-  }, [currentUser])
+  }, [user, currentUser])
 
   const onButtonClick = async () => {
     const userFollow = {
-      username: user.userName,
+      username: user.username,
       followerUsername: currentUser.displayName,
     }
 
@@ -50,12 +52,16 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(userFollow),
-      }).then(() => {
-        isFollowing
-          ? setTotalFollowersSate(totalFollowersState - 1)
-          : setTotalFollowersSate(totalFollowersState + 1)
-        setIsFollowing(!isFollowing)
       })
+        .then((response) => {
+          if (response.ok) {
+            isFollowing
+              ? setTotalFollowersSate(totalFollowersState - 1)
+              : setTotalFollowersSate(totalFollowersState + 1)
+            setIsFollowing(!isFollowing)
+          } else Promise.reject()
+        })
+        .catch((error) => console.error(error))
     })
   }
 

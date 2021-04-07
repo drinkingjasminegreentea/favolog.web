@@ -45,10 +45,14 @@ export const uiConfig = {
             return Promise.reject(response)
           })
           .then((data) => {
-            if (data.username !== authResult.user.displayName) {
+            if (
+              data.username !== authResult.user.displayName ||
+              data.profileImage !== authResult.user.photoURL
+            ) {
               authResult.user
                 .updateProfile({
                   displayName: data.username,
+                  photoURL: data.profileImage,
                 })
                 .then(() => {
                   return
@@ -65,5 +69,6 @@ export const uiConfig = {
   signInOptions: [
     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
   ],
 }

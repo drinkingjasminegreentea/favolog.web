@@ -1,5 +1,5 @@
 import styles from '../../styles/Layout.module.css'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../../src/AuthContext'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -17,12 +17,20 @@ export default function NavigationMenu() {
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'
   let exploreStyle = 'button'
+  const [profileImage, setProfileImage] = useState('')
+  const [username, setUsername] = useState('')
+  const [showModal, setShowModal] = useState(false)
 
   if (activePage == ActivePages.home) homeStyle = homeStyle + ' activePage'
   if (activePage == ActivePages.explore)
     exploreStyle = exploreStyle + ' activePage'
 
-  const [showModal, setShowModal] = useState(false)
+  useEffect(() => {
+    if (currentUser) {
+      setProfileImage(currentUser.photoURL)
+      setUsername(currentUser.displayName)
+    }
+  }, [currentUser])
 
   const toggleModalWindow = () => {
     setShowModal(!showModal)
@@ -62,15 +70,15 @@ export default function NavigationMenu() {
         <Dropdown.Toggle as='a' bsPrefix='custom'>
           <ProfileIcon
             src={'/icons/settings.svg'}
-            profileImage={currentUser.photoURL}
-            username={currentUser.displayName}
+            profileImage={profileImage}
+            username={username}
           />
         </Dropdown.Toggle>
 
         <Dropdown.Menu align='right'>
           <Dropdown.Item
             className={styles.dropDownMenuItem}
-            onClick={() => router.push(`/${currentUser.displayName}`)}
+            onClick={() => router.push(`/${username}`)}
           >
             <Image src='/icons/person.svg' width='20' height='20' />
             <span>Profile</span>
