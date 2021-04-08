@@ -7,7 +7,6 @@ import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
-import Link from 'next/link'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
@@ -84,7 +83,7 @@ export default function Page() {
         <>
           <Alert variant='info'>
             <span>
-              Share your favorite products and discover new ones. Sign in to get
+              Share your favorite items and discover new ones. Sign in to get
               started!
             </span>
           </Alert>
