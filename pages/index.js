@@ -96,9 +96,7 @@ export default function Page() {
         </Alert>
       )}
       <div className={styles.catalog}>
-        {feed.map((item) => (
-          <FeedItemCard key={item.id} item={item} />
-        ))}
+        {feed.map((item) => item && <FeedItemCard key={item.id} item={item} />)}
       </div>
       {!isReachingEnd && (
         <Button

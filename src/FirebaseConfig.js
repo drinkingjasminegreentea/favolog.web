@@ -20,20 +20,13 @@ export const uiConfig = {
   signInFlow: 'popup',
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      const user = {
-        displayName: authResult.user.displayName,
-        emailAddress: authResult.user.email,
-        externalId: authResult.user.uid,
-        profileImage: authResult.user.photoURL,
-      }
       authResult.user.getIdToken(true).then((token) => {
         fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user`, {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(user),
         })
           .then((response) => {
             if (response.ok) {

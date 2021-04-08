@@ -17,20 +17,11 @@ export default function NavigationMenu() {
   const { activePage } = useContext(PageContext)
   let homeStyle = 'button'
   let exploreStyle = 'button'
-  const [profileImage, setProfileImage] = useState('')
-  const [username, setUsername] = useState('')
   const [showModal, setShowModal] = useState(false)
 
   if (activePage == ActivePages.home) homeStyle = homeStyle + ' activePage'
   if (activePage == ActivePages.explore)
     exploreStyle = exploreStyle + ' activePage'
-
-  useEffect(() => {
-    if (currentUser) {
-      setProfileImage(currentUser.photoURL)
-      setUsername(currentUser.displayName)
-    }
-  }, [currentUser])
 
   const toggleModalWindow = () => {
     setShowModal(!showModal)
@@ -70,8 +61,8 @@ export default function NavigationMenu() {
         <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
           <ProfileImage
             src={'/icons/settings.svg'}
-            profileImage={profileImage}
-            username={username}
+            profileImage={currentUser.photoURL}
+            username={currentUser.displayName}
             width='35'
             height='35'
           />
@@ -80,7 +71,7 @@ export default function NavigationMenu() {
         <Dropdown.Menu align='right'>
           <Dropdown.Item
             className={styles.dropDownMenuItem}
-            onClick={() => router.push(`/${username}`)}
+            onClick={() => router.push(`/${currentUser.displayName}`)}
           >
             <Image src='/icons/person.svg' width='20' height='20' />
             <span>Profile</span>
