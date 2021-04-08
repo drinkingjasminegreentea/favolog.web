@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ProfileCard from '../components/user/ProfileCard'
+import ProfileImage from '../components/user/ProfileImage'
 import styles from '../styles/CatalogStyles.module.css'
 import { PageContext } from '../src/PageContext'
 import { useContext } from 'react'
@@ -33,6 +34,8 @@ export default function Page({ searchQuery, results }) {
                 <ProfileImage
                   profileImage={item.user.profileImage}
                   username={item.user.username}
+                  width='35'
+                  height='35'
                 />
                 <h6>{item.user.username}</h6>
               </div>
