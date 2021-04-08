@@ -7,6 +7,7 @@ import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
+import Link from 'next/link'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
@@ -80,11 +81,14 @@ export default function Page() {
   return (
     <>
       {!currentUser && (
-        <Alert variant='info'>
-          <span>
-            Share your favorites and discover new ones. Sign in to get started!
-          </span>
-        </Alert>
+        <>
+          <Alert variant='info'>
+            <span>
+              Share your favorites and discover new ones. Sign in to get
+              started!
+            </span>
+          </Alert>
+        </>
       )}
       {isEmpty && (
         <Alert variant='info'>

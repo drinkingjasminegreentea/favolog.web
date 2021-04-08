@@ -44,6 +44,17 @@ export default function Layout({ children }) {
         </div>
         <div className={styles.content}>{children}</div>
         {currentUser && <Add />}
+        {!currentUser && (
+          <div className={styles.guestMenu}>
+            <Link href='/about'>
+              <span className='button'> About </span>
+            </Link>
+            &nbsp; &#x2022; &nbsp;
+            <Link href='/privacypolicy'>
+              <span className='button'>Privacy Policy </span>
+            </Link>
+          </div>
+        )}
       </div>
     </>
   )

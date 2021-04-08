@@ -51,7 +51,8 @@ a:hover {
 }
 
 span,
-p {
+p,
+li {
   font-size: 14px;
 }
 
