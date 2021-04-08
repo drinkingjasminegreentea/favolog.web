@@ -1,5 +1,5 @@
 import styles from '../../../styles/ProfileInfo.module.css'
-import UserCard from '../../../components/user/UserCard'
+import ProfileCard from '../../../components/user/ProfileCard'
 
 export default function Page({ user }) {
   return (
@@ -7,7 +7,7 @@ export default function Page({ user }) {
       <h5>People following {user.username}</h5>
       <div className={styles.userGrid}>
         {user.followers.map((item) => (
-          <UserCard key={item.id} user={item} />
+          <ProfileCard key={item.id} user={item} />
         ))}
       </div>
     </>

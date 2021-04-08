@@ -1,7 +1,7 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import ItemCard from '../../components/item/ItemCard'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
-import ProfileIcon from '../../components/user/ProfileIcon'
+import ProfileImage from '../../components/user/ProfileImage'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
@@ -103,9 +103,11 @@ export default function Page({ catalogId, refreshKey }) {
         ) : (
           <Link href={`/${data.user.username}`}>
             <a className='button'>
-              <ProfileIcon
+              <ProfileImage
                 profileImage={data.user.profileImage}
                 username={data.user.username}
+                width='35'
+                height='35'
               />
             </a>
           </Link>

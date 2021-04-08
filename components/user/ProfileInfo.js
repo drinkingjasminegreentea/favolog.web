@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import ProfileImage from '../user/ProfileImage'
 import Link from 'next/link'
 import styles from '../../styles/ProfileInfo.module.css'
 import Button from 'react-bootstrap/Button'
@@ -67,23 +67,12 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
 
   return (
     <div className={styles.profileInfo}>
-      {user.profileImage ? (
-        <span>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${user.profileImage}`}
-            layout='fixed'
-            objectFit='cover'
-            objectPosition='top'
-            width='150'
-            height='150'
-            quality={100}
-          />
-        </span>
-      ) : (
-        <div className={styles.profilePlaceholder}>
-          <span> {user.username.substring(0, 1).toUpperCase()} </span>
-        </div>
-      )}
+      <ProfileImage
+        profileImage={user.profileImage}
+        username={user.username}
+        width='150'
+        height='150'
+      />
       <div className={styles.profileDetails}>
         <h4>{user.username}</h4>
         <h6>

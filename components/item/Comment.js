@@ -1,4 +1,4 @@
-import ProfileIcon from '../user/ProfileIcon'
+import ProfileImage from '../user/ProfileImage'
 import styles from '../../styles/CatalogStyles.module.css'
 import Link from 'next/link'
 
@@ -9,9 +9,11 @@ export default function Comment({ item, user, toggleItemView }) {
     <div className={styles.comment}>
       <Link href={`/${user.username}`}>
         <a className='button'>
-          <ProfileIcon
+          <ProfileImage
             profileImage={user.profileImage}
             username={user.username}
+            width='35'
+            height='35'
           />
         </a>
       </Link>

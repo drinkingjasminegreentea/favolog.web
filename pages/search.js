@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import UserCard from '../components/user/UserCard'
-import ProfileIcon from '../components/user/ProfileIcon'
+import ProfileCard from '../components/user/ProfileCard'
 import styles from '../styles/CatalogStyles.module.css'
 import { PageContext } from '../src/PageContext'
 import { useContext } from 'react'
@@ -18,7 +17,7 @@ export default function Page({ searchQuery, results }) {
       {results.users.length > 0 && <h4>Users</h4>}
       <div className={styles.catalog}>
         {results.users.map((item) => (
-          <UserCard key={item.id} user={item} />
+          <ProfileCard key={item.id} user={item} />
         ))}
       </div>
       <br />
@@ -31,7 +30,7 @@ export default function Page({ searchQuery, results }) {
             </Link>
             <Link href={`/user/${item.user.id}`}>
               <div className={styles.catalogAuthor + ' button'}>
-                <ProfileIcon
+                <ProfileImage
                   profileImage={item.user.profileImage}
                   username={item.user.username}
                 />

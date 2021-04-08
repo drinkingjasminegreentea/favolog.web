@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import styles from '../../styles/CatalogStyles.module.css'
-import ProfileIcon from '../user/ProfileIcon'
+import ProfileImage from '../user/ProfileImage'
 import Link from 'next/link'
 import ItemImage from './ItemImage'
 
@@ -30,9 +30,11 @@ export default function ItemView({ show, parentAction, item, user }) {
             </a>
           )}
           <div className={styles.comment}>
-            <ProfileIcon
+            <ProfileImage
               profileImage={user.profileImage}
               username={user.username}
+              width='35'
+              height='35'
             />
             <div>
               <Link href={`/${user.username}`}>

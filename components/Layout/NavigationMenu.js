@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import ProfileIcon from '../user/ProfileIcon'
+import ProfileImage from '../user/ProfileImage'
 import { ActivePages, PageContext } from '../../src/PageContext'
 import { SignInModal } from '../../src/AuthContext'
 
@@ -67,11 +67,13 @@ export default function NavigationMenu() {
       </Link>
 
       <Dropdown drop='bottom'>
-        <Dropdown.Toggle as='a' bsPrefix='custom'>
-          <ProfileIcon
+        <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
+          <ProfileImage
             src={'/icons/settings.svg'}
             profileImage={profileImage}
             username={username}
+            width='35'
+            height='35'
           />
         </Dropdown.Toggle>
 
