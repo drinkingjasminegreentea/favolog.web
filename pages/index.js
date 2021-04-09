@@ -1,12 +1,10 @@
-import styles from '../styles/CatalogStyles.module.css'
+import styles from '../styles/Feed.module.css'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '../src/AuthContext'
 import { ActivePages, PageContext } from '../src/PageContext'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
-import Alert from 'react-bootstrap/Alert'
 
 export default function Page() {
   const { setActivePage } = useContext(PageContext)
@@ -79,37 +77,20 @@ export default function Page() {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      {!currentUser && (
-        <>
-          <Alert variant='info'>
-            <span>
-              Share your favorite items and discover new ones. Sign in to get
-              started!
-            </span>
-          </Alert>
-        </>
-      )}
-      {isEmpty && (
-        <Alert variant='info'>
-          <Alert.Heading>Welcome!</Alert.Heading>
-          <span>
-            Create your own favorites catalog by clicking on the plus button.
-            Explore and find people to follow.
-          </span>
-        </Alert>
-      )}
-      <div className={styles.catalog}>
-        {feed.map((item) => item && <FeedItemCard key={item.id} item={item} />)}
-      </div>
+      {feed.map((item) => (
+        <FeedItemCard key={item.id} item={item} />
+      ))}
       {!isReachingEnd && (
-        <Button
-          disabled={isLoadingMore || isReachingEnd}
-          variant='secondary'
-          className={styles.loadMore}
-          onClick={() => setSize(size + 1)}
-        >
-          {isLoadingMore ? 'Loading...' : 'Load more'}
-        </Button>
+        <span className='center'>
+          <button
+            disabled={isLoadingMore || isReachingEnd}
+            variant='secondary'
+            className={styles.secondary}
+            onClick={() => setSize(size + 1)}
+          >
+            {isLoadingMore ? 'Loading...' : 'Load more'}
+          </button>
+        </span>
       )}
     </>
   )

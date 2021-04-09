@@ -2,8 +2,9 @@
   display: grid;
   justify-items: left;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid lightgray;
 }
 
 .profileInfo > div {

@@ -1,17 +1,8 @@
-import ItemImage from './ItemImage'
-import Comment from './Comment'
-import Link from 'next/link'
-import { useState } from 'react'
-import ItemView from './ItemView'
-import styles from '../../styles/CatalogStyles.module.css'
+import Image from 'next/image'
+import ProfileImage from '../user/ProfileImage'
+import styles from '../../styles/Feed.module.css'
 
 export default function FeedItemCard({ item }) {
-  const [showItemView, setShowItemView] = useState(false)
-
-  const toggleItemView = () => {
-    setShowItemView(!showItemView)
-  }
-
   const user = {
     id: item.userId,
     profileImage: item.profileImage,
@@ -21,21 +12,42 @@ export default function FeedItemCard({ item }) {
   }
 
   return (
-    <div className={styles.catalogItem}>
-      <ItemImage imageName={item.imageName} clickHandler={toggleItemView} />
-      <span className='button medium-font' onClick={toggleItemView}>
-        {item.title}
-      </span>
-      <Link href={`catalog/${item.catalogId}`}>
-        <h5 className='button'> {item.catalogName} </h5>
-      </Link>
-      <Comment item={item} user={user} toggleItemView={toggleItemView} />
-      <ItemView
-        show={showItemView}
-        parentAction={toggleItemView}
-        item={item}
-        user={user}
-      />
+    <div className='card'>
+      <div className={styles.header}>
+        <ProfileImage
+          profileImage={user.profileImage}
+          username={user.username}
+          width='35'
+          height='35'
+        />
+        <span className='bold'>
+          {user.username} {'>'} {item.catalogName}
+        </span>
+        <button className={styles.secondary}>Follow</button>
+      </div>
+      {item.imageName && (
+        <div className={styles.image}>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+            layout='fixed'
+            objectFit='contain'
+            width='400'
+            height='400'
+            quality={100}
+          />
+        </div>
+      )}
+      <div className={styles.footer}>
+        <span className={styles.feedAuthor}>
+          <span className='bold'>{item.title}</span>
+          <br />
+          <a href={item.url} className='link'>
+            {item.urlDomain}
+          </a>
+        </span>
+        <br />
+        <div>{item.comment}</div>
+      </div>
     </div>
   )
 }

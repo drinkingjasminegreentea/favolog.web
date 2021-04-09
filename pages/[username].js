@@ -11,13 +11,7 @@ import Tab from 'react-bootstrap/Tab'
 import FeedItemCard from '../components/item/FeedItemCard'
 
 export default function Page({ username }) {
-  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
-    PageContext
-  )
-
-  useEffect(() => {
-    setActivePage(null)
-  }, [])
+  const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
 
   const fetcher = (url) => {
     return fetch(url, {
@@ -75,7 +69,7 @@ export default function Page({ username }) {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
 
   return (
-    <>
+    <div>
       <ProfileInfo
         user={data.user}
         totalFollowing={data.totalFollowing}
@@ -117,7 +111,7 @@ export default function Page({ username }) {
           </Tab>
         )}
       </Tabs>
-    </>
+    </div>
   )
 }
 

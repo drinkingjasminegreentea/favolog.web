@@ -66,7 +66,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   }
 
   return (
-    <div className={styles.profileInfo}>
+    <div className={styles.profileInfo + ' '}>
       <ProfileImage
         profileImage={user.profileImage}
         username={user.username}
