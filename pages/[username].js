@@ -92,11 +92,9 @@ export default function Page({ username }) {
         {feed && (
           <Tab eventKey='items' title='All items'>
             <div className='grid'>
-              <div className={styles.catalog}>
-                {feed.map((item) => (
-                  <FeedItemCard key={item.id} item={item} />
-                ))}
-              </div>
+              {feed.map((item) => (
+                <FeedItemCard key={item.id} item={item} />
+              ))}
               {!isReachingEnd && (
                 <Button
                   disabled={isLoadingMore || isReachingEnd}

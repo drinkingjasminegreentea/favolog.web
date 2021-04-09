@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div className={styles.header}>
       <Link href='/'>
-        <span className={styles.logo}>
+        <span className={styles.logo + ' button'}>
           <Image
             src='/images/logo.png'
             width='200'

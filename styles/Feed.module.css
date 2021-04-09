@@ -7,7 +7,8 @@
   margin: 0px 40px 0 60px;
   display: grid;
   grid-template-columns: 50px 1fr 110px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  align-items: center;
 }
 
 .footer {
@@ -31,4 +32,9 @@
 
 .image {
   justify-self: center;
+}
+
+.catalogBreadCrumb > span {
+  font-size: 16px;
+  font-family: 'Poppins-Medium';
 }

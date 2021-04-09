@@ -30,12 +30,12 @@ export default function NavigationMenu() {
   return (
     <div className={styles.navigation}>
       <Link href='/'>
-        <span>
+        <span className='button'>
           <Image src='/icons/home.svg' width='23' height='23' layout='fixed' />
         </span>
       </Link>
       <Link href='/'>
-        <span>
+        <span className='button'>
           <Image src='/icons/bell.svg' width='23' height='23' layout='fixed' />
         </span>
       </Link>

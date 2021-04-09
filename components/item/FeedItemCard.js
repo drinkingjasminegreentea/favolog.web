@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import ProfileImage from '../user/ProfileImage'
 import styles from '../../styles/Feed.module.css'
 
@@ -20,8 +21,14 @@ export default function FeedItemCard({ item }) {
           width='35'
           height='35'
         />
-        <span className='bold'>
-          {user.username} {'>'} {item.catalogName}
+        <span className={styles.catalogBreadCrumb}>
+          <Link href={`/${user.username}`}>
+            <span className='button'>{user.username}</span>
+          </Link>
+          {' > '}
+          <Link href={`/catalog/${item.catalogId}`}>
+            <span className='button'>{item.catalogName}</span>
+          </Link>
         </span>
         <button className={styles.secondary}>Follow</button>
       </div>
@@ -39,8 +46,7 @@ export default function FeedItemCard({ item }) {
       )}
       <div className={styles.footer}>
         <span className={styles.feedAuthor}>
-          <span className='bold'>{item.title}</span>
-          <br />
+          <h5>{item.title}</h5>
           <a href={item.url} className='link'>
             {item.urlDomain}
           </a>

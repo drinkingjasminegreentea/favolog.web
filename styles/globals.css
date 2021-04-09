@@ -26,14 +26,13 @@ body {
   src: url(../public/fonts/Poppins-Bold.ttf);
 }
 
-@font-face {
-  font-family: Poppins-ExtraBold;
-  src: url(../public/fonts/Poppins-ExtraBold.ttf);
+h5 {
+  font-size: 18px;
 }
 
-@font-face {
-  font-family: Poppins-Black;
-  src: url(../public/fonts/Poppins-Black.ttf);
+h5,
+h6 {
+  font-family: 'Poppins-Medium';
 }
 
 a,
@@ -48,20 +47,11 @@ button.btn {
 
 * {
   font-family: Poppins-Regular;
+  font-size: 15px;
 }
 
 .medium-font {
   font-family: Poppins-Medium;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: Poppins-Medium;
-  color: #535353;
 }
 
 .button:hover,
