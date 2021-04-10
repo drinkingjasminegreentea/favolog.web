@@ -83,7 +83,7 @@ export default function Page() {
         <>
           <Alert variant='info'>
             <span>
-              Share your favorite items and discover new ones. Sign in to get
+              Share what you love and discover new favorites. Sign in to get
               started!
             </span>
           </Alert>
