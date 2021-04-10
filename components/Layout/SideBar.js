@@ -7,9 +7,17 @@ export default function SideBar() {
       <div className={styles.sideBar}>
         <div className={styles.suggestions}></div>
         <div className={styles.sideMenu}>
-          <Link href='/privacyPolicy'>Privacy Policy and Terms </Link> <br />
-          <Link href='/about'>About Us </Link> <br />
-          <Link href='/help'>Help </Link>
+          <Link href='/privacypolicy'>
+            <span className='button'>Privacy Policy and Terms</span>
+          </Link>
+          <br />
+          <Link href='/about'>
+            <span className='button'>About Us </span>
+          </Link>
+          <br />
+          <Link href='/help'>
+            <span className='button'>Help </span>
+          </Link>
         </div>
       </div>
     </div>

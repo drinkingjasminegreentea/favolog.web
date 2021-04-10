@@ -1,19 +1,15 @@
 .sideBar {
   height: 100vh;
   display: grid;
-  grid-template-rows: 1.5fr 1fr;
-  justify-items: center;
+  grid-template-rows: 1fr 1fr;
   position: fixed;
-  left: 5%;
-  width: 200px;
 }
 
-.sideMenu {
+.sideMenu > span {
   color: #868686;
   font-size: 12px;
-  line-height: 30px;
 }
 .sideBarContainer {
+  display: grid;
   position: relative;
-  justify-self: center;
 }

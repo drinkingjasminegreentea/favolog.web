@@ -84,8 +84,7 @@ export default function Page() {
         <span className='center'>
           <button
             disabled={isLoadingMore || isReachingEnd}
-            variant='secondary'
-            className={styles.secondary}
+            className='secondary'
             onClick={() => setSize(size + 1)}
           >
             {isLoadingMore ? 'Loading...' : 'Load more'}

@@ -30,8 +30,10 @@ export default function Layout({ children }) {
       <div className={styles.container}>
         <Header />
         <div className={styles.layout}>
-          <SideBar />
-          <div className={styles.content}>{children}</div>
+          <div className={styles.content}>
+            <SideBar />
+            <div>{children}</div>
+          </div>
         </div>
         {currentUser && <Add />}
       </div>

@@ -236,7 +236,6 @@ const AddItemDialog = ({ show, parentAction }) => {
 
 export default function Add() {
   const [showModal, setShowModal] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(false)
 
   const toggleModalWindow = () => {
     setShowModal(!showModal)
@@ -244,20 +243,10 @@ export default function Add() {
 
   return (
     <>
-      {showOverlay && (
-        <div className={styles.addOverlay}>
-          <div className={styles.addText}>
-            <span className='extraBold'>Add new item </span> <br />
-            <span className='extraBold'>Add new catalog </span>
-          </div>
-        </div>
-      )}
       <div
         role='button'
-        className={styles.addButton + ' button'}
+        className={styles.addButton}
         onClick={toggleModalWindow}
-        onMouseEnter={() => setShowOverlay(true)}
-        onMouseLeave={() => setShowOverlay(false)}
       >
         <img src='/icons/add.png' />
       </div>

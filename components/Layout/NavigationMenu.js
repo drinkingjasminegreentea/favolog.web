@@ -20,8 +20,8 @@ export default function NavigationMenu() {
   if (!currentUser)
     return (
       <>
-        <button className={styles.login} onClick={toggleModalWindow}>
-          LOG IN/SIGN UP
+        <button className='primary' onClick={toggleModalWindow}>
+          Log in
         </button>
         <SignInModal show={showModal} parentAction={toggleModalWindow} />
       </>
@@ -30,14 +30,14 @@ export default function NavigationMenu() {
   return (
     <div className={styles.navigation}>
       <Link href='/'>
-        <span className='button'>
-          <Image src='/icons/home.svg' width='23' height='23' layout='fixed' />
-        </span>
+        <div className='button'>
+          <Image src='/icons/home.svg' width='20' height='20' layout='fixed' />
+        </div>
       </Link>
       <Link href='/'>
-        <span className='button'>
-          <Image src='/icons/bell.svg' width='23' height='23' layout='fixed' />
-        </span>
+        <div className='button'>
+          <Image src='/icons/bell.svg' width='20' height='20' layout='fixed' />
+        </div>
       </Link>
 
       <Dropdown drop='bottom'>
