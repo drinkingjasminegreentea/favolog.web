@@ -12,8 +12,8 @@ export const PageContextProvider = ({ children }) => {
   const defaulOGInfo = {
     url: process.env.NEXT_PUBLIC_REDIRECTURI,
     image: 'https://favolog.blob.core.windows.net/appimages/Logo.png',
-    title: 'Favolog - Catalog and Share Your Favorite Things',
-    description: 'Catalog and Share Your Favorite Things',
+    title: 'Favolog - Share what you love',
+    description: 'Share what you love and find new favorites',
   }
   const [activePage, setActivePage] = useState(null)
   const { currentUser, getToken } = useContext(AuthContext)
