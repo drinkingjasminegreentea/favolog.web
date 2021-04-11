@@ -1,9 +1,8 @@
 import ProfileImage from '../user/ProfileImage'
 import Link from 'next/link'
-import styles from '../../styles/ProfileInfo.module.css'
-import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
+import styles from '../../styles/ProfileInfo.module.css'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { currentUser, getToken } = useContext(AuthContext)
@@ -66,48 +65,66 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   }
 
   return (
-    <div className={styles.profileInfo + ' '}>
+    <div className='card'>
       <ProfileImage
         profileImage={user.profileImage}
         username={user.username}
-        width='150'
-        height='150'
+        width='120'
+        height='120'
       />
-      <div className={styles.profileDetails}>
-        <h4>{user.username}</h4>
-        <h6>
-          {user.firstName} {user.lastName}
-        </h6>
-        <Link href={`/user/${user.username}/following`}>
-          <span className={styles.followInfo + ' button'}>
-            {totalFollowing} following
-          </span>
-        </Link>
-        &nbsp; | &nbsp;
-        <Link href={`/user/${user.username}/followers`}>
-          <span className={styles.followInfo + ' button'}>
-            {totalFollowersState} followers
-          </span>
-        </Link>
-        <br />
-        {user.bio && <span> {user.bio} </span>}
-        {user.website && (
-          <a href={user.website} className='link'>
-            {user.website}
-          </a>
-        )}
-      </div>
+      <br />
+      <h5>{user.username}</h5>
       <div className={styles.profileButtons}>
-        {!self && currentUser && (
-          <Button variant='secondary' onClick={onButtonClick}>
+        {!self && (
+          <button className='primary' onClick={onButtonClick}>
             {isFollowing ? 'Unfollow' : 'Follow'}
-          </Button>
+          </button>
         )}
         {self && (
           <Link href='/settings'>
-            <Button variant='secondary'>Edit profile</Button>
+            <button className='primary'>Edit profile</button>
           </Link>
         )}
+      </div>
+      <br />
+      {user.firstName && user.lastName && (
+        <h4>
+          {user.firstName} {user.lastName}
+        </h4>
+      )}
+      {user.bio && (
+        <span>
+          {user.bio} <br />
+        </span>
+      )}
+      {user.website && (
+        <>
+          <a href={user.website} className='link'>
+            {user.website}
+          </a>
+        </>
+      )}
+      <br />
+      <div className={styles.profileStats}>
+        <Link href={`/user/${user.username}/following`}>
+          <span className='button'>
+            <b>{totalFollowing}</b> following
+          </span>
+        </Link>
+        &nbsp; &nbsp;
+        <Link href={`/user/${user.username}/followers`}>
+          <span className='button'>
+            <b>{totalFollowersState}</b> followers
+          </span>
+        </Link>
+        <br />
+        <span>
+          <b>20</b> catalogs
+        </span>
+        &nbsp; &nbsp;
+        <span>
+          <b>140</b> items
+        </span>
       </div>
     </div>
   )

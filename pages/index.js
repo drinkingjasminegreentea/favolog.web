@@ -77,20 +77,22 @@ export default function Page() {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      {feed.map((item) => (
-        <FeedItemCard key={item.id} item={item} />
-      ))}
-      {!isReachingEnd && (
-        <span className='center'>
-          <button
-            disabled={isLoadingMore || isReachingEnd}
-            className='secondary'
-            onClick={() => setSize(size + 1)}
-          >
-            {isLoadingMore ? 'Loading...' : 'Load more'}
-          </button>
-        </span>
-      )}
+      <div className={styles.feed}>
+        {feed.map((item) => (
+          <FeedItemCard key={item.id} item={item} />
+        ))}
+        {!isReachingEnd && (
+          <span className='center'>
+            <button
+              disabled={isLoadingMore || isReachingEnd}
+              className='secondary'
+              onClick={() => setSize(size + 1)}
+            >
+              {isLoadingMore ? 'Loading...' : 'Load more'}
+            </button>
+          </span>
+        )}
+      </div>
     </>
   )
 }

@@ -1,8 +1,6 @@
 import styles from '../../styles/CatalogStyles.module.css'
-import ItemCard from '../../components/item/ItemCard'
-import CatalogMenu from '../../components/catalog/CatalogMenu'
 import ProfileImage from '../../components/user/ProfileImage'
-import Link from 'next/link'
+import ItemCard from '../../components/item/ItemCard'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
@@ -96,24 +94,23 @@ export default function Page({ catalogId, refreshKey }) {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <div className={styles.catalogHeader}>
-        <h3> {data.name} </h3>
-        {data.isEditable ? (
-          <CatalogMenu catalog={data} />
-        ) : (
-          <Link href={`/${data.user.username}`}>
-            <a className='button'>
-              <ProfileImage
-                profileImage={data.user.profileImage}
-                username={data.user.username}
-                width='35'
-                height='35'
-              />
-            </a>
-          </Link>
-        )}
+      <div>
+        <div className='card'>
+          <h3> {data.name} </h3>
+          <br />
+          {data.user && (
+            <ProfileImage
+              profileImage={data.user.profileImage}
+              username={data.user.username}
+              width='100'
+              height='100'
+            />
+          )}
+          <br />
+          <b>{data.user.username}</b>
+        </div>
       </div>
-      <div className={styles.catalog}>
+      <div className={styles.feed}>
         {data.items.map((item) => (
           <ItemCard
             key={item.id}

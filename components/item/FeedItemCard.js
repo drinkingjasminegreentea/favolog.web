@@ -41,7 +41,7 @@ export default function FeedItemCard({ item }) {
   return (
     <div className='card'>
       <Link href={`/catalog/${item.catalogId}`}>
-        <h5 className='button'>{item.catalogName}</h5>
+        <h5 className='button bold'>{item.catalogName}</h5>
       </Link>
       <LinkView item={item} />
       <div className={styles.header}>

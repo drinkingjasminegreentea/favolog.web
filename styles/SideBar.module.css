@@ -9,7 +9,9 @@
   color: #868686;
   font-size: 12px;
 }
+
 .sideBarContainer {
   display: grid;
   position: relative;
+  padding-left: 40px;
 }

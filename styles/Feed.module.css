@@ -1,5 +1,5 @@
 .feed {
-  margin-bottom: 40px;
+  grid-column-start: 2;
   display: grid;
 }
 

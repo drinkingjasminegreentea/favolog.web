@@ -248,7 +248,7 @@ export default function Add() {
         className={styles.addButton}
         onClick={toggleModalWindow}
       >
-        <img src='/icons/add.png' />
+        +
       </div>
       <AddItemDialog show={showModal} parentAction={toggleModalWindow} />
     </>

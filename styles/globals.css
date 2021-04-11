@@ -36,7 +36,7 @@ button.btn {
 }
 
 h5 {
-  font-family: Poppins-Bold;
+  font-family: Poppins-Medium;
 }
 
 .medium-font {
@@ -49,7 +49,11 @@ h5 {
 }
 
 a {
-  color: #2270af;
+  color: black;
+}
+
+a:hover {
+  color: black;
 }
 
 .link:hover {
@@ -85,6 +89,14 @@ button.close {
   width: 50px;
 }
 
+.tab-content {
+  margin-top: 20px;
+}
+
+.tab-content > .active {
+  display: grid;
+}
+
 .nav.nav-tabs,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link:hover {
@@ -92,10 +104,16 @@ button.close {
 }
 
 .nav-tabs .nav-link.active {
-  border-top: 2px solid #535353;
+  border-bottom: 2px solid #58ebff;
   border-radius: 0%;
   font-weight: bold;
   background-color: transparent;
+  color: black;
+}
+
+.nav.nav-tabs > a {
+  font-size: 18px;
+  font-family: 'Poppins-Medium';
 }
 
 .bold {
@@ -103,13 +121,13 @@ button.close {
 }
 
 .card {
-  display: grid;
-  row-gap: 5px;
   background-color: white;
-  margin-bottom: 20px;
   padding: 30px;
+  margin-bottom: 20px;
   border: solid 1px #dbdbdb;
   border-radius: 4px;
+  height: fit-content;
+  width: 100%;
 }
 
 .primary {
@@ -120,6 +138,7 @@ button.close {
   color: white;
   font-family: 'Poppins-Medium';
   width: fit-content;
+  font-weight: bold;
 }
 
 .primary:hover {

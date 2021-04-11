@@ -34,11 +34,6 @@ export default function NavigationMenu() {
           <Image src='/icons/home.svg' width='20' height='20' layout='fixed' />
         </div>
       </Link>
-      <Link href='/'>
-        <div className='button'>
-          <Image src='/icons/bell.svg' width='20' height='20' layout='fixed' />
-        </div>
-      </Link>
 
       <Dropdown drop='bottom'>
         <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>

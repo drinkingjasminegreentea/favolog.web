@@ -1,78 +1,36 @@
-.profileInfo {
+.profileCard {
   display: grid;
-  justify-items: left;
+  gap: 20px;
+  width: 400px;
+  justify-self: center;
+}
+
+.mainInfo {
+  display: grid;
+  grid-template-columns: 150px 250px;
+  justify-items: center;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 30px;
 }
 
-.profileInfo > div {
-  text-align: left;
-}
-
-.profileDetails > span,
+.detailedInfo > span,
 .followInfo > span {
   display: block;
 }
 
-.profilePlaceholder > span {
-  font-size: 60px;
-}
-
-span.followInfo {
-  font-size: 12px;
-  margin-top: 10px;
-  display: inline;
-}
-
-.userGrid {
-  margin-top: 20px;
+.profileContent {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+}
+
+.catalog {
+  display: grid;
+  column-gap: 20px;
   text-align: left;
-  grid-gap: 20px;
+  justify-items: left;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
-@media (min-width: 1200px) {
-  .userGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1.5fr 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 1200px) {
-  .userGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1.5fr 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .userGrid {
-    grid-template-columns: 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    grid-column-start: 2;
-    justify-self: start;
-  }
-}
-
-.userInfo > span {
-  display: block;
+.items {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
 }
