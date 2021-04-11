@@ -36,8 +36,7 @@ button.btn {
 }
 
 h5 {
-  font-family: Poppins-Medium;
-  color: #2270af;
+  font-family: Poppins-Bold;
 }
 
 .medium-font {
@@ -114,7 +113,7 @@ button.close {
 }
 
 .primary {
-  background-color: #2270af;
+  background-color: #58ebff;
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
@@ -128,9 +127,9 @@ button.close {
 }
 
 .secondary {
-  border: 1px solid #2270af;
+  border: 1px solid #58ebff;
   border-radius: 4px;
-  color: #2270af;
+  color: #58ebff;
   background-color: white;
   font-weight: bold;
   min-width: 100px;

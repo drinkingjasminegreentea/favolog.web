@@ -8,7 +8,9 @@ export default function Header() {
     <div className={styles.headerContainer}>
       <div className={styles.header}>
         <Link href='/'>
-          <span className={styles.logo + ' button'}>favolog</span>
+          <span className={styles.logo + ' button'}>
+            <img src='/icons/gratipay-brands.svg' /> favolog
+          </span>
         </Link>
         <SearchBar />
         <NavigationMenu />

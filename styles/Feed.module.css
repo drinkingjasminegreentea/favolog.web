@@ -11,7 +11,7 @@
 }
 
 .catalogBreadCrumb > span {
-  font-family: 'Poppins-Medium';
+  font-family: 'Poppins-Bold';
 }
 
 .linkContent {
@@ -25,7 +25,6 @@
   align-items: center;
   grid-template-columns: 15px 1fr;
   justify-items: start;
-  color: #2270af;
 }
 
 .imageContent {
