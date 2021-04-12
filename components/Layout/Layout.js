@@ -25,7 +25,7 @@ export default function Layout({ children }) {
         />
         <meta property='og:image:width' content='300' />
         <meta property='og:image:height' content='300' />
-        <title>Favolog - Share your favorites</title>
+        <title>Favolog - Share what you love</title>
       </Head>
       <div className={styles.container}>
         <Header />
