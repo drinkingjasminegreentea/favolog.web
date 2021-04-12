@@ -1,5 +1,5 @@
 import styles from '../styles/Feed.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext } from '../src/AuthContext'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { useSWRInfinite } from 'swr'
