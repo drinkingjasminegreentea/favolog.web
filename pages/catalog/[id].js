@@ -115,11 +115,36 @@ export default function Page({ catalogId, refreshKey }) {
             </Link>
             <br />
             {!self && <FollowButton style='primary' />}
-            <br />
           </div>
         </div>
       </div>
       <div className='mainContent'>
+        <div className='mobile'>
+          {data.isEditable && <CatalogMenu catalog={data} />}
+          <div className={styles.catalogAuthor}>
+            <Link href={`/${data.user.username}`}>
+              <div className='center button'>
+                <ProfileImage
+                  profileImage={data.user.profileImage}
+                  username={data.user.username}
+                  width='100'
+                  height='100'
+                />
+              </div>
+            </Link>
+            <div>
+              <Link href={`/${data.user.username}`}>
+                <b className='center button'>{data.user.username}</b>
+              </Link>
+              <br />
+              <br />
+              {!self && <FollowButton style='primary' />}
+            </div>
+          </div>
+          <br />
+          <h5 className='bold'> {data.name} </h5>
+          <br />
+        </div>
         {data.items.map((item) => (
           <CatalogItemCard
             key={item.id}

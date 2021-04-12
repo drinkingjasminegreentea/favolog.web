@@ -81,7 +81,7 @@ export default function Page({ username }) {
         </div>
       </div>
       <div className='card mainContent'>
-        <div className={styles.profileMobile}>
+        <div className={styles.profileMobile + ' mobile'}>
           <ProfileInfo
             user={data.user}
             totalFollowing={data.totalFollowing}

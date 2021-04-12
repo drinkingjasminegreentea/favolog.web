@@ -1,5 +1,5 @@
 /* screen size larger than 600 */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1200px) {
   .header {
     position: relative;
     width: 1200px;
@@ -25,7 +25,7 @@
 }
 
 /* screen size smaller than 600 */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
   .header {
     position: relative;
     display: grid;

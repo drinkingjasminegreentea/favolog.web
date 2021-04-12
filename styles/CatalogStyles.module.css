@@ -10,8 +10,7 @@
   justify-self: end;
 }
 
-.addEdit,
-.catalogAuthor {
+.addEdit {
   justify-self: right;
 }
 
@@ -22,10 +21,9 @@
 }
 
 .catalogAuthor {
-  grid-column-start: 2;
   display: grid;
-  grid-template-columns: 40px 1fr;
-  width: fit-content;
+  grid-template-columns: 130px 1fr;
+  align-items: center;
 }
 
 .searchResults {

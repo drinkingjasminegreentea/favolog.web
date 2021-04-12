@@ -44,17 +44,20 @@ body {
 }
 
 /* screen size larger than 600 */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 1200px) {
   .mainContent {
     grid-column-start: 2;
     display: grid;
     height: fit-content;
     width: 610px;
   }
+  .mobile {
+    display: none;
+  }
 }
 
 /* screen size smaller than 600 */
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
   .mainContent {
     display: grid;
     height: fit-content;
@@ -62,6 +65,9 @@ body {
   }
   .leftBarContainer {
     display: none;
+  }
+  .mobile {
+    display: grid;
   }
 }
 
