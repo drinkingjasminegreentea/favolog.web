@@ -1,15 +1,25 @@
 import ProfileImage from '../user/ProfileImage'
+import Image from 'next/image'
 import Link from 'next/link'
-import styles from '../../styles/ProfileInfo.module.css'
-import Button from 'react-bootstrap/Button'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
+import styles from '../../styles/ProfileInfo.module.css'
+import Follow from '../layout/Follow'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { currentUser, getToken } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
+  let websiteUrl = null
+  if (user.website) {
+    if (
+      !user.website.startsWith('http://') ||
+      !user.website.startsWith('https://')
+    )
+      websiteUrl = `https://${user.website}`
+    else websiteUrl = user.website
+  }
 
   useEffect(() => {
     if (currentUser) {
@@ -37,78 +47,57 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
     }
   }, [user, currentUser])
 
-  const onButtonClick = async () => {
-    const userFollow = {
-      username: user.username,
-      followerUsername: currentUser.displayName,
-    }
-
-    getToken().then((accessToken) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(userFollow),
-      })
-        .then((response) => {
-          if (response.ok) {
-            isFollowing
-              ? setTotalFollowersSate(totalFollowersState - 1)
-              : setTotalFollowersSate(totalFollowersState + 1)
-            setIsFollowing(!isFollowing)
-          } else Promise.reject()
-        })
-        .catch((error) => console.error(error))
-    })
-  }
-
   return (
-    <div className={styles.profileInfo}>
-      <ProfileImage
-        profileImage={user.profileImage}
-        username={user.username}
-        width='150'
-        height='150'
-      />
-      <div className={styles.profileDetails}>
-        <h4>{user.username}</h4>
-        <h6>
-          {user.firstName} {user.lastName}
-        </h6>
+    <div className='card'>
+      <div className='center'>
+        <ProfileImage
+          profileImage={user.profileImage}
+          username={user.username}
+          width='120'
+          height='120'
+        />
+      </div>
+      <br />
+      <h5 className='center'>{user.username}</h5>
+      {!self && <Follow username={user.username} style='primary' />}
+      {self && (
+        <Link href='/settings'>
+          <button className='secondary'>Edit profile</button>
+        </Link>
+      )}
+      <br />
+      <div className={styles.profileStats}>
         <Link href={`/user/${user.username}/following`}>
-          <span className={styles.followInfo + ' button'}>
-            {totalFollowing} following
+          <span className='button'>
+            <b>{totalFollowing}</b> following
           </span>
         </Link>
-        &nbsp; | &nbsp;
+        &nbsp; &nbsp;
         <Link href={`/user/${user.username}/followers`}>
-          <span className={styles.followInfo + ' button'}>
-            {totalFollowersState} followers
+          <span className='button'>
+            <b>{totalFollowersState}</b> followers
           </span>
         </Link>
-        <br />
-        {user.bio && <span> {user.bio} </span>}
-        {user.website && (
-          <a href={user.website} className='link'>
-            {user.website}
+      </div>
+      <br />
+      {user.firstName && user.lastName && (
+        <b>
+          {user.firstName} {user.lastName}
+        </b>
+      )}
+      {user.bio && (
+        <span>
+          {user.bio} <br />
+        </span>
+      )}
+      {websiteUrl && (
+        <>
+          <a href={websiteUrl} target='_blank' className='flex'>
+            <Image src='/icons/link-45deg.svg' width='18' height='18' />
+            <b>{user.website}</b>
           </a>
-        )}
-      </div>
-      <div className={styles.profileButtons}>
-        {!self && currentUser && (
-          <Button variant='secondary' onClick={onButtonClick}>
-            {isFollowing ? 'Unfollow' : 'Follow'}
-          </Button>
-        )}
-        {self && (
-          <Link href='/settings'>
-            <Button variant='secondary'>Edit profile</Button>
-          </Link>
-        )}
-      </div>
+        </>
+      )}
     </div>
   )
 }

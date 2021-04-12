@@ -1,7 +1,6 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
-import ItemImage from '../item/ItemImage'
 
 export default function CatalogCard({ catalog, username }) {
   let catalogLink = `/catalog/${catalog.id}`
@@ -10,41 +9,24 @@ export default function CatalogCard({ catalog, username }) {
   return (
     <Link href={catalogLink}>
       <div className={styles.catalogItem + ' button'}>
-        {catalog.lastThreeImages.length > 1 ? (
-          <div className={styles.catalogImages}>
+        <b> {catalog.name} </b>
+        <br />
+        <span> {catalog.itemCount} items </span>
+        <br />
+        <br />
+        {catalog.lastThreeImages.length > 0 && (
+          <div className='center'>
             <Image
               src={`${imageFolder}/${catalog.lastThreeImages[0]}`}
               className={styles.catalogFirstImage}
               layout='fixed'
               objectFit='contain'
-              width='150'
-              height='200'
+              width='130'
+              height='150'
               quality={100}
             />
-            <div>
-              <Image
-                src={`${imageFolder}/${catalog.lastThreeImages[1]}`}
-                layout='fixed'
-                objectFit='contain'
-                width='100'
-                height='100'
-                quality={100}
-              />
-              <Image
-                src={`${imageFolder}/${catalog.lastThreeImages[2]}`}
-                layout='fixed'
-                objectFit='contain'
-                width='100'
-                height='100'
-                quality={100}
-              />
-            </div>
           </div>
-        ) : (
-          <ItemImage imageName={catalog.lastThreeImages[0]} />
         )}
-        <h5> {catalog.name} </h5>
-        <span> {catalog.itemCount} items </span>
       </div>
     </Link>
   )

@@ -1,14 +1,11 @@
-import styles from '../../styles/Layout.module.css'
+import styles from '../../styles/Header.module.css'
 import { useRouter } from 'next/router'
-import { useState, useRef } from 'react'
-import Form from 'react-bootstrap/Form'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { useState } from 'react'
 import Image from 'next/image'
 
 export default function SearchBar() {
   const router = useRouter()
   const [query, setQuery] = useState('')
-  const inputRef = useRef()
 
   const handleParam = (e) => setQuery(e.target.value)
 
@@ -16,7 +13,6 @@ export default function SearchBar() {
     e.preventDefault()
     const searchQuery = query
     setQuery('')
-    inputRef.current.blur()
     router.push({
       pathname: '/search',
       query: { q: searchQuery },
@@ -24,15 +20,18 @@ export default function SearchBar() {
   }
 
   return (
-    <Form className={styles.search} onSubmit={handleSubmit}>
-      <Image src='/icons/search.svg' width='25' height='25' layout='fixed' />
-      <Form.Control
-        type='text'
+    <form className={styles.search} onSubmit={handleSubmit}>
+      <input
+        type='search'
+        name='q'
         placeholder='Search users, catalogs'
+        autoComplete='off'
         value={query}
         onChange={handleParam}
-        ref={inputRef}
       />
-    </Form>
+      <button type='submit'>
+        <Image src='/icons/search.svg' width='25' height='25' layout='fixed' />
+      </button>
+    </form>
   )
 }

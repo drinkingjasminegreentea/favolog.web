@@ -1,78 +1,37 @@
-.profileInfo {
+.profileCard {
   display: grid;
-  justify-items: left;
+  gap: 20px;
+  width: 400px;
+  justify-self: center;
+}
+
+.mainInfo {
+  display: grid;
+  grid-template-columns: 150px 250px;
+  justify-items: center;
   align-items: center;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
 }
 
-.profileInfo > div {
-  text-align: left;
-}
-
-.profileDetails > span,
+.detailedInfo > span,
 .followInfo > span {
   display: block;
 }
 
-.profilePlaceholder > span {
-  font-size: 60px;
-}
-
-span.followInfo {
-  font-size: 12px;
-  margin-top: 10px;
-  display: inline;
-}
-
-.userGrid {
-  margin-top: 20px;
+.profileContent {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  text-align: left;
+}
+
+.catalog {
+  display: grid;
   grid-gap: 20px;
+  text-align: left;
+  justify-items: left;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 30px;
 }
 
-@media (min-width: 1200px) {
-  .userGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1.5fr 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 1200px) {
-  .userGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1.5fr 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .userGrid {
-    grid-template-columns: 1fr;
-  }
-  .profileInfo {
-    grid-template-columns: 150px 1fr;
-    grid-gap: 20px;
-  }
-  .profileButtons {
-    grid-column-start: 2;
-    justify-self: start;
-  }
-}
-
-.userInfo > span {
-  display: block;
+.items {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
 }

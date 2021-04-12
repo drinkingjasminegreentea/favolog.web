@@ -1,7 +1,6 @@
 import { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthContext } from '../../src/AuthContext'
@@ -53,12 +52,12 @@ export default function EditCatalog({ show, parentAction, catalog }) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={() => parentAction()}>
+        <button className='secondary' onClick={() => parentAction()}>
           Cancel
-        </Button>
-        <Button variant='secondary' onClick={submit}>
+        </button>
+        <button className='primary' onClick={submit}>
           Save
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   )

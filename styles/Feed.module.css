@@ -1,0 +1,43 @@
+.feed {
+  grid-column-start: 2;
+  display: grid;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 40px 1fr 100px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.catalogBreadCrumb > span {
+  font-family: 'Poppins-Bold';
+}
+
+.linkContent {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+.text > span {
+  font-size: 12px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 15px 1fr;
+  justify-items: start;
+}
+
+.imageContent {
+  display: grid;
+  row-gap: 10px;
+}
+
+.imageContent a {
+  font-size: 12px;
+}
+
+.linkImage {
+  justify-self: center;
+  justify-content: center;
+  display: grid;
+}

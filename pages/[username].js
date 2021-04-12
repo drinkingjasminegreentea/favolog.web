@@ -1,23 +1,16 @@
-import styles from '../styles/CatalogStyles.module.css'
+import styles from '../styles/ProfileInfo.module.css'
 import CatalogCard from '../components/catalog/CatalogCard'
 import ProfileInfo from '../components/user/ProfileInfo'
 import { PageContext } from '../src/PageContext'
 import { useContext, useEffect } from 'react'
 import useSWR, { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import FeedItemCard from '../components/item/FeedItemCard'
+import UserItem from '../components/item/UserItem'
 
 export default function Page({ username }) {
-  const { setActivePage, setOpenGraphInfo, openGraphInfo } = useContext(
-    PageContext
-  )
-
-  useEffect(() => {
-    setActivePage(null)
-  }, [])
+  const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
 
   const fetcher = (url) => {
     return fetch(url, {
@@ -76,47 +69,51 @@ export default function Page({ username }) {
 
   return (
     <>
-      <ProfileInfo
-        user={data.user}
-        totalFollowing={data.totalFollowing}
-        totalFollowers={data.totalFollowers}
-      />
-
-      <Tabs
-        defaultActiveKey='catalogs'
-        transition={false}
-        id='noanim-tab-example'
-      >
-        <Tab eventKey='catalogs' title='Catalogs'>
-          <div className={styles.catalog}>
-            {data.catalogs &&
-              data.catalogs.map((catalog) => (
-                <CatalogCard key={catalog.id} catalog={catalog} />
-              ))}
-          </div>
-        </Tab>
-        {feed && (
-          <Tab eventKey='items' title='All items'>
-            <div className='grid'>
+      <div className='rightBarContainer'>
+        <div className='rightBar'>
+          <ProfileInfo
+            user={data.user}
+            totalFollowing={data.totalFollowing}
+            totalFollowers={data.totalFollowers}
+          />
+        </div>
+      </div>
+      <div className='card'>
+        <Tabs
+          defaultActiveKey='catalogs'
+          transition={false}
+          id='noanim-tab-example'
+        >
+          <Tab eventKey='catalogs' title='Catalogs'>
+            <div className={styles.catalog}>
+              {data.catalogs &&
+                data.catalogs.map((catalog) => (
+                  <CatalogCard key={catalog.id} catalog={catalog} />
+                ))}
+            </div>
+          </Tab>
+          {feed && (
+            <Tab eventKey='items' title='All items'>
               <div className={styles.catalog}>
                 {feed.map((item) => (
-                  <FeedItemCard key={item.id} item={item} />
+                  <UserItem key={item.id} item={item} user={data.user} />
                 ))}
               </div>
               {!isReachingEnd && (
-                <Button
-                  disabled={isLoadingMore || isReachingEnd}
-                  variant='secondary'
-                  className={styles.loadMore}
-                  onClick={() => setSize(size + 1)}
-                >
-                  {isLoadingMore ? 'Loading...' : 'Load more'}
-                </Button>
+                <span className='center'>
+                  <button
+                    disabled={isLoadingMore || isReachingEnd}
+                    className='secondary'
+                    onClick={() => setSize(size + 1)}
+                  >
+                    {isLoadingMore ? 'Loading...' : 'Load more'}
+                  </button>
+                </span>
               )}
-            </div>
-          </Tab>
-        )}
-      </Tabs>
+            </Tab>
+          )}
+        </Tabs>
+      </div>
     </>
   )
 }

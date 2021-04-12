@@ -1,20 +1,11 @@
 import styles from '../../styles/Layout.module.css'
-import NavigationMenu from './NavigationMenu'
-import Add from './Add'
-import SearchBar from './SearchBar'
-import Link from 'next/link'
-import Head from 'next/head'
 import { PageContext } from '../../src/PageContext'
 import { AuthContext } from '../../src/AuthContext'
+import Header from './Header'
+import Add from './Add'
+import Head from 'next/head'
 import { useContext } from 'react'
-
-const Logo = () => {
-  return (
-    <Link href='/'>
-      <span className={'button ' + styles.logo}>favolog</span>
-    </Link>
-  )
-}
+import SideBar from './SideBar'
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
@@ -36,25 +27,15 @@ export default function Layout({ children }) {
         <meta property='og:image:height' content='300' />
         <title>Favolog - Share what you love</title>
       </Head>
-      <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <Logo />
-          <SearchBar />
-          <NavigationMenu />
-        </div>
-        <div className={styles.content}>{children}</div>
-        {currentUser && <Add />}
-        {!currentUser && (
-          <div className={styles.guestMenu}>
-            <Link href='/about'>
-              <span className='button'> About </span>
-            </Link>
-            &nbsp; &#x2022; &nbsp;
-            <Link href='/privacypolicy'>
-              <span className='button'>Privacy Policy </span>
-            </Link>
+      <div className={styles.container}>
+        <Header />
+        <div className={styles.layout}>
+          <div className={styles.content}>
+            {children}
+            <SideBar />
           </div>
-        )}
+        </div>
+        {currentUser && <Add />}
       </div>
     </>
   )

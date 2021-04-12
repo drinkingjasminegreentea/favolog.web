@@ -1,17 +1,10 @@
-import ItemImage from './ItemImage'
-import Comment from './Comment'
+import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
-import ItemView from './ItemView'
-import styles from '../../styles/CatalogStyles.module.css'
+import ProfileImage from '../user/ProfileImage'
+import Follow from '../layout/Follow'
+import styles from '../../styles/Feed.module.css'
 
-export default function FeedItemCard({ item }) {
-  const [showItemView, setShowItemView] = useState(false)
-
-  const toggleItemView = () => {
-    setShowItemView(!showItemView)
-  }
-
+export default function FeedItemCard({ item, showFollow }) {
   const user = {
     id: item.userId,
     profileImage: item.profileImage,
@@ -21,21 +14,48 @@ export default function FeedItemCard({ item }) {
   }
 
   return (
-    <div className={styles.catalogItem}>
-      <ItemImage imageName={item.imageName} clickHandler={toggleItemView} />
-      <span className='button medium-font' onClick={toggleItemView}>
-        {item.title}
-      </span>
-      <Link href={`catalog/${item.catalogId}`}>
-        <h5 className='button'> {item.catalogName} </h5>
+    <div className='card'>
+      <Link href={`/catalog/${item.catalogId}`}>
+        <h5 className='button bold'>{item.catalogName}</h5>
       </Link>
-      <Comment item={item} user={user} toggleItemView={toggleItemView} />
-      <ItemView
-        show={showItemView}
-        parentAction={toggleItemView}
-        item={item}
-        user={user}
-      />
+      <a href={item.url} target='_blank' className='grid'>
+        <div className={styles.text}>
+          <h4>{item.title}</h4>
+          <span>
+            <Image src='/icons/box-arrow-up-right.svg' width='10' height='10' />
+            {item.urlDomain}
+          </span>
+        </div>
+        {item.imageName && (
+          <div className='center'>
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+              layout='fixed'
+              objectFit='contain'
+              width='400'
+              height='300'
+              quality={100}
+            />
+          </div>
+        )}
+      </a>
+      <div className={styles.header}>
+        <Link href={`/${user.username}`}>
+          <div className='button'>
+            <ProfileImage
+              profileImage={user.profileImage}
+              username={user.username}
+              width='35'
+              height='35'
+            />
+          </div>
+        </Link>
+        <Link href={`/${user.username}`}>
+          <b className='button'>{user.username}</b>
+        </Link>
+        {showFollow && <Follow username={user.username} />}
+      </div>
+      <div className={styles.comment}>{item.comment}</div>
     </div>
   )
 }

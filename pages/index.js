@@ -1,25 +1,19 @@
-import styles from '../styles/CatalogStyles.module.css'
-import { useContext, useEffect } from 'react'
+import styles from '../styles/Feed.module.css'
+import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../src/AuthContext'
-import { ActivePages, PageContext } from '../src/PageContext'
 import FeedItemCard from '../components/item/FeedItemCard'
 import { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
-import Alert from 'react-bootstrap/Alert'
 
 export default function Page() {
-  const { setActivePage } = useContext(PageContext)
   const { currentUser, getToken } = useContext(AuthContext)
-
-  useEffect(() => {
-    setActivePage(ActivePages.home)
-  }, [])
+  const [showFollow, setShowFollow] = useState(true)
 
   const fetchGuestFeed = (url) => {
     return fetch(url)
       .then((response) => {
         if (response.ok) {
+          setShowFollow(true)
           return response.json()
         }
         return Promise.reject(response)
@@ -40,6 +34,7 @@ export default function Page() {
       })
         .then((response) => {
           if (response.ok) {
+            setShowFollow(false)
             return response.json()
           }
           return Promise.reject(response)
@@ -49,6 +44,7 @@ export default function Page() {
         })
     })
   }
+
   let url = null
   let fetcher = null
   const PAGE_SIZE = 12
@@ -75,42 +71,29 @@ export default function Page() {
     isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE)
 
   const feed = data ? [].concat(...data) : []
-  if (error) return <div>Failed to load. Please refresh.</div>
+  if (error) {
+    console.error(error)
+    return <div>Failed to load. Please refresh.</div>
+  }
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      {!currentUser && (
-        <>
-          <Alert variant='info'>
-            <span>
-              Share what you love and discover new favorites. Sign in to get
-              started!
-            </span>
-          </Alert>
-        </>
-      )}
-      {isEmpty && (
-        <Alert variant='info'>
-          <Alert.Heading>Welcome!</Alert.Heading>
-          <span>
-            Create your own favorites catalog by clicking on the plus button.
-            Explore and find people to follow.
+      <div className={styles.feed}>
+        {feed.map((item) => (
+          <FeedItemCard key={item.id} item={item} showFollow={showFollow} />
+        ))}
+        {!isReachingEnd && (
+          <span className='center'>
+            <button
+              disabled={isLoadingMore || isReachingEnd}
+              className='secondary'
+              onClick={() => setSize(size + 1)}
+            >
+              {isLoadingMore ? 'Loading...' : 'Load more'}
+            </button>
           </span>
-        </Alert>
-      )}
-      <div className={styles.catalog}>
-        {feed.map((item) => item && <FeedItemCard key={item.id} item={item} />)}
+        )}
       </div>
-      {!isReachingEnd && (
-        <Button
-          disabled={isLoadingMore || isReachingEnd}
-          variant='secondary'
-          className={styles.loadMore}
-          onClick={() => setSize(size + 1)}
-        >
-          {isLoadingMore ? 'Loading...' : 'Load more'}
-        </Button>
-      )}
     </>
   )
 }

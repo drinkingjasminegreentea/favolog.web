@@ -125,10 +125,10 @@ export default function Page() {
                 email: data.emailAddress,
               })
               .then(() => {
-                router.push(`/${currentUser.displayName}`)
+                router.push(`/${data.username}`)
               })
           }
-          router.push(`/${currentUser.displayName}`)
+          router.push(`/${data.username}`)
         })
         .catch((error) => {
           console.error(error)
@@ -207,7 +207,7 @@ export default function Page() {
             onChange={(e) => setFile(e.target.files[0])}
           />
         </Form.Group>
-        <Button variant='secondary' onClick={update}>
+        <Button className='primary' onClick={() => update()}>
           Save
         </Button>
       </Form>

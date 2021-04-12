@@ -1,0 +1,17 @@
+.sideBar {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  position: fixed;
+}
+
+.sideMenu > span {
+  color: #868686;
+  font-size: 12px;
+}
+
+.sideBarContainer {
+  display: grid;
+  position: relative;
+  padding-left: 40px;
+}

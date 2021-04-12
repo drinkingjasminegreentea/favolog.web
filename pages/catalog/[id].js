@@ -1,23 +1,22 @@
 import styles from '../../styles/CatalogStyles.module.css'
-import ItemCard from '../../components/item/ItemCard'
-import CatalogMenu from '../../components/catalog/CatalogMenu'
 import ProfileImage from '../../components/user/ProfileImage'
-import Link from 'next/link'
+import Follow from '../../components/layout/Follow'
+import CatalogItemCard from '../../components/item/CatalogItemCard'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
+import Link from 'next/link'
+import CatalogMenu from '../../components/catalog/CatalogMenu'
 
 export default function Page({ catalogId, refreshKey }) {
-  const {
-    setActivePage,
-    setOpenGraphInfo,
-    openGraphInfo,
-    setCurrentCatalogId,
-  } = useContext(PageContext)
+  const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(
+    PageContext
+  )
   const { currentUser, getToken } = useContext(AuthContext)
   const [key, setKey] = useState(refreshKey)
+  const [self, setIsSelf] = useState(false)
 
   useEffect(() => {
     setCurrentCatalogId(catalogId)
@@ -70,11 +69,6 @@ export default function Page({ catalogId, refreshKey }) {
   }
 
   const { data, error, mutate } = useSWR(url, fetcher)
-
-  useEffect(() => {
-    setActivePage('')
-  }, [])
-
   if (key != refreshKey) {
     setKey(refreshKey)
     mutate()
@@ -89,6 +83,8 @@ export default function Page({ catalogId, refreshKey }) {
         title: `${data.user.username} - ${data.name}`,
         url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/catalog/${data.id}`,
       })
+
+      setIsSelf(data.user.username == currentUser.displayName)
     }
   }, [data])
 
@@ -96,31 +92,37 @@ export default function Page({ catalogId, refreshKey }) {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <div className={styles.catalogHeader}>
-        <h3> {data.name} </h3>
-        {data.isEditable ? (
-          <CatalogMenu catalog={data} />
-        ) : (
+      <div>
+        <div className='card'>
+          {data.isEditable && <CatalogMenu catalog={data} />}
+          <h4 className='bold'> {data.name} </h4>
+          <br />
+          <br />
           <Link href={`/${data.user.username}`}>
-            <a className='button'>
+            <div className='center button'>
               <ProfileImage
                 profileImage={data.user.profileImage}
                 username={data.user.username}
-                width='35'
-                height='35'
+                width='100'
+                height='100'
               />
-            </a>
+            </div>
           </Link>
-        )}
+          <br />
+          <Link href={`/${data.user.username}`}>
+            <b className='center button'>{data.user.username}</b>
+          </Link>
+          <br />
+          {!self && <Follow username={data.user.username} style='primary' />}
+          <br />
+        </div>
       </div>
-      <div className={styles.catalog}>
+      <div className={styles.feed}>
         {data.items.map((item) => (
-          <ItemCard
+          <CatalogItemCard
             key={item.id}
             item={item}
-            catalogId={data.id}
             isEditable={data.isEditable}
-            user={data.user}
           />
         ))}
       </div>

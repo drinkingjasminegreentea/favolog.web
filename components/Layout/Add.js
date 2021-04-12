@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import styles from '../../styles/Layout.module.css'
 import { AuthContext } from '../../src/AuthContext'
@@ -218,16 +217,16 @@ const AddItemDialog = ({ show, parentAction }) => {
         </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant='secondary'
+        <button
+          className='secondary'
           disabled={addInProgress}
           onClick={closeModal}
         >
           Cancel
-        </Button>
-        <Button variant='primary' disabled={addInProgress} onClick={submit}>
+        </button>
+        <button className='primary' disabled={addInProgress} onClick={submit}>
           Ready
-        </Button>
+        </button>
         {addInProgress && <Spinner animation='grow' />}
       </Modal.Footer>
     </Modal>
@@ -236,7 +235,6 @@ const AddItemDialog = ({ show, parentAction }) => {
 
 export default function Add() {
   const [showModal, setShowModal] = useState(false)
-  const [showOverlay, setShowOverlay] = useState(false)
 
   const toggleModalWindow = () => {
     setShowModal(!showModal)
@@ -244,22 +242,12 @@ export default function Add() {
 
   return (
     <>
-      {showOverlay && (
-        <div className={styles.addOverlay}>
-          <div className={styles.addText}>
-            <span className='extraBold'>Add new item </span> <br />
-            <span className='extraBold'>Add new catalog </span>
-          </div>
-        </div>
-      )}
       <div
         role='button'
-        className={styles.addButton + ' button'}
+        className={styles.addButton}
         onClick={toggleModalWindow}
-        onMouseEnter={() => setShowOverlay(true)}
-        onMouseLeave={() => setShowOverlay(false)}
       >
-        <img src='/icons/add.png' />
+        +
       </div>
       <AddItemDialog show={showModal} parentAction={toggleModalWindow} />
     </>
