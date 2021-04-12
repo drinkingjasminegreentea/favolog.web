@@ -10,7 +10,7 @@
   display: flex;
   width: 100%;
   justify-content: center;
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .content {
@@ -23,7 +23,7 @@
 }
 
 .addButton {
-  background: #58ebff;
+  background: #20d5ec;
   width: 70px;
   height: 70px;
   border-radius: 100px;

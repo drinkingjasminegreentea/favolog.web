@@ -66,10 +66,24 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         </Link>
       )}
       <br />
+      <div className={styles.profileStats}>
+        <Link href={`/user/${user.username}/following`}>
+          <span className='button'>
+            <b>{totalFollowing}</b> following
+          </span>
+        </Link>
+        &nbsp; &nbsp;
+        <Link href={`/user/${user.username}/followers`}>
+          <span className='button'>
+            <b>{totalFollowersState}</b> followers
+          </span>
+        </Link>
+      </div>
+      <br />
       {user.firstName && user.lastName && (
-        <h4 className='center'>
+        <b>
           {user.firstName} {user.lastName}
-        </h4>
+        </b>
       )}
       {user.bio && (
         <span>
@@ -84,28 +98,6 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
           </a>
         </>
       )}
-      <br />
-      <div className={styles.profileStats}>
-        <Link href={`/user/${user.username}/following`}>
-          <span className='button'>
-            <b>{totalFollowing}</b> following
-          </span>
-        </Link>
-        &nbsp; &nbsp;
-        <Link href={`/user/${user.username}/followers`}>
-          <span className='button'>
-            <b>{totalFollowersState}</b> followers
-          </span>
-        </Link>
-        <br />
-        <span>
-          <b>20</b> catalogs
-        </span>
-        &nbsp; &nbsp;
-        <span>
-          <b>140</b> items
-        </span>
-      </div>
     </div>
   )
 }
