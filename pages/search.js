@@ -10,20 +10,20 @@ export default function Page({ searchQuery, results }) {
   setActivePage(null)
 
   return (
-    <div className={styles.searchResults}>
+    <div className='mainContent'>
       <span>
         Search results <b>'{searchQuery}'</b>
       </span>
       <br />
       {results.users.length > 0 && <h4>Users</h4>}
-      <div className={styles.catalog}>
+      <div className={styles.searchResults}>
         {results.users.map((item) => (
           <ProfileCard key={item.id} user={item} />
         ))}
       </div>
       <br />
       {results.catalogs.length > 0 && <h4>Catalogs</h4>}
-      <div className={styles.catalog}>
+      <div className={styles.searchResults}>
         {results.catalogs.map((item) => (
           <div key={item.id}>
             <Link href={`/catalog/${item.id}`} key={item.id}>
