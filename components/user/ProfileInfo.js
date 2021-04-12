@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import styles from '../../styles/ProfileInfo.module.css'
-import Follow from '../layout/Follow'
+import FollowButton from '../layout/FollowButton'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { currentUser, getToken } = useContext(AuthContext)
@@ -59,7 +59,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       </div>
       <br />
       <h5 className='center'>{user.username}</h5>
-      {!self && <Follow username={user.username} style='primary' />}
+      {!self && <FollowButton style='primary' />}
       {self && (
         <Link href='/settings'>
           <button className='secondary'>Edit profile</button>

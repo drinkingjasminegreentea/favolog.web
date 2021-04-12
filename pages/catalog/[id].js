@@ -1,6 +1,6 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import ProfileImage from '../../components/user/ProfileImage'
-import Follow from '../../components/layout/Follow'
+import FollowButton from '../../components/layout/FollowButton'
 import CatalogItemCard from '../../components/item/CatalogItemCard'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
@@ -113,7 +113,7 @@ export default function Page({ catalogId, refreshKey }) {
             <b className='center button'>{data.user.username}</b>
           </Link>
           <br />
-          {!self && <Follow username={data.user.username} style='primary' />}
+          {!self && <FollowButton style='primary' />}
           <br />
         </div>
       </div>

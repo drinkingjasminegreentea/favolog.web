@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { AuthContext, SignInModal } from '../../src/AuthContext'
 
-export default function Follow({ style }) {
+export default function FollowButton({ style }) {
   const { currentUser } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
   const className = style || 'secondary'

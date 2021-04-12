@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ProfileImage from '../user/ProfileImage'
-import Follow from '../layout/Follow'
+import FollowButton from '../layout/FollowButton'
 import styles from '../../styles/Feed.module.css'
 
 export default function FeedItemCard({ item, showFollow }) {
@@ -53,7 +53,7 @@ export default function FeedItemCard({ item, showFollow }) {
         <Link href={`/${user.username}`}>
           <b className='button'>{user.username}</b>
         </Link>
-        {showFollow && <Follow username={user.username} />}
+        {showFollow && <FollowButton />}
       </div>
       <div className={styles.comment}>{item.comment}</div>
     </div>
