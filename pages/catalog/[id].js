@@ -92,29 +92,31 @@ export default function Page({ catalogId, refreshKey }) {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <div>
-        <div className='card'>
-          {data.isEditable && <CatalogMenu catalog={data} />}
-          <h4 className='bold'> {data.name} </h4>
-          <br />
-          <br />
-          <Link href={`/${data.user.username}`}>
-            <div className='center button'>
-              <ProfileImage
-                profileImage={data.user.profileImage}
-                username={data.user.username}
-                width='100'
-                height='100'
-              />
-            </div>
-          </Link>
-          <br />
-          <Link href={`/${data.user.username}`}>
-            <b className='center button'>{data.user.username}</b>
-          </Link>
-          <br />
-          {!self && <FollowButton style='primary' />}
-          <br />
+      <div className='rightBarContainer'>
+        <div className='rightBar'>
+          <div className='card'>
+            {data.isEditable && <CatalogMenu catalog={data} />}
+            <h5 className='bold'> {data.name} </h5>
+            <br />
+            <br />
+            <Link href={`/${data.user.username}`}>
+              <div className='center button'>
+                <ProfileImage
+                  profileImage={data.user.profileImage}
+                  username={data.user.username}
+                  width='100'
+                  height='100'
+                />
+              </div>
+            </Link>
+            <br />
+            <Link href={`/${data.user.username}`}>
+              <b className='center button'>{data.user.username}</b>
+            </Link>
+            <br />
+            {!self && <FollowButton style='primary' />}
+            <br />
+          </div>
         </div>
       </div>
       <div className={styles.feed}>

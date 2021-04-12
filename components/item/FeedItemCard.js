@@ -20,7 +20,7 @@ export default function FeedItemCard({ item, showFollow }) {
       </Link>
       <a href={item.url} target='_blank' className='grid'>
         <div className={styles.text}>
-          <h4>{item.title}</h4>
+          <h5>{item.title}</h5>
           <span>
             <Image src='/icons/box-arrow-up-right.svg' width='10' height='10' />
             {item.urlDomain}

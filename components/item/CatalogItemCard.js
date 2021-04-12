@@ -8,7 +8,7 @@ export default function CatalogItemCard({ item, isEditable }) {
       {isEditable && <ItemMenu item={item} />}
       <a href={item.url} target='_blank' className='grid'>
         <div className={styles.text}>
-          <h4>{item.title}</h4>
+          <h5>{item.title}</h5>
           {item.url && (
             <span className='link'>
               <Image
