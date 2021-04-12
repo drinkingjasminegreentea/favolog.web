@@ -9,8 +9,13 @@ export default function CatalogCard({ catalog, username }) {
   return (
     <Link href={catalogLink}>
       <div className={styles.catalogItem + ' button'}>
+        <b> {catalog.name} </b>
+        <br />
+        <span> {catalog.itemCount} items </span>
+        <br />
+        <br />
         {catalog.lastThreeImages.length > 0 && (
-          <div className={styles.catalogImages}>
+          <div className='center'>
             <Image
               src={`${imageFolder}/${catalog.lastThreeImages[0]}`}
               className={styles.catalogFirstImage}
@@ -22,9 +27,6 @@ export default function CatalogCard({ catalog, username }) {
             />
           </div>
         )}
-        <b> {catalog.name} </b>
-        <br />
-        <span> {catalog.itemCount} items </span>
       </div>
     </Link>
   )

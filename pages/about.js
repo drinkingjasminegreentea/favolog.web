@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <>
+    <div className='mainContent'>
       <h3>Mission</h3>
       <p>
         We want to help you discover your new favorite items through your own
@@ -19,6 +19,6 @@ export default function Page() {
         share with your followers. You can explore favorites shared by your
         network and see if there's anything new that you'll love!
       </p>
-    </>
+    </div>
   )
 }

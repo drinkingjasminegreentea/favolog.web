@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
@@ -43,12 +42,12 @@ export default function DeleteCatalog({ show, parentAction, catalogId }) {
       </Modal.Header>
       <Modal.Body>Are you sure you want to delete this catalog?</Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={parentAction}>
+        <button className='secondary' onClick={() => parentAction()}>
           Cancel
-        </Button>
-        <Button variant='secondary' onClick={submit}>
+        </button>
+        <button className='primary' onClick={submit}>
           Delete
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   )

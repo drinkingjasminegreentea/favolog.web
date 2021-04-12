@@ -28,13 +28,6 @@
   width: fit-content;
 }
 
-.catalog {
-  display: grid;
-  grid-gap: 20px;
-  text-align: left;
-  justify-items: left;
-}
-
 .searchResults {
   text-align: left;
 }
@@ -138,13 +131,13 @@
   margin: 40px 0px;
 }
 
-.catalogImages {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  justify-items: center;
-}
-
 .feed {
   grid-column-start: 2;
   display: grid;
+}
+
+.catalogItem {
+  border-bottom: solid 1px lightgray;
+  padding-bottom: 10px;
+  width: 100%;
 }

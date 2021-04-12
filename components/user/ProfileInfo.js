@@ -1,14 +1,25 @@
 import ProfileImage from '../user/ProfileImage'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import styles from '../../styles/ProfileInfo.module.css'
+import Follow from '../layout/Follow'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { currentUser, getToken } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
+  let websiteUrl = null
+  if (user.website) {
+    if (
+      !user.website.startsWith('http://') ||
+      !user.website.startsWith('https://')
+    )
+      websiteUrl = `https://${user.website}`
+    else websiteUrl = user.website
+  }
 
   useEffect(() => {
     if (currentUser) {
@@ -36,59 +47,27 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
     }
   }, [user, currentUser])
 
-  const onButtonClick = async () => {
-    const userFollow = {
-      username: user.username,
-      followerUsername: currentUser.displayName,
-    }
-
-    getToken().then((accessToken) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/follow`, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(userFollow),
-      })
-        .then((response) => {
-          if (response.ok) {
-            isFollowing
-              ? setTotalFollowersSate(totalFollowersState - 1)
-              : setTotalFollowersSate(totalFollowersState + 1)
-            setIsFollowing(!isFollowing)
-          } else Promise.reject()
-        })
-        .catch((error) => console.error(error))
-    })
-  }
-
   return (
     <div className='card'>
-      <ProfileImage
-        profileImage={user.profileImage}
-        username={user.username}
-        width='120'
-        height='120'
-      />
-      <br />
-      <h5>{user.username}</h5>
-      <div className={styles.profileButtons}>
-        {!self && (
-          <button className='primary' onClick={onButtonClick}>
-            {isFollowing ? 'Unfollow' : 'Follow'}
-          </button>
-        )}
-        {self && (
-          <Link href='/settings'>
-            <button className='primary'>Edit profile</button>
-          </Link>
-        )}
+      <div className='center'>
+        <ProfileImage
+          profileImage={user.profileImage}
+          username={user.username}
+          width='120'
+          height='120'
+        />
       </div>
       <br />
+      <h5 className='center'>{user.username}</h5>
+      {!self && <Follow username={user.username} style='primary' />}
+      {self && (
+        <Link href='/settings'>
+          <button className='secondary'>Edit profile</button>
+        </Link>
+      )}
+      <br />
       {user.firstName && user.lastName && (
-        <h4>
+        <h4 className='center'>
           {user.firstName} {user.lastName}
         </h4>
       )}
@@ -97,10 +76,11 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
           {user.bio} <br />
         </span>
       )}
-      {user.website && (
+      {websiteUrl && (
         <>
-          <a href={user.website} className='link'>
-            {user.website}
+          <a href={websiteUrl} target='_blank' className='flex'>
+            <Image src='/icons/link-45deg.svg' width='18' height='18' />
+            <b>{user.website}</b>
           </a>
         </>
       )}

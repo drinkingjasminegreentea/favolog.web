@@ -66,10 +66,6 @@ input.form-control:focus {
   box-shadow: none;
 }
 
-.activePage {
-  border-bottom: solid 2px #535353;
-}
-
 .error {
   color: red;
 }
@@ -83,6 +79,10 @@ input.form-control:focus {
 
 .grid {
   display: grid;
+}
+
+a.dropdown-item {
+  display: flex;
 }
 
 button.close {
@@ -128,6 +128,7 @@ button.close {
   border-radius: 4px;
   height: fit-content;
   width: 100%;
+  display: grid;
 }
 
 .primary {
@@ -135,9 +136,7 @@ button.close {
   border: none;
   border-radius: 4px;
   padding: 8px 20px;
-  color: white;
-  font-family: 'Poppins-Medium';
-  width: fit-content;
+  color: black;
   font-weight: bold;
 }
 
@@ -146,9 +145,9 @@ button.close {
 }
 
 .secondary {
-  border: 1px solid #58ebff;
+  border: 2px solid #58ebff;
   border-radius: 4px;
-  color: #58ebff;
+  color: black;
   background-color: white;
   font-weight: bold;
   min-width: 100px;
@@ -157,4 +156,14 @@ button.close {
 
 .secondary:hover {
   background-color: #fafafa;
+}
+
+.flex {
+  display: flex;
+}
+
+.mainContent {
+  grid-column-start: 2;
+  display: grid;
+  height: fit-content;
 }

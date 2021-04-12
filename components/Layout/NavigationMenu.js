@@ -52,11 +52,11 @@ export default function NavigationMenu() {
             onClick={() => router.push(`/${currentUser.displayName}`)}
           >
             <Image src='/icons/person.svg' width='20' height='20' />
-            <span>Profile</span>
+            <span> &nbsp; Profile</span>
           </Dropdown.Item>
           <Dropdown.Item className={styles.dropDownMenuItem} onClick={logOut}>
             <Image src='/icons/box-arrow-left.svg' width='20' height='20' />
-            <span>Log out</span>
+            <span> &nbsp; Log out</span>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>

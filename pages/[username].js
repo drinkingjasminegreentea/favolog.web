@@ -90,9 +90,9 @@ export default function Page({ username }) {
           </Tab>
           {feed && (
             <Tab eventKey='items' title='All items'>
-              <div className={styles.items}>
+              <div className={styles.catalog}>
                 {feed.map((item) => (
-                  <UserItem key={item.id} item={item} />
+                  <UserItem key={item.id} item={item} user={data.user} />
                 ))}
               </div>
               {!isReachingEnd && (

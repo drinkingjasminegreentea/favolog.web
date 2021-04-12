@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div>
+    <div className='mainContent'>
       <h3>Privacy Policy</h3>
       <p>Last updated: April 8, 2021</p>
       <p>

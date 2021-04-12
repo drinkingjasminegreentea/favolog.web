@@ -25,9 +25,8 @@
   }
 }
 
-.settingsPage,
-.settingsForm {
-  display: grid;
+.settingsPage {
+  grid-column-start: 2;
 }
 
 .deleteProfile {

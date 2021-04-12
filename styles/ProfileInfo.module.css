@@ -23,10 +23,11 @@
 
 .catalog {
   display: grid;
-  column-gap: 20px;
+  grid-gap: 20px;
   text-align: left;
   justify-items: left;
   grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 30px;
 }
 
 .items {

@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthContext } from '../../src/AuthContext'
 import uploadImage from '../../src/UploadImage'
+import { useRouter } from 'next/router'
 
 export default function EditItem({ show, parentAction, item }) {
   const [title, setTitle] = useState('')
@@ -12,6 +12,7 @@ export default function EditItem({ show, parentAction, item }) {
   const [comment, setComment] = useState('')
   const [file, setFile] = useState()
   const { getToken } = useContext(AuthContext)
+  const router = useRouter()
 
   useEffect(() => {
     setTitle(item.title)
@@ -41,14 +42,13 @@ export default function EditItem({ show, parentAction, item }) {
         body: JSON.stringify(item),
       })
         .then((response) => {
-          if (response.ok) return response.json()
-          else return Promise.reject(response)
-        })
-        .then((data) => {
-          parentAction(data)
+          if (response.ok) {
+            parentAction()
+            router.push(`/catalog/${item.catalogId}?refreshKey=${Date.now()}`)
+          } else return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
@@ -87,12 +87,12 @@ export default function EditItem({ show, parentAction, item }) {
         />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={() => parentAction()}>
+        <button className='secondary' onClick={() => parentAction()}>
           Cancel
-        </Button>
-        <Button variant='secondary' onClick={submit}>
+        </button>
+        <button className='primary' onClick={submit}>
           Save
-        </Button>
+        </button>
       </Modal.Footer>
     </Modal>
   )
