@@ -8,7 +8,7 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
-import FollowButton from '@/components/layout1/FollowButton'
+import FollowButton from '@/components/layout/FollowButton'
 
 export default function Page({ catalogId, refreshKey }) {
   const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(

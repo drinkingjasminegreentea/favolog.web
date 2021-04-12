@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ProfileImage from '../user/ProfileImage'
-import FollowButton from '@/components/layout1/FollowButton'
+import FollowButton from '@/components/layout/FollowButton'
 import styles from '../../styles/Feed.module.css'
 
 export default function FeedItemCard({ item, showFollow }) {
