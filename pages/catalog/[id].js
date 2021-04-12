@@ -84,7 +84,7 @@ export default function Page({ catalogId, refreshKey }) {
         url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/catalog/${data.id}`,
       })
 
-      setIsSelf(data.user.username == currentUser.displayName)
+      if (currentUser) setIsSelf(data.user.username == currentUser.displayName)
     }
   }, [data])
 
