@@ -15,9 +15,6 @@ export default function FeedItemCard({ item, showFollow }) {
 
   return (
     <div className='card'>
-      <Link href={`/catalog/${item.catalogId}`}>
-        <h5 className='button bold'>{item.catalogName}</h5>
-      </Link>
       <a href={item.url} target='_blank' className='grid'>
         <div className={styles.text}>
           <h5>{item.title}</h5>
@@ -39,6 +36,7 @@ export default function FeedItemCard({ item, showFollow }) {
           </div>
         )}
       </a>
+
       <div className={styles.header}>
         <Link href={`/${user.username}`}>
           <div className='button'>
@@ -50,9 +48,15 @@ export default function FeedItemCard({ item, showFollow }) {
             />
           </div>
         </Link>
-        <Link href={`/${user.username}`}>
-          <b className='button'>{user.username}</b>
-        </Link>
+        <span>
+          <Link href={`/${user.username}`}>
+            <b className='button'>{user.username}</b>
+          </Link>
+          <b>{' > '}</b>
+          <Link href={`/catalog/${item.catalogId}`}>
+            <b className='button'>{item.catalogName}</b>
+          </Link>
+        </span>
         {showFollow && <FollowButton />}
       </div>
       <div className={styles.comment}>{item.comment}</div>
