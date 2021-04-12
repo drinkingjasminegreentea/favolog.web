@@ -23,16 +23,14 @@ export default function ItemView({ show, parentAction, item, user }) {
         <a href={item.url} target='_blank'>
           <div className='grid'>
             {item.url && (
-              <a href={item.url} target='_blank'>
-                <span>
-                  <Image
-                    src='/icons/box-arrow-up-right.svg'
-                    width='10'
-                    height='10'
-                  />
-                  {item.urlDomain}
-                </span>
-              </a>
+              <span>
+                <Image
+                  src='/icons/box-arrow-up-right.svg'
+                  width='10'
+                  height='10'
+                />
+                {item.urlDomain}
+              </span>
             )}
             {item.imageName && (
               <div className='center'>
