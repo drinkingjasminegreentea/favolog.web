@@ -1,6 +1,5 @@
 import styles from '../../styles/CatalogStyles.module.css'
 import ProfileImage from '../../components/user/ProfileImage'
-import FollowButton from '../../components/layout/FollowButton'
 import CatalogItemCard from '../../components/item/CatalogItemCard'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
@@ -9,6 +8,7 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
+import FollowButton from '../../components/layout/FollowButton'
 
 export default function Page({ catalogId, refreshKey }) {
   const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(
