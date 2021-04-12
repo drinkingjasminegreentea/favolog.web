@@ -43,6 +43,28 @@ body {
   border-radius: 5px;
 }
 
+/* screen size larger than 600 */
+@media only screen and (min-width: 600px) {
+  .mainContent {
+    grid-column-start: 2;
+    display: grid;
+    height: fit-content;
+    width: 610px;
+  }
+}
+
+/* screen size smaller than 600 */
+@media only screen and (max-width: 600px) {
+  .mainContent {
+    display: grid;
+    height: fit-content;
+    width: 100%;
+  }
+  .leftBarContainer {
+    display: none;
+  }
+}
+
 button.btn {
   border-radius: 0px;
 }
@@ -179,20 +201,13 @@ button.close {
   display: flex;
 }
 
-.mainContent {
-  grid-column-start: 2;
-  display: grid;
-  height: fit-content;
-  width: 610px;
-}
-
-.rightBarContainer {
+.leftBarContainer {
   position: relative;
   margin-bottom: 100px;
   width: 250px;
 }
 
-.rightBar {
+.leftBar {
   position: fixed;
   width: 250px;
   overflow-y: auto;

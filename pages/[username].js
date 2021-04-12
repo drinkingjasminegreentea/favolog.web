@@ -69,8 +69,8 @@ export default function Page({ username }) {
 
   return (
     <>
-      <div className='rightBarContainer'>
-        <div className='rightBar'>
+      <div className='leftBarContainer'>
+        <div className='leftBar'>
           <ProfileInfo
             user={data.user}
             totalFollowing={data.totalFollowing}
@@ -78,7 +78,7 @@ export default function Page({ username }) {
           />
         </div>
       </div>
-      <div className='card'>
+      <div className='card mainContent'>
         <Tabs
           defaultActiveKey='catalogs'
           transition={false}

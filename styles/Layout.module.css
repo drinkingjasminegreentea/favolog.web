@@ -1,3 +1,32 @@
+/* screen size larger than 600 */
+@media only screen and (min-width: 600px) {
+  .content {
+    display: grid;
+    gap: 20px;
+    width: 1200px;
+    padding: 30px 0px;
+    margin-left: 100px;
+    grid-template-columns: 250px 600px 300px;
+  }
+  .pageContent {
+    padding-top: 60px;
+  }
+}
+
+/* screen size smaller than 600 */
+@media only screen and (max-width: 600px) {
+  .content {
+    display: grid;
+    gap: 20px;
+  }
+  .container {
+    padding: 0px 10px;
+  }
+  .pageContent {
+    padding-top: 70px;
+  }
+}
+
 .container {
   background: #fafafa;
   min-height: 100vh;
@@ -6,20 +35,10 @@
   justify-content: center;
 }
 
-.layout {
+.pageContent {
   display: flex;
   width: 100%;
   justify-content: center;
-  padding-top: 60px;
-}
-
-.content {
-  display: grid;
-  gap: 20px;
-  width: 1200px;
-  padding: 30px 0px;
-  margin-left: 100px;
-  grid-template-columns: 250px 600px 300px;
 }
 
 .addButton {

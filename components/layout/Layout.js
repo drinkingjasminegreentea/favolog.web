@@ -29,7 +29,7 @@ export default function Layout({ children }) {
       </Head>
       <div className={styles.container}>
         <Header />
-        <div className={styles.layout}>
+        <div className={styles.pageContent}>
           <div className={styles.content}>
             {children}
             <SideBar />

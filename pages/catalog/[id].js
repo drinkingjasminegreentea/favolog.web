@@ -92,8 +92,8 @@ export default function Page({ catalogId, refreshKey }) {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <div className='rightBarContainer'>
-        <div className='rightBar'>
+      <div className='leftBarContainer'>
+        <div className='leftBar'>
           <div className='card'>
             {data.isEditable && <CatalogMenu catalog={data} />}
             <h5 className='bold'> {data.name} </h5>
@@ -119,7 +119,7 @@ export default function Page({ catalogId, refreshKey }) {
           </div>
         </div>
       </div>
-      <div className={styles.feed}>
+      <div className='mainContent'>
         {data.items.map((item) => (
           <CatalogItemCard
             key={item.id}
