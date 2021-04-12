@@ -32,8 +32,8 @@ export default function FeedItemCard({ item, showFollow }) {
               src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
               layout='fixed'
               objectFit='contain'
-              width='400'
-              height='300'
+              width='300'
+              height='150'
               quality={100}
             />
           </div>
