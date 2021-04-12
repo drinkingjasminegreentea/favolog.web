@@ -183,11 +183,13 @@ button.close {
   grid-column-start: 2;
   display: grid;
   height: fit-content;
+  width: 610px;
 }
 
 .rightBarContainer {
   position: relative;
   margin-bottom: 100px;
+  width: 250px;
 }
 
 .rightBar {

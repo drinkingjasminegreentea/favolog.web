@@ -78,7 +78,7 @@ export default function Page() {
   if (!data) return <Spinner className={styles.loading} animation='grow' />
   return (
     <>
-      <div className={styles.feed}>
+      <div className='mainContent'>
         {feed.map((item) => (
           <FeedItemCard key={item.id} item={item} showFollow={showFollow} />
         ))}
