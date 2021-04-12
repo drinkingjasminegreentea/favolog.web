@@ -1,4 +1,4 @@
-import Layout from '../components/Layout/Layout'
+import Layout from '../components/layout1/Layout'
 import { AuthContextProvider } from '../src/AuthContext'
 import { PageContextProvider } from '../src/PageContext'
 import '../styles/globals.css'

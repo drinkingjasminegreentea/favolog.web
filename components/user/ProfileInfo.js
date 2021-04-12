@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import styles from '../../styles/ProfileInfo.module.css'
-import FollowButton from '@/components/layout/FollowButton'
+import FollowButton from '@/components/layout1/FollowButton'
 
 export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   const { currentUser, getToken } = useContext(AuthContext)
