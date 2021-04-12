@@ -52,6 +52,9 @@
 .logo {
   font-size: 26px;
   font-weight: bold;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 25px 1fr;
 }
 
 .logo > img {

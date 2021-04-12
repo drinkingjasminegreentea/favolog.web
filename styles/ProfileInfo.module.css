@@ -3,12 +3,18 @@
   .catalog {
     grid-template-columns: 1fr 1fr 1fr;
   }
+  .profileMobile {
+    display: none;
+  }
 }
 
 /* screen size smaller than 600 */
 @media only screen and (max-width: 600px) {
   .catalog {
     grid-template-columns: 1fr 1fr;
+  }
+  .profileMobile {
+    display: grid;
   }
 }
 

@@ -48,7 +48,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
   }, [user, currentUser])
 
   return (
-    <div className='card'>
+    <>
       <div className='center'>
         <ProfileImage
           profileImage={user.profileImage}
@@ -98,6 +98,6 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
           </a>
         </>
       )}
-    </div>
+    </>
   )
 }

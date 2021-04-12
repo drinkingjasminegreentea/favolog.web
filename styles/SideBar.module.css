@@ -11,7 +11,20 @@
 }
 
 .sideBarContainer {
-  display: grid;
   position: relative;
   padding-left: 40px;
+}
+
+/* screen size larger than 600 */
+@media only screen and (min-width: 600px) {
+  .sideBarContainer {
+    display: grid;
+  }
+}
+
+/* screen size smaller than 600 */
+@media only screen and (max-width: 600px) {
+  .sideBarContainer {
+    display: none;
+  }
 }
