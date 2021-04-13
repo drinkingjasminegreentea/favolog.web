@@ -14,7 +14,7 @@ export default function CatalogCard({ catalog, username }) {
         <span> {catalog.itemCount} items </span>
         <br />
         <br />
-        {catalog.lastThreeImages.length > 0 && (
+        {catalog.lastImage && (
           <div className='center'>
             <Image
               src={`${imageFolder}/${catalog.lastThreeImages[0]}`}

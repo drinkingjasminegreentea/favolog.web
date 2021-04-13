@@ -1,24 +1,19 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { AuthContext, SignInModal } from '../../src/AuthContext'
 
-export default function FollowButton({
+export default function Follow({
   style,
   username,
-  updateTotalFollowers,
-  following,
+  increaseFollowers,
+  setIsFollowing,
 }) {
-  const { currentUser } = useContext(AuthContext)
-  const [showModal, setShowModal] = useState(false)
-  const [isFollowing, setIsFollowing] = useState(false)
+  const { currentUser, getToken } = useContext(AuthContext)
+  const [showLogin, setShowLogin] = useState(false)
   const className = style || 'secondary'
-
-  useEffect(() => {
-    if (following) setIsFollowing(following)
-  }, [])
 
   const followHandler = async function () {
     if (!currentUser) {
-      setShowModal(true)
+      setShowLogin(true)
       return
     }
 
@@ -38,24 +33,21 @@ export default function FollowButton({
         body: JSON.stringify(userFollow),
       })
         .then((response) => {
-          if (!response.ok) Promise.reject()
-          if (updateTotalFollowers) {
-            isFollowing
-              ? setTotalFollowersSate(totalFollowersState - 1)
-              : setTotalFollowersSate(totalFollowersState + 1)
-            setIsFollowing(!isFollowing)
-          }
+          if (response.ok) {
+            increaseFollowers()
+            setIsFollowing(true)
+          } else Promise.reject()
         })
         .catch((error) => console.error(error))
     })
   }
 
   return (
-    <>
+    <span className='center'>
       <button className={className} onClick={followHandler}>
-        {!isFollowing ? 'Follow' : 'Unfollow'}
+        Follow
       </button>
-      <SignInModal show={showModal} parentAction={() => setShowModal(false)} />
-    </>
+      <SignInModal show={showLogin} parentAction={() => setShowLogin(false)} />
+    </span>
   )
 }

@@ -8,7 +8,7 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import CatalogMenu from '../../components/catalog/CatalogMenu'
-import FollowButton from '@/components/layout/FollowButton'
+import Follow from '@/components/layout/Follow'
 
 export default function Page({ catalogId, refreshKey }) {
   const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(
@@ -34,7 +34,7 @@ export default function Page({ catalogId, refreshKey }) {
         return Promise.reject(response)
       })
       .catch((error) => {
-        console.log('Something went wrong.', error)
+        console.error(error)
       })
   }
 
@@ -52,7 +52,7 @@ export default function Page({ catalogId, refreshKey }) {
           return Promise.reject(response)
         })
         .catch((error) => {
-          console.log('Something went wrong.', error)
+          console.error(error)
         })
     })
   }
@@ -119,7 +119,7 @@ export default function Page({ catalogId, refreshKey }) {
               <b className='center button'>{data.user.username}</b>
             </Link>
             <br />
-            {!self && <FollowButton style='primary' />}
+            {!self && <Follow style='primary' />}
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function Page({ catalogId, refreshKey }) {
               <h5 className='bold'> {data.name} </h5>
             </div>
 
-            {!self && <FollowButton style='primary' />}
+            {!self && <Follow style='primary' />}
           </div>
         </div>
         {data.items.map((item) => (

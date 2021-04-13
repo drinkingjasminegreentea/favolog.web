@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import ProfileImage from '../user/ProfileImage'
-import FollowButton from '@/components/layout/FollowButton'
+import Follow from '@/components/layout/Follow'
 import styles from '../../styles/Feed.module.css'
 
 export default function FeedItemCard({ item, showFollow }) {
@@ -57,7 +57,7 @@ export default function FeedItemCard({ item, showFollow }) {
             <b className='button'>{item.catalogName}</b>
           </Link>
         </span>
-        {showFollow && <FollowButton />}
+        {showFollow && <Follow />}
       </div>
       <div className={styles.comment}>{item.comment}</div>
     </div>

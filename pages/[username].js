@@ -2,6 +2,7 @@ import styles from '../styles/ProfileInfo.module.css'
 import CatalogCard from '../components/catalog/CatalogCard'
 import ProfileInfo from '../components/user/ProfileInfo'
 import { PageContext } from '../src/PageContext'
+import { AuthContext } from '../src/AuthContext'
 import { useContext, useEffect } from 'react'
 import useSWR, { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
@@ -11,8 +12,9 @@ import UserItem from '../components/item/UserItem'
 
 export default function Page({ username }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
+  const { currentUser, getToken } = useContext(AuthContext)
 
-  const fetcher = (url) => {
+  const fetchPublic = (url) => {
     return fetch(url, {
       method: 'GET',
       headers: {
@@ -27,8 +29,46 @@ export default function Page({ username }) {
         console.error(error)
       })
   }
-  const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/profile`,
+
+  const fetchPrivate = (url) => {
+    return getToken().then((accessToken) => {
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) return response.json()
+          return Promise.reject(response)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    })
+  }
+
+  let url = null
+  let fetcher = null
+
+  if (currentUser) {
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/private`
+    fetcher = fetchPrivate
+  } else {
+    url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${username}/public`
+    fetcher = fetchPublic
+  }
+
+  const { data, error } = useSWR(url, fetcher)
+
+  const PAGE_SIZE = 12
+
+  const { data: items, error: itemsError, size, setSize } = useSWRInfinite(
+    (index) =>
+      `${
+        process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL
+      }/feed/profile/${username}?pageSize=${PAGE_SIZE}&pageIndex=${index + 1}`,
     fetcher
   )
 
@@ -43,16 +83,6 @@ export default function Page({ username }) {
       })
     }
   }, [data])
-
-  const PAGE_SIZE = 12
-
-  const { data: items, error: itemsError, size, setSize } = useSWRInfinite(
-    (index) =>
-      `${
-        process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL
-      }/feed/profile/${username}?pageSize=${PAGE_SIZE}&pageIndex=${index + 1}`,
-    fetcher
-  )
 
   const isLoadingInitialData = !items && !itemsError
   const isLoadingMore =
@@ -81,6 +111,7 @@ export default function Page({ username }) {
               user={data.user}
               totalFollowing={data.totalFollowing}
               totalFollowers={data.totalFollowers}
+              isFollowing={data.isFollowing}
             />
           </div>
         </div>
@@ -90,6 +121,7 @@ export default function Page({ username }) {
           user={data.user}
           totalFollowing={data.totalFollowing}
           totalFollowers={data.totalFollowers}
+          isFollowing={data.isFollowing}
         />
       </div>
       <div className='card mainContent'>

@@ -4,13 +4,28 @@ import Link from 'next/link'
 import { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../src/AuthContext'
 import styles from '../../styles/ProfileInfo.module.css'
-import FollowButton from '@/components/layout/FollowButton'
+import Follow from '@/components/layout/Follow'
+import Unfollow from '../layout/Unfollow'
 
-export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
-  const { currentUser, getToken } = useContext(AuthContext)
+export default function ProfileInfo({
+  user,
+  totalFollowing,
+  totalFollowers,
+  isFollowing,
+}) {
+  const { currentUser } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
-  const [isFollowing, setIsFollowing] = useState(false)
-  const [totalFollowersState, setTotalFollowersSate] = useState(totalFollowers)
+  const [followerCount, setFollowerCount] = useState(totalFollowers)
+  const [following, setIsFollowing] = useState(isFollowing)
+
+  const increaseFollowers = () => {
+    setFollowerCount(followerCount + 1)
+  }
+
+  const decreaseFollowers = () => {
+    setFollowerCount(followerCount - 1)
+  }
+
   let websiteUrl = null
   if (user.website) {
     if (
@@ -25,25 +40,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
     if (currentUser) {
       if (user.username == currentUser.displayName) {
         setIsSelf(true)
-        setIsFollowing(false)
-      } else {
-        getToken().then((accessToken) => {
-          fetch(
-            `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/${currentUser.displayName}/isFollowing/${user.username}`,
-            {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          )
-            .then((response) => response.json())
-            .then((data) => setIsFollowing(data))
-        })
       }
-    } else {
-      setIsSelf(false)
     }
   }, [user, currentUser])
 
@@ -59,7 +56,22 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
       </div>
       <br />
       <h5 className='center'>{user.username}</h5>
-      {!self && <FollowButton style='primary' />}
+      {!self && !following && (
+        <Follow
+          style='primary'
+          username={user.username}
+          increaseFollowers={increaseFollowers}
+          setIsFollowing={setIsFollowing}
+        />
+      )}
+      {!self && following && (
+        <Unfollow
+          style='primary'
+          username={user.username}
+          decreaseFollowers={decreaseFollowers}
+          setIsFollowing={setIsFollowing}
+        />
+      )}
       {self && (
         <Link href='/settings'>
           <button className='secondary'>Edit profile</button>
@@ -75,7 +87,7 @@ export default function ProfileInfo({ user, totalFollowing, totalFollowers }) {
         &nbsp; &nbsp;
         <Link href={`/user/${user.username}/followers`}>
           <span className='button'>
-            <b>{totalFollowersState}</b> followers
+            <b>{followerCount}</b> followers
           </span>
         </Link>
       </div>
