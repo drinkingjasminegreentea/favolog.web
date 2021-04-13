@@ -3,14 +3,15 @@ import ProfileCard from '../../../components/user/ProfileCard'
 
 export default function Page({ user }) {
   return (
-    <>
-      <h5>People following {user.username}</h5>
+    <div className='mainContent'>
+      <b>People following {user.username}</b>
+      <br />
       <div className={styles.userGrid}>
         {user.followers.map((item) => (
           <ProfileCard key={item.id} user={item} />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
