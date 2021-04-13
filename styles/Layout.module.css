@@ -11,6 +11,9 @@
   .pageContent {
     padding-top: 60px;
   }
+  .addButton {
+    display: grid;
+  }
 }
 
 /* screen size smaller than 600 */
@@ -20,11 +23,12 @@
     gap: 20px;
     width: 100%;
   }
-  .container {
-    padding: 0px 10px;
-  }
+
   .pageContent {
     padding-top: 80px;
+  }
+  .addButton {
+    display: none;
   }
 }
 
@@ -47,7 +51,6 @@
   width: 70px;
   height: 70px;
   border-radius: 100px;
-  display: grid;
   justify-items: center;
   align-items: center;
   font-size: 30px;

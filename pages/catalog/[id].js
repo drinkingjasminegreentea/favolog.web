@@ -89,7 +89,7 @@ export default function Page({ catalogId, refreshKey }) {
   }, [data])
 
   if (error) return <div>failed to load</div>
-  if (!data) return <Spinner className={styles.loading} animation='grow' />
+  if (!data) return <Spinner className='loading' animation='grow' />
   return (
     <>
       <div className='leftBarContainer'>
@@ -121,7 +121,7 @@ export default function Page({ catalogId, refreshKey }) {
       <div className='mainContent'>
         <div className='mobile'>
           {data.isEditable && <CatalogMenu catalog={data} />}
-          <div className={styles.catalogAuthor}>
+          <div className={styles.catalogAuthor + ' card'}>
             <Link href={`/${data.user.username}`}>
               <div className='center button'>
                 <ProfileImage
@@ -136,14 +136,11 @@ export default function Page({ catalogId, refreshKey }) {
               <Link href={`/${data.user.username}`}>
                 <b className='center button'>{data.user.username}</b>
               </Link>
-              <br />
-              <br />
-              {!self && <FollowButton style='primary' />}
+              <h5 className='bold'> {data.name} </h5>
             </div>
+
+            {!self && <FollowButton style='primary' />}
           </div>
-          <br />
-          <h5 className='bold'> {data.name} </h5>
-          <br />
         </div>
         {data.items.map((item) => (
           <CatalogItemCard

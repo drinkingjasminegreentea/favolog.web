@@ -65,7 +65,7 @@ export default function Page({ username }) {
   const feed = items ? [].concat(...items) : []
 
   if (error) return <div>failed to load </div>
-  if (!data) return <Spinner className={styles.loading} animation='grow' />
+  if (!data) return <Spinner className='loading' animation='grow' />
 
   return (
     <>
@@ -80,16 +80,14 @@ export default function Page({ username }) {
           </div>
         </div>
       </div>
+      <div className={styles.profileMobile + ' mobile card'}>
+        <ProfileInfo
+          user={data.user}
+          totalFollowing={data.totalFollowing}
+          totalFollowers={data.totalFollowers}
+        />
+      </div>
       <div className='card mainContent'>
-        <div className={styles.profileMobile + ' mobile'}>
-          <ProfileInfo
-            user={data.user}
-            totalFollowing={data.totalFollowing}
-            totalFollowers={data.totalFollowers}
-          />
-          <br />
-        </div>
-
         <Tabs
           defaultActiveKey='catalogs'
           transition={false}

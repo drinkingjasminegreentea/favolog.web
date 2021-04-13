@@ -6,6 +6,7 @@ import Add from './Add'
 import Head from 'next/head'
 import { useContext } from 'react'
 import SideBar from './SideBar'
+import MobileFooter from './MobileFooter'
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
@@ -35,7 +36,11 @@ export default function Layout({ children }) {
             <SideBar />
           </div>
         </div>
-        {currentUser && <Add />}
+        {currentUser && (
+          <>
+            <Add /> <MobileFooter />
+          </>
+        )}
       </div>
     </>
   )

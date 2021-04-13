@@ -54,6 +54,10 @@ body {
   .mobile {
     display: none;
   }
+  .card {
+    border: solid 1px #dbdbdb;
+    border-radius: 4px;
+  }
 }
 
 /* screen size smaller than 600 */
@@ -62,12 +66,16 @@ body {
     display: grid;
     height: fit-content;
     width: 100%;
+    margin-bottom: 70px;
   }
   .leftBarContainer {
     display: none;
   }
   .mobile {
     display: grid;
+  }
+  .card {
+    border: none;
   }
 }
 
@@ -161,6 +169,12 @@ button.close {
   font-family: 'Poppins-Medium';
 }
 
+.loading {
+  position: absolute;
+  right: 50%;
+  bottom: 50%;
+}
+
 .bold {
   font-weight: bold;
 }
@@ -169,8 +183,6 @@ button.close {
   background-color: white;
   padding: 30px;
   margin-bottom: 20px;
-  border: solid 1px #dbdbdb;
-  border-radius: 4px;
   height: fit-content;
   width: 100%;
   display: grid;
