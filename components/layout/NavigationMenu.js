@@ -3,7 +3,6 @@ import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { AuthContext } from '../../src/AuthContext'
 import Dropdown from 'react-bootstrap/Dropdown'
-import Link from 'next/link'
 import Image from 'next/image'
 import ProfileImage from '../user/ProfileImage'
 import { SignInModal } from '../../src/AuthContext'
@@ -19,23 +18,17 @@ export default function NavigationMenu() {
 
   if (!currentUser)
     return (
-      <>
+      <span>
         <button className='primary' onClick={toggleModalWindow}>
           Log in
         </button>
         <SignInModal show={showModal} parentAction={toggleModalWindow} />
-      </>
+      </span>
     )
 
   return (
     <div className={styles.navigation}>
-      <Link href='/'>
-        <div className='button'>
-          <Image src='/icons/home.svg' width='20' height='20' layout='fixed' />
-        </div>
-      </Link>
-
-      <Dropdown drop='bottom'>
+      <Dropdown drop='down'>
         <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
           <ProfileImage
             src={'/icons/settings.svg'}
@@ -44,14 +37,15 @@ export default function NavigationMenu() {
             width='35'
             height='35'
           />
+          <span className='small bold'>{currentUser.displayName}</span>
         </Dropdown.Toggle>
 
-        <Dropdown.Menu align='right'>
+        <Dropdown.Menu>
           <Dropdown.Item
             className={styles.dropDownMenuItem}
             onClick={() => router.push(`/${currentUser.displayName}`)}
           >
-            <Image src='/icons/person.svg' width='20' height='20' />
+            <Image src='/icons/person-black.svg' width='20' height='20' />
             <span> &nbsp; Profile</span>
           </Dropdown.Item>
           <Dropdown.Item className={styles.dropDownMenuItem} onClick={logOut}>
