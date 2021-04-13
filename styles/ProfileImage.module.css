@@ -7,6 +7,5 @@
   align-items: center;
   justify-items: center;
   border-radius: 50%;
-  background-color: #20d5ec;
-  color: white;
+  border: 1px solid #535353;
 }
