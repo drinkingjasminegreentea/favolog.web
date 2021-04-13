@@ -14,10 +14,10 @@ export default function CatalogCard({ catalog, username }) {
         <span> {catalog.itemCount} items </span>
         <br />
         <br />
-        {catalog.lastImage && (
+        {catalog.lastItemImage && (
           <div className='center'>
             <Image
-              src={`${imageFolder}/${catalog.lastThreeImages[0]}`}
+              src={`${imageFolder}/${catalog.lastItemImage}`}
               className={styles.catalogFirstImage}
               layout='fixed'
               objectFit='contain'
