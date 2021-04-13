@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Form from 'react-bootstrap/Form'
 import styles from '../../styles/Layout.module.css'
-import { AuthContext } from '../../src/AuthContext'
+import { AuthContext, SignInModal } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
 
@@ -234,10 +234,16 @@ const AddItemDialog = ({ show, parentAction }) => {
 }
 
 export default function Add() {
-  const [showModal, setShowModal] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
+  const [showLogin, setShowLogin] = useState(false)
+  const { currentUser } = useContext(AuthContext)
 
   const toggleModalWindow = () => {
-    setShowModal(!showModal)
+    if (!currentUser) {
+      setShowLogin(true)
+      return
+    }
+    setShowAdd(true)
   }
 
   return (
@@ -249,7 +255,8 @@ export default function Add() {
       >
         +
       </div>
-      <AddItemDialog show={showModal} parentAction={toggleModalWindow} />
+      <AddItemDialog show={showAdd} parentAction={() => setShowAdd(false)} />
+      <SignInModal show={showLogin} parentAction={() => setShowLogin(false)} />
     </>
   )
 }

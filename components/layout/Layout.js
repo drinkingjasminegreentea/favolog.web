@@ -36,11 +36,7 @@ export default function Layout({ children }) {
             <SideBar />
           </div>
         </div>
-        {currentUser && (
-          <>
-            <Add /> <MobileFooter />
-          </>
-        )}
+        <Add /> <MobileFooter />
       </div>
     </>
   )
