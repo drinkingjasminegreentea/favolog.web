@@ -75,7 +75,12 @@ export default function Page() {
     console.error(error)
     return <div>Failed to load. Please refresh.</div>
   }
-  if (!data) return <Spinner className='loading' animation='grow' />
+  if (!data)
+    return (
+      <div className='mainContent'>
+        <Spinner className='loading' animation='grow' />
+      </div>
+    )
   return (
     <>
       <div className='mainContent'>

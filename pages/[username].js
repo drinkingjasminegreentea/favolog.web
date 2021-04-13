@@ -65,7 +65,12 @@ export default function Page({ username }) {
   const feed = items ? [].concat(...items) : []
 
   if (error) return <div>failed to load </div>
-  if (!data) return <Spinner className='loading' animation='grow' />
+  if (!data)
+    return (
+      <div className='mainContent'>
+        <Spinner className='loading' animation='grow' />
+      </div>
+    )
 
   return (
     <>

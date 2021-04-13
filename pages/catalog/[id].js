@@ -89,7 +89,12 @@ export default function Page({ catalogId, refreshKey }) {
   }, [data])
 
   if (error) return <div>failed to load</div>
-  if (!data) return <Spinner className='loading' animation='grow' />
+  if (!data)
+    return (
+      <div className='mainContent'>
+        <Spinner className='loading' animation='grow' />
+      </div>
+    )
   return (
     <>
       <div className='leftBarContainer'>
