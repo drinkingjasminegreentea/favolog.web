@@ -16,6 +16,11 @@
     width: 100%;
     bottom: 0;
     background: white;
-    border-top: 1px solid lightgray;
   }
+}
+
+.footerMenu > div {
+  width: 100%;
+  display: grid;
+  justify-items: center;
 }
