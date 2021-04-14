@@ -142,11 +142,10 @@ const AddItemDialog = ({ show, parentAction }) => {
         return Promise.reject(response)
       })
       .then((data) => {
-        const openGraph = data.hybridGraph
-        setTitle(openGraph.title)
-        setSourceImageUrl(openGraph.image)
+        setTitle(data.title)
+        setSourceImageUrl(data.image)
+        setUrl(data.url)
         setShowPreview(true)
-        setUrl(openGraph.url)
       })
   }
 
