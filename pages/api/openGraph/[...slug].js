@@ -12,12 +12,12 @@ export default async function handler(req, res) {
   let response = await fetch(linkPreviewUrl)
   if (response.ok) {
     const jsonData = await response.json()
-    console.log({ jsonData })
+    console.log('link preview api', jsonData)
     res.status(200).json(jsonData)
   } else {
     response = await fetch(openGraphUrl)
     const jsonData = await response.json()
-    console.log({ jsonData })
+    console.log('open graph api', jsonData)
     res.status(200).json(jsonData.hybridGraph)
   }
 }
