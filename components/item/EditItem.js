@@ -24,7 +24,7 @@ export default function EditItem({ show, parentAction, item }) {
     }
 
     if (item.comment) setComment(item.comment)
-  }, [])
+  }, [item])
 
   const submit = async () => {
     item.title = title
