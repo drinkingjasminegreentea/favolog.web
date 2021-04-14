@@ -258,3 +258,8 @@ input.form-check-input:focus {
   border: 6px solid #20d5ec;
   outline: none;
 }
+
+.icon {
+  width: 23px;
+  height: 23px;
+}

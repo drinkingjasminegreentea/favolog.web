@@ -9,9 +9,14 @@ import { PageContext } from '../../src/PageContext'
 import Spinner from 'react-bootstrap/Spinner'
 
 const AddItemDialog = ({ show, parentAction }) => {
-  const [catalogName, setCatalogName] = useState(null)
-  const [catalogId, setCatalogId] = useState(null)
-  const [originalUrl, setOriginalUrl] = useState(null)
+  const [title, setTitle] = useState('')
+  const [url, setUrl] = useState('')
+  const [sourceImageUrl, setSourceImageUrl] = useState('')
+  const [showPreview, setShowPreview] = useState(false)
+
+  const [catalogName, setCatalogName] = useState('')
+  const [catalogId, setCatalogId] = useState('')
+  const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
   const { getToken } = useContext(AuthContext)
   const { catalogs, setCatalogRefresh, currentCatalogId } = useContext(
@@ -19,8 +24,8 @@ const AddItemDialog = ({ show, parentAction }) => {
   )
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
-  const [addDataType, setAddDataType] = useState('item')
   const [defaultCatalog, setDefaultCatalog] = useState('unselected')
+  const [createNewCatalog, setCreateNewCatalog] = useState(false)
 
   useEffect(() => {
     if (currentCatalogId) {
@@ -37,51 +42,47 @@ const AddItemDialog = ({ show, parentAction }) => {
     setCatalogName('')
     setCatalogId('')
     setOriginalUrl('')
-    setAddDataType('item')
+    setCreateNewCatalog(false)
+    setShowPreview(false)
     setErrors({})
   }
 
   const submit = async () => {
-    let postData, url
-
-    if (addDataType === 'item') {
-      if (!originalUrl) {
-        setErrors({
-          originalUrl: 'Please enter link to your item',
-        })
-        return
-      }
-
-      if (!catalogId) {
-        setErrors({
-          catalog: 'Please choose a catalog',
-        })
-        return
-      }
-
-      postData = {
-        catalogId,
-        originalUrl,
-      }
-      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
-    } else {
-      if (!catalogName) {
-        setErrors({
-          catalog: 'Please enter catalog name',
-        })
-        return
-      }
-
-      postData = {
-        name: catalogName,
-      }
-      url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/catalog`
+    if (!title) {
+      setErrors({
+        originalUrl: 'Please enter title of your item',
+      })
+      return
     }
+
+    if (createNewCatalog && !catalogName) {
+      setErrors({
+        catalog: 'Please enter new catalog name',
+      })
+      return
+    }
+
+    if (!createNewCatalog && !catalogId) {
+      setErrors({
+        catalog: 'Please choose a catalog',
+      })
+      return
+    }
+
+    const postData = {
+      catalogId,
+      originalUrl,
+      url,
+      catalogName,
+      sourceImageUrl,
+      title,
+    }
+    const postUrl = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
 
     setAddInProgress(true)
     const accessToken = await getToken()
 
-    fetch(url, {
+    fetch(postUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,13 +99,8 @@ const AddItemDialog = ({ show, parentAction }) => {
       .then((data) => {
         setAddInProgress(false)
         closeModal()
-        let redirectCatalogId
-        if (addDataType === 'item') redirectCatalogId = data.catalogId
-        else {
-          redirectCatalogId = data.id
-          setCatalogRefresh(true)
-        }
-        router.push(`/catalog/${redirectCatalogId}?refreshKey=${Date.now()}`)
+        setCatalogRefresh(createNewCatalog)
+        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
         setAddInProgress(false)
@@ -130,12 +126,28 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const updateUrl = (e) => {
+  const urlChangeHandler = (e) => {
+    console.log('urlChangeHandler')
     const value = e.target.value
     setOriginalUrl(value)
     if (value) {
       setErrors({})
     }
+
+    fetch(`/api/openGraph/${encodeURIComponent(value)}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        return Promise.reject(response)
+      })
+      .then((data) => {
+        const openGraph = data.hybridGraph
+        setTitle(openGraph.title)
+        setSourceImageUrl(openGraph.image)
+        setShowPreview(true)
+        setUrl(openGraph.url)
+      })
   }
 
   const changeAddDataType = (e) => {
@@ -146,11 +158,43 @@ const AddItemDialog = ({ show, parentAction }) => {
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
       <Modal.Body>
+        {errors && errors.originalUrl && (
+          <p className='error'>{errors.originalUrl}</p>
+        )}
+        <Form.Group>
+          <span>
+            <img src='/icons/link.svg' className='icon' />
+            <b> Item page link</b> <br />
+          </span>
+          <br />
+          <Form.Control
+            as='textarea'
+            rows={3}
+            autoComplete='off'
+            type='text'
+            placeholder='https:// Just grab the web page link of your favorite item and paste here'
+            value={originalUrl}
+            onChange={urlChangeHandler}
+          />
+        </Form.Group>
+        {showPreview && (
+          <div className={styles.preview}>
+            <Form.Control
+              type='text'
+              placeholder='Title'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <br />
+            <img className={styles.addImage} src={sourceImageUrl} />
+          </div>
+        )}
+        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
         <Form.Group>
           <Form.Check
             defaultChecked
             type='radio'
-            label='New Item'
+            label='Choose an existing catalog'
             name='dataType'
             id='item'
             value='item'
@@ -158,22 +202,6 @@ const AddItemDialog = ({ show, parentAction }) => {
             onChange={changeAddDataType}
           />
         </Form.Group>
-        {errors && errors.originalUrl && (
-          <p className='error'>{errors.originalUrl}</p>
-        )}
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            rows={3}
-            autoComplete='off'
-            type='text'
-            placeholder='https:// Enter item link here'
-            value={originalUrl}
-            onChange={updateUrl}
-            disabled={addDataType !== 'item'}
-          />
-        </Form.Group>
-        {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
         <Form.Group>
           <Form.Control
             autoComplete='off'
@@ -181,10 +209,10 @@ const AddItemDialog = ({ show, parentAction }) => {
             custom
             defaultValue={defaultCatalog}
             onChange={updateCatalogId}
-            disabled={addDataType !== 'item'}
+            disabled={createNewCatalog}
           >
             <option value='unselected' disabled='disabled'>
-              Choose from existing catalogs
+              Choose a catalog
             </option>
             {catalogs &&
               catalogs.map((catalog) => (
@@ -197,7 +225,7 @@ const AddItemDialog = ({ show, parentAction }) => {
         <Form.Group>
           <Form.Check
             type='radio'
-            label='New Catalog'
+            label='Create a new catalog'
             name='dataType'
             id='catalog'
             value='catalog'
@@ -212,7 +240,7 @@ const AddItemDialog = ({ show, parentAction }) => {
             placeholder='Catalog name'
             value={catalogName}
             onChange={updateCatalogName}
-            disabled={addDataType !== 'catalog'}
+            disabled={!createNewCatalog}
           />
         </Form.Group>
       </Modal.Body>

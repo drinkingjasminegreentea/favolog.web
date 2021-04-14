@@ -11,7 +11,7 @@ export default function CatalogMenu({ catalog }) {
 
   return (
     <span className={styles.addEdit}>
-      <Dropdown drop='bottom'>
+      <Dropdown>
         <Dropdown.Toggle as='a' bsPrefix='custom' className='button'>
           <img src='/icons/more_horiz-24px.svg' />
         </Dropdown.Toggle>

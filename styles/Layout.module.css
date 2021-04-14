@@ -66,6 +66,12 @@
   cursor: pointer;
 }
 
+.addImage {
+  width: 200px;
+  height: 300px;
+  object-fit: scale-down;
+}
+
 .dropDownMenuItem {
   display: grid !important;
   grid-template-columns: 30px 1fr;
