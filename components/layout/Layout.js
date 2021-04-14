@@ -6,9 +6,11 @@ import Head from 'next/head'
 import { useContext } from 'react'
 import SideBar from './SideBar'
 import MobileFooter from './MobileFooter'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
+  const { currentUser } = useContext(AuthContext)
 
   return (
     <>
@@ -34,7 +36,7 @@ export default function Layout({ children }) {
             <SideBar />
           </div>
         </div>
-        <Add /> <MobileFooter />
+        <Add /> {currentUser && <MobileFooter />}
       </div>
     </>
   )

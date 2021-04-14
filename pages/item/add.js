@@ -1,125 +1,126 @@
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import { BlobServiceClient } from '@azure/storage-blob'
-import { v4 as uuidv4 } from 'uuid'
+import { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { useState, useContext } from 'react'
-import { AuthContext } from '../../src/AuthContext'
-import useSWR from 'swr'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Form from 'react-bootstrap/Form'
+import styles from '../../styles/Layout.module.css'
+import { AuthContext, SignInModal } from '../../src/AuthContext'
+import { PageContext } from '../../src/PageContext'
+import uploadImage from '../../src/UploadImage'
 import Spinner from 'react-bootstrap/Spinner'
 
-export default function Page({ redirected }) {
-  const [file, setFile] = useState()
+export default function Page({ show, parentAction }) {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
-  const [catalogId, setCatalogId] = useState('')
+  const [sourceImageUrl, setSourceImageUrl] = useState('')
+  const [showPreview, setShowPreview] = useState(false)
+  const [imageFile, setImageFile] = useState(null)
+
   const [catalogName, setCatalogName] = useState('')
+  const [catalogId, setCatalogId] = useState('')
+  const [originalUrl, setOriginalUrl] = useState('')
   const router = useRouter()
-  const { currentUser, getToken } = useContext(AuthContext)
+  const { getToken } = useContext(AuthContext)
+  const { catalogs, setCatalogRefresh, currentCatalogId } = useContext(
+    PageContext
+  )
   const [errors, setErrors] = useState({})
   const [addInProgress, setAddInProgress] = useState(false)
+  const [defaultCatalog, setDefaultCatalog] = useState('unselected')
+  const [createNewCatalog, setCreateNewCatalog] = useState(false)
 
-  const fetcher = (url) => {
-    return getToken().then((accessToken) => {
-      return fetch(url, {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((response) => {
-          if (response.ok) return response.json()
-          return Promise.reject(response)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    })
+  useEffect(() => {
+    if (currentCatalogId) {
+      setDefaultCatalog(currentCatalogId)
+      setCatalogId(currentCatalogId)
+    } else {
+      setDefaultCatalog('unselected')
+      setCatalogId(null)
+    }
+  }, [currentCatalogId])
+
+  const closeModal = () => {
+    parentAction()
+    setCatalogName('')
+    setCatalogId('')
+    setOriginalUrl('')
+    setCreateNewCatalog(false)
+    setShowPreview(false)
+    setErrors({})
   }
 
-  const fetchUrl = currentUser
-    ? `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/user/catalog`
-    : null
-
-  const { data, error } = useSWR(fetchUrl, fetcher)
-
-  function getFileExtension(fileName) {
-    const lastDot = fileName.lastIndexOf('.')
-    return fileName.substring(lastDot)
-  }
-
-  async function uploadImage() {
-    const blobName = uuidv4() + getFileExtension(file.name)
-    const blobServiceClient = new BlobServiceClient(
-      `https://${process.env.NEXT_PUBLIC_BLOBSTORAGEACCOUNT}.blob.core.windows.net${process.env.NEXT_PUBLIC_BLOBSTORAGESASKEY}`
-    )
-    const containerClient = blobServiceClient.getContainerClient(
-      `${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}`
-    )
-    var options = { blobContentType: file.type }
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName)
-
-    await blockBlobClient.uploadData(file, { blobHTTPHeaders: options })
-    return blobName
-  }
-
-  const addItem = async () => {
+  const submit = async () => {
     if (!title) {
       setErrors({
-        title: 'Please enter a title for your favorite item',
+        originalUrl: 'Please enter title of your item',
       })
       return
     }
 
-    if (!catalogId && !catalogName) {
+    if (createNewCatalog && !catalogName) {
       setErrors({
-        catalog: 'Please choose a catalog or create a new one',
+        catalog: 'Please enter new catalog name',
       })
       return
     }
+
+    if (!createNewCatalog && !catalogId) {
+      setErrors({
+        catalog: 'Please choose a catalog',
+      })
+      return
+    }
+
+    const postData = {
+      catalogId,
+      originalUrl,
+      url,
+      catalogName,
+      sourceImageUrl,
+      title,
+    }
+
+    if (imageFile) {
+      postData.imageName = await uploadImage(
+        imageFile,
+        process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER
+      )
+      postData.sourceImageUrl = null
+    }
+
+    const postUrl = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
 
     setAddInProgress(true)
+    const accessToken = await getToken()
 
-    const itemPost = {
-      catalogId,
-      catalogName,
-      title,
-      url,
-    }
-
-    if (file) {
-      itemPost.imageName = await uploadImage()
-    }
-
-    acquireToken().then((accessToken) => {
-      fetch(`${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify(itemPost),
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json()
-          }
-          return Promise.reject(response)
-        })
-        .then((data) => {
-          router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
-          setAddInProgress(false)
-        })
-        .catch((error) => {
-          setAddInProgress(false)
-          console.error(error)
-        })
+    fetch(postUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(postData),
     })
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        return Promise.reject(response)
+      })
+      .then((data) => {
+        setAddInProgress(false)
+        closeModal()
+        setCatalogRefresh(createNewCatalog)
+        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+      })
+      .catch((error) => {
+        setAddInProgress(false)
+        closeModal()
+        router.push('/item/add?redirected=yes')
+        console.error(error)
+      })
   }
 
-  const handleCatalogNameChange = (e) => {
+  const updateCatalogName = (e) => {
     const value = e.target.value
     setCatalogName(value)
     if (value) {
@@ -127,7 +128,7 @@ export default function Page({ redirected }) {
     }
   }
 
-  const handleCatalogIdChange = (e) => {
+  const updateCatalogId = (e) => {
     const value = e.target.value
     setCatalogId(value)
     if (value) {
@@ -135,95 +136,154 @@ export default function Page({ redirected }) {
     }
   }
 
-  const handleUrlChange = (e) => {
+  const urlChangeHandler = async (e) => {
     const value = e.target.value
-    setUrl(value)
+    setOriginalUrl(value)
     if (value) {
       setErrors({})
     }
+
+    await fetch(`/api/openGraph/${encodeURIComponent(value)}`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        return Promise.reject(response)
+      })
+      .then((data) => {
+        setTitle(data.title)
+        setSourceImageUrl(data.image)
+        setUrl(data.url)
+        setShowPreview(true)
+      })
+      .catch(() => {
+        setShowPreview(true)
+      })
   }
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  const updateImageFile = (e) => {
+    const file = e.target.files[0]
+    setImageFile(file)
+
+    var reader = new FileReader()
+    reader.onload = function (e) {
+      // get loaded data and render thumbnail.
+      setSourceImageUrl(e.target.result)
+    }
+    // read the image file as a data URL.
+    reader.readAsDataURL(file)
+  }
 
   return (
-    <div>
-      <h4>Add Item</h4>
-      {redirected && (
-        <span>
-          We apologize - the source URL is not letting us retrive information
-          about the item. Please add it manually.
-        </span>
-      )}
+    <div className='card'>
       <Form>
+        {errors && errors.originalUrl && (
+          <p className='error'>{errors.originalUrl}</p>
+        )}
         <Form.Group>
+          <span>
+            <img src='/icons/link.svg' className='icon' />
+            <b> Item page link</b> <br />
+          </span>
+          <br />
           <Form.Control
+            as='textarea'
+            rows={3}
+            autoComplete='off'
             type='text'
-            placeholder='Item title'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder='https:// Just grab the web page link of your favorite item and paste here'
+            value={originalUrl}
+            onChange={urlChangeHandler}
           />
-          {errors && errors.title && <p className='error'>{errors.title}</p>}
         </Form.Group>
-
+        {showPreview && (
+          <div className={styles.preview}>
+            <Form.Control
+              type='text'
+              placeholder='Title'
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <br />
+            {sourceImageUrl && (
+              <img className={styles.addImage} src={sourceImageUrl} />
+            )}
+            <Form.File
+              accept='image/*'
+              label='Item image'
+              onChange={updateImageFile}
+            />
+            <br />
+          </div>
+        )}
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
         <Form.Group>
+          <Form.Check
+            defaultChecked
+            type='radio'
+            label='Choose an existing catalog'
+            name='createCatalog'
+            id='false'
+            value='false'
+            className={styles.checkbox}
+            onChange={() => setCreateNewCatalog(false)}
+          />
+        </Form.Group>
+        <Form.Group>
           <Form.Control
+            autoComplete='off'
             as='select'
             custom
-            defaultValue={catalogId || 'unselected'}
-            onChange={handleCatalogIdChange}
+            defaultValue={defaultCatalog}
+            onChange={updateCatalogId}
+            disabled={createNewCatalog}
           >
             <option value='unselected' disabled='disabled'>
               Choose a catalog
             </option>
-            {data.map((catalog) => (
-              <option key={catalog.id} value={catalog.id}>
-                {catalog.name}
-              </option>
-            ))}
+            {catalogs &&
+              catalogs.map((catalog) => (
+                <option key={catalog.id} value={catalog.id}>
+                  {catalog.name}
+                </option>
+              ))}
           </Form.Control>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Or create a new catalog</Form.Label>
+          <Form.Check
+            type='radio'
+            label='Create a new catalog'
+            name='createCatalog'
+            id='true'
+            value='true'
+            className={styles.checkbox}
+            onChange={() => setCreateNewCatalog(true)}
+          />
+        </Form.Group>
+        <Form.Group>
           <Form.Control
+            autoComplete='off'
             type='text'
             placeholder='Catalog name'
             value={catalogName}
-            onChange={handleCatalogNameChange}
+            onChange={updateCatalogName}
+            disabled={!createNewCatalog}
           />
         </Form.Group>
-        <Form.Group>
-          <Form.File
-            accept='image/*'
-            label='Item image'
-            onChange={(e) => setFile(e.target.files[0])}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control
-            as='textarea'
-            rows={3}
-            type='text'
-            placeholder='Item page link'
-            value={url}
-            onChange={handleUrlChange}
-          />
-          {errors && errors.url && <p className='error'>{errors.url}</p>}
-        </Form.Group>
-        <Button variant='secondary' disabled={addInProgress} onClick={addItem}>
-          Add
-        </Button>
+        <div>
+          <button
+            className='secondary'
+            disabled={addInProgress}
+            onClick={closeModal}
+          >
+            Cancel
+          </button>
+          <button className='primary' disabled={addInProgress} onClick={submit}>
+            Ready
+          </button>
+        </div>
         {addInProgress && <Spinner animation='grow' />}
       </Form>
     </div>
   )
-}
-
-export async function getServerSideProps({ query }) {
-  return {
-    props: {
-      redirected: query.redirected || '',
-    },
-  }
 }

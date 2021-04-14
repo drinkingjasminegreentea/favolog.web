@@ -143,7 +143,7 @@ export default function Page() {
   }
 
   return (
-    <div className={styles.settingsPage}>
+    <div className='mainContent'>
       <h4>Edit Profile</h4>
       <Form className={styles.settingsForm}>
         <Form.Group>

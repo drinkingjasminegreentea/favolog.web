@@ -1,5 +1,4 @@
 import styles from '../../styles/MobileFooter.module.css'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../src/AuthContext'
@@ -57,7 +56,7 @@ export default function MobileFooter() {
           />
         </div>
       </Link>
-      <Link href='/'>
+      <Link href='/item/add'>
         <div id='add' className='button' onClick={clickHandler}>
           <img
             id='add'

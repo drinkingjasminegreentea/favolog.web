@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   const getToken = async () => {
-    if (!currentUser) throw 'user is not logged in'
+    if (!auth.currentUser) throw 'user is not logged in'
 
     try {
       return await auth.currentUser.getIdToken(true)
@@ -37,6 +37,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) logOut()
       setCurrentUser(user)
       setLoading(false)
     })
