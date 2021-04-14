@@ -39,8 +39,8 @@ export default function MobileFooter() {
           <img
             id='home'
             src={`/icons/${homeImage}`}
-            width='20'
-            height='20'
+            width='25'
+            height='25'
             layout='fixed'
           />
         </div>
@@ -50,8 +50,8 @@ export default function MobileFooter() {
           <img
             id='search'
             src={`/icons/${searchImage}`}
-            width='25'
-            height='25'
+            width='30'
+            height='30'
             layout='fixed'
           />
         </div>
@@ -61,8 +61,8 @@ export default function MobileFooter() {
           <img
             id='add'
             src={`/icons/${addImage}`}
-            width='25'
-            height='25'
+            width='30'
+            height='30'
             layout='fixed'
           />
         </div>
@@ -72,8 +72,8 @@ export default function MobileFooter() {
           <img
             id='profile'
             src={`/icons/${profileImage}`}
-            width='25'
-            height='25'
+            width='30'
+            height='30'
             layout='fixed'
           />
         </div>

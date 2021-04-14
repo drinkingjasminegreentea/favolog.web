@@ -11,6 +11,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
+    align-items: center;
     position: fixed;
     width: 100%;
     bottom: 0;
