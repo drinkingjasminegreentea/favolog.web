@@ -119,7 +119,7 @@ export default function Page({ catalogId, refreshKey }) {
               <b className='center button'>{data.user.username}</b>
             </Link>
             <br />
-            {!self && <Follow style='primary' />}
+            {!self && !data.user.isFollowing && <Follow style='primary' />}
           </div>
         </div>
       </div>

@@ -126,6 +126,10 @@ input.form-control:focus {
   color: red;
 }
 
+.end {
+  justify-self: end;
+}
+
 .center {
   justify-self: center;
 }

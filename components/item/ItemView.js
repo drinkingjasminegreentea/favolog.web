@@ -4,16 +4,8 @@ import styles from '../../styles/CatalogStyles.module.css'
 import ProfileImage from '../user/ProfileImage'
 import Link from 'next/link'
 import Image from 'next/image'
-import ItemImage from './ItemImage'
 
 export default function ItemView({ show, parentAction, item, user }) {
-  const imageClickHandler = () => {
-    if (item.url) {
-      const win = window.open(item.url, '_blank')
-      win.focus()
-    }
-  }
-
   return (
     <Modal show={show} onHide={parentAction} centered>
       <Modal.Header closeButton>

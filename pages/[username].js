@@ -107,22 +107,12 @@ export default function Page({ username }) {
       <div className='leftBarContainer'>
         <div className='leftBar'>
           <div className='card'>
-            <ProfileInfo
-              user={data.user}
-              totalFollowing={data.totalFollowing}
-              totalFollowers={data.totalFollowers}
-              isFollowing={data.isFollowing}
-            />
+            <ProfileInfo user={data.user} />
           </div>
         </div>
       </div>
       <div className={styles.profileMobile + ' mobile card'}>
-        <ProfileInfo
-          user={data.user}
-          totalFollowing={data.totalFollowing}
-          totalFollowers={data.totalFollowers}
-          isFollowing={data.isFollowing}
-        />
+        <ProfileInfo user={data.user} />
       </div>
       <div className='card mainContent'>
         <Tabs

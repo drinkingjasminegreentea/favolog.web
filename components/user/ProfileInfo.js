@@ -7,16 +7,11 @@ import styles from '../../styles/ProfileInfo.module.css'
 import Follow from '@/components/layout/Follow'
 import Unfollow from '../layout/Unfollow'
 
-export default function ProfileInfo({
-  user,
-  totalFollowing,
-  totalFollowers,
-  isFollowing,
-}) {
+export default function ProfileInfo({ user }) {
   const { currentUser } = useContext(AuthContext)
   const [self, setIsSelf] = useState(false)
-  const [followerCount, setFollowerCount] = useState(totalFollowers)
-  const [following, setIsFollowing] = useState(isFollowing)
+  const [followerCount, setFollowerCount] = useState(user.totalFollowers)
+  const [following, setIsFollowing] = useState(user.isFollowing)
 
   const increaseFollowers = () => {
     setFollowerCount(followerCount + 1)
@@ -81,7 +76,7 @@ export default function ProfileInfo({
       <div className={styles.profileStats}>
         <Link href={`/user/${user.username}/following`}>
           <span className='button'>
-            <b>{totalFollowing}</b> following
+            <b>{user.totalFollowing}</b> following
           </span>
         </Link>
         &nbsp; &nbsp;

@@ -5,29 +5,35 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { AuthContext } from '../../src/AuthContext'
 import uploadImage from '../../src/UploadImage'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 export default function EditItem({ show, parentAction, item }) {
-  const [title, setTitle] = useState('')
-  const [url, setUrl] = useState('')
+  const [title, setTitle] = useState(item.title)
+  const [url, setUrl] = useState(item.url)
   const [comment, setComment] = useState('')
-  const [file, setFile] = useState()
+  const [imageFile, setImageFile] = useState()
   const { getToken } = useContext(AuthContext)
+  const [sourceImageUrl, setSourceImageUrl] = useState('')
   const router = useRouter()
 
   useEffect(() => {
-    setTitle(item.title)
-    setUrl(item.url)
-    setComment(item.comment)
-  }, [item.comment])
+    if (item.imageName) {
+      setSourceImageUrl(
+        `${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`
+      )
+    }
+
+    if (item.comment) setComment(item.comment)
+  }, [])
 
   const submit = async () => {
     item.title = title
     item.url = url
     item.comment = comment
 
-    if (file) {
+    if (imageFile) {
       item.ImageName = await uploadImage(
-        file,
+        imageFile,
         process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER
       )
     }
@@ -53,37 +59,67 @@ export default function EditItem({ show, parentAction, item }) {
     })
   }
 
+  const updateImageFile = (e) => {
+    const file = e.target.files[0]
+    setImageFile(file)
+
+    var reader = new FileReader()
+    reader.onload = function (e) {
+      // get loaded data and render thumbnail.
+      setSourceImageUrl(e.target.result)
+    }
+    // read the image file as a data URL.
+    reader.readAsDataURL(file)
+  }
+
   return (
     <Modal show={show} onHide={() => parentAction()} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit item</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Label>Title</Form.Label>
+        <Form.Label>
+          <b>Title</b>
+        </Form.Label>
         <Form.Control
           type='text'
           placeholder='Title'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Form.Label>Url</Form.Label>
+        <Form.Label>
+          <b>Url</b>
+        </Form.Label>
         <Form.Control
           type='text'
           placeholder='Url'
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <Form.Label>Comment</Form.Label>
-        <Form.Control
-          as='textarea'
-          rows={3}
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
+        {sourceImageUrl && (
+          <Image
+            src={sourceImageUrl}
+            layout='fixed'
+            objectFit='contain'
+            width='200'
+            height='200'
+            quality={100}
+          />
+        )}
         <Form.File
           accept='image/*'
           label='Item image'
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={updateImageFile}
+        />
+        <br />
+        <Form.Label>
+          <b>Tell us why you love it</b>
+        </Form.Label>
+        <Form.Control
+          as='textarea'
+          rows={5}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         />
       </Modal.Body>
       <Modal.Footer>
