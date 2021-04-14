@@ -126,7 +126,7 @@ const AddItemDialog = ({ show, parentAction }) => {
     }
   }
 
-  const urlChangeHandler = (e) => {
+  const urlChangeHandler = async (e) => {
     console.log('urlChangeHandler')
     const value = e.target.value
     setOriginalUrl(value)
@@ -134,7 +134,7 @@ const AddItemDialog = ({ show, parentAction }) => {
       setErrors({})
     }
 
-    fetch(`/api/openGraph/${encodeURIComponent(value)}`)
+    await fetch(`/api/openGraph/${encodeURIComponent(value)}`)
       .then((response) => {
         if (response.ok) {
           return response.json()
