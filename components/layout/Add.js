@@ -127,7 +127,6 @@ const AddItemDialog = ({ show, parentAction }) => {
   }
 
   const urlChangeHandler = async (e) => {
-    console.log('urlChangeHandler')
     const value = e.target.value
     setOriginalUrl(value)
     if (value) {
