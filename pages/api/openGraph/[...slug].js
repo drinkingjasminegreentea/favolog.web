@@ -16,10 +16,16 @@ export default async function handler(req, res) {
     const jsonData = await response.json()
     console.log('link preview api', jsonData)
     res.status(200).json(jsonData)
+    return
   } else {
     response = await fetch(openGraphUrl)
-    const jsonData = await response.json()
-    console.log('open graph api', jsonData)
-    res.status(200).json(jsonData.hybridGraph)
+    if (response.ok) {
+      const jsonData = await response.json()
+      console.log('open graph api', jsonData)
+      res.status(200).json(jsonData.hybridGraph)
+      return
+    }
   }
+  console.log({ response })
+  res.status(400).json({ message: 'Invalid Url' })
 }

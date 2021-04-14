@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import styles from '../../styles/Layout.module.css'
 import { AuthContext, SignInModal } from '../../src/AuthContext'
 import { PageContext } from '../../src/PageContext'
+import uploadImage from '../../src/UploadImage'
 import Spinner from 'react-bootstrap/Spinner'
 
 const AddItemDialog = ({ show, parentAction }) => {
@@ -13,6 +14,7 @@ const AddItemDialog = ({ show, parentAction }) => {
   const [url, setUrl] = useState('')
   const [sourceImageUrl, setSourceImageUrl] = useState('')
   const [showPreview, setShowPreview] = useState(false)
+  const [imageFile, setImageFile] = useState(null)
 
   const [catalogName, setCatalogName] = useState('')
   const [catalogId, setCatalogId] = useState('')
@@ -77,6 +79,15 @@ const AddItemDialog = ({ show, parentAction }) => {
       sourceImageUrl,
       title,
     }
+
+    if (imageFile) {
+      postData.imageName = await uploadImage(
+        imageFile,
+        process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER
+      )
+      postData.sourceImageUrl = null
+    }
+
     const postUrl = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item`
 
     setAddInProgress(true)
@@ -146,6 +157,22 @@ const AddItemDialog = ({ show, parentAction }) => {
         setUrl(data.url)
         setShowPreview(true)
       })
+      .catch(() => {
+        setShowPreview(true)
+      })
+  }
+
+  const updateImageFile = (e) => {
+    const file = e.target.files[0]
+    setImageFile(file)
+
+    var reader = new FileReader()
+    reader.onload = function (e) {
+      // get loaded data and render thumbnail.
+      setSourceImageUrl(e.target.result)
+    }
+    // read the image file as a data URL.
+    reader.readAsDataURL(file)
   }
 
   return (
@@ -179,7 +206,15 @@ const AddItemDialog = ({ show, parentAction }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
             <br />
-            <img className={styles.addImage} src={sourceImageUrl} />
+            {sourceImageUrl && (
+              <img className={styles.addImage} src={sourceImageUrl} />
+            )}
+            <Form.File
+              accept='image/*'
+              label='Item image'
+              onChange={updateImageFile}
+            />
+            <br />
           </div>
         )}
         {errors && errors.catalog && <p className='error'>{errors.catalog}</p>}
