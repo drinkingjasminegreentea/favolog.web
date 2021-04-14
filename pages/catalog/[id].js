@@ -124,25 +124,23 @@ export default function Page({ catalogId, refreshKey }) {
         </div>
       </div>
       <div className='mainContent'>
-        <div className='mobile'>
+        <div className='mobile card'>
           {data.isEditable && <CatalogMenu catalog={data} />}
-          <div className={styles.catalogAuthor + ' card'}>
+          <h5 className='bold'> {data.name} </h5>
+          <div className={styles.catalogAuthor}>
             <Link href={`/${data.user.username}`}>
-              <div className='center button'>
+              <div className='button'>
                 <ProfileImage
                   profileImage={data.user.profileImage}
                   username={data.user.username}
-                  width='100'
-                  height='100'
+                  width='50'
+                  height='50'
                 />
               </div>
             </Link>
-            <div>
-              <Link href={`/${data.user.username}`}>
-                <b className='center button'>{data.user.username}</b>
-              </Link>
-              <h5 className='bold'> {data.name} </h5>
-            </div>
+            <Link href={`/${data.user.username}`}>
+              <b className='button'>{data.user.username}</b>
+            </Link>
 
             {!self && <Follow style='primary' />}
           </div>

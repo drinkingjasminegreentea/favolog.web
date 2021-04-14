@@ -1,6 +1,5 @@
 import styles from '../../styles/Layout.module.css'
 import { PageContext } from '../../src/PageContext'
-import { AuthContext } from '../../src/AuthContext'
 import Header from './Header'
 import Add from './Add'
 import Head from 'next/head'
@@ -10,7 +9,6 @@ import MobileFooter from './MobileFooter'
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
-  const { currentUser } = useContext(AuthContext)
 
   return (
     <>

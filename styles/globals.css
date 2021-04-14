@@ -51,6 +51,9 @@ body {
     height: fit-content;
     width: 610px;
   }
+  .desktop {
+    display: grid;
+  }
   .mobile {
     display: none !important;
   }
@@ -70,6 +73,9 @@ body {
   }
   .leftBarContainer {
     display: none;
+  }
+  .desktop {
+    display: none !important;
   }
   .mobile {
     display: grid;

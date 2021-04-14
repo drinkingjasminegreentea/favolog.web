@@ -23,19 +23,19 @@ export default function FeedItemCard({ item, showFollow }) {
             {item.urlDomain}
           </span>
         </div>
-        {item.imageName && (
-          <div className='center'>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-              layout='fixed'
-              objectFit='contain'
-              width='300'
-              height='150'
-              quality={100}
-            />
-          </div>
-        )}
       </a>
+      {item.imageName && (
+        <div className='center'>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+            layout='fixed'
+            objectFit='contain'
+            width='300'
+            height='150'
+            quality={100}
+          />
+        </div>
+      )}
 
       <div className={styles.header}>
         <Link href={`/${user.username}`}>

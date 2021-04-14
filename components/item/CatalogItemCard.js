@@ -54,19 +54,19 @@ export default function CatalogItemCard({ item, isEditable }) {
             </span>
           )}
         </div>
-        {currentItem.imageName && (
-          <div className='center'>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-              layout='fixed'
-              objectFit='contain'
-              width='300'
-              height='150'
-              quality={100}
-            />
-          </div>
-        )}
       </a>
+      {currentItem.imageName && (
+        <div className='center'>
+          <Image
+            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+            layout='fixed'
+            objectFit='contain'
+            width='300'
+            height='150'
+            quality={100}
+          />
+        </div>
+      )}
       {currentItem.comment ? (
         <div>{currentItem.comment}</div>
       ) : (
