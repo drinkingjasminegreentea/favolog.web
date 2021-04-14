@@ -70,7 +70,6 @@ body {
     display: grid;
     height: fit-content;
     width: 100%;
-    margin-bottom: 70px;
   }
   .leftBarContainer {
     display: none;

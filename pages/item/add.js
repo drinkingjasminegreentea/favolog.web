@@ -38,16 +38,6 @@ export default function Page({ show, parentAction }) {
     }
   }, [currentCatalogId])
 
-  const closeModal = () => {
-    parentAction()
-    setCatalogName('')
-    setCatalogId('')
-    setOriginalUrl('')
-    setCreateNewCatalog(false)
-    setShowPreview(false)
-    setErrors({})
-  }
-
   const submit = async () => {
     if (!title) {
       setErrors({
@@ -108,13 +98,11 @@ export default function Page({ show, parentAction }) {
       })
       .then((data) => {
         setAddInProgress(false)
-        closeModal()
         setCatalogRefresh(createNewCatalog)
         router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
         setAddInProgress(false)
-        closeModal()
         router.push('/item/add?redirected=yes')
         console.error(error)
       })
@@ -175,8 +163,8 @@ export default function Page({ show, parentAction }) {
   }
 
   return (
-    <div className='card'>
-      <Form>
+    <>
+      <div className='card'>
         {errors && errors.originalUrl && (
           <p className='error'>{errors.originalUrl}</p>
         )}
@@ -270,20 +258,15 @@ export default function Page({ show, parentAction }) {
             disabled={!createNewCatalog}
           />
         </Form.Group>
-        <div>
-          <button
-            className='secondary'
-            disabled={addInProgress}
-            onClick={closeModal}
-          >
-            Cancel
-          </button>
-          <button className='primary' disabled={addInProgress} onClick={submit}>
-            Ready
-          </button>
-        </div>
+        <button
+          className='primary center'
+          disabled={addInProgress}
+          onClick={submit}
+        >
+          Ready
+        </button>
         {addInProgress && <Spinner animation='grow' />}
-      </Form>
-    </div>
+      </div>
+    </>
   )
 }

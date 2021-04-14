@@ -9,6 +9,7 @@
   }
   .pageContent {
     padding-top: 60px;
+    justify-content: center;
   }
   .addButton {
     display: grid;
@@ -22,6 +23,9 @@
     gap: 20px;
     width: 100%;
   }
+  .pageContent {
+    margin-bottom: 60px;
+  }
 
   .addButton {
     display: none;
@@ -34,12 +38,12 @@
   width: 100%;
   height: fit-content;
   display: grid;
+  grid-template-rows: 80px 1fr;
 }
 
 .pageContent {
   display: grid;
   width: 100%;
-  justify-content: center;
 }
 
 .addButton {
