@@ -150,11 +150,6 @@ const AddItemDialog = ({ show, parentAction }) => {
       })
   }
 
-  const changeAddDataType = (e) => {
-    setAddDataType(e.target.value)
-    setErrors({})
-  }
-
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
       <Modal.Body>
@@ -195,11 +190,11 @@ const AddItemDialog = ({ show, parentAction }) => {
             defaultChecked
             type='radio'
             label='Choose an existing catalog'
-            name='dataType'
-            id='item'
-            value='item'
+            name='createCatalog'
+            id='false'
+            value='false'
             className={styles.checkbox}
-            onChange={changeAddDataType}
+            onChange={() => setCreateNewCatalog(false)}
           />
         </Form.Group>
         <Form.Group>
@@ -226,11 +221,11 @@ const AddItemDialog = ({ show, parentAction }) => {
           <Form.Check
             type='radio'
             label='Create a new catalog'
-            name='dataType'
-            id='catalog'
-            value='catalog'
+            name='createCatalog'
+            id='true'
+            value='true'
             className={styles.checkbox}
-            onChange={changeAddDataType}
+            onChange={() => setCreateNewCatalog(true)}
           />
         </Form.Group>
         <Form.Group>

@@ -6,6 +6,5 @@ export default async function handler(req, res) {
 
   const response = await fetch(url)
   const jsonData = await response.json()
-  console.log('api response', jsonData)
   res.status(200).json(jsonData)
 }
