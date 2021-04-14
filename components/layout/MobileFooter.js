@@ -1,8 +1,12 @@
 import styles from '../../styles/MobileFooter.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useContext } from 'react'
+import { AuthContext } from '../../src/AuthContext'
 
 export default function MobileFooter() {
+  const { currentUser } = useContext(AuthContext)
+
   return (
     <div className={styles.footerMenu}>
       <Link href='/'>
@@ -25,7 +29,7 @@ export default function MobileFooter() {
           <Image src='/icons/plus.svg' width='23' height='23' layout='fixed' />
         </div>
       </Link>
-      <Link href='/'>
+      <Link href={`/${currentUser.displayName}`}>
         <div className='button'>
           <Image
             src='/icons/person.svg'
