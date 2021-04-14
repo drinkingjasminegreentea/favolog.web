@@ -37,7 +37,7 @@ export default function MobileFooter() {
     <div className={styles.footerMenu}>
       <Link href='/'>
         <div id='home' className='button' onClick={clickHandler}>
-          <Image
+          <img
             id='home'
             src={`/icons/${homeImage}`}
             width='20'
@@ -48,7 +48,7 @@ export default function MobileFooter() {
       </Link>
       <Link href='/'>
         <div id='search' className='button' onClick={clickHandler}>
-          <Image
+          <img
             id='search'
             src={`/icons/${searchImage}`}
             width='25'
@@ -59,7 +59,7 @@ export default function MobileFooter() {
       </Link>
       <Link href='/'>
         <div id='add' className='button' onClick={clickHandler}>
-          <Image
+          <img
             id='add'
             src={`/icons/${addImage}`}
             width='25'
@@ -70,7 +70,7 @@ export default function MobileFooter() {
       </Link>
       <Link href={`/${currentUser.displayName}`}>
         <div id='profile' className='button' onClick={clickHandler}>
-          <Image
+          <img
             id='profile'
             src={`/icons/${profileImage}`}
             width='25'
