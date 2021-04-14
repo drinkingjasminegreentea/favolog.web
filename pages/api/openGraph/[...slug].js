@@ -1,7 +1,9 @@
 export default async function handler(req, res) {
   const { slug } = req.query
 
-  const url = encodeURIComponent(slug)
+  let url = encodeURIComponent(slug)
+  url = url.replace('%2C', '%2F')
+
   const linkPreviewUrl = `${process.env.LINK_PREVIEW_API_URL}${url}`
   const openGraphUrl = `${process.env.OPEN_GRAPH_API_URL}${url}?app_id=${process.env.OPEN_GRAPH_API_KEY}`
 
