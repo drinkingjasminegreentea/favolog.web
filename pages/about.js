@@ -4,14 +4,19 @@ export default function Page() {
       <h3>Mission</h3>
       <p>
         Our mission is to help people discover the best products in the market
-        through the word of mouth. We also want to give each person a chance to
-        introduce themselves to their own network of friends, family and
-        followers by displaying their own unique favorites and preferences. And
+        through the word of mouth. You find a great product that you think
+        everyone should check out. Great! Add to your catalog to share with your
+        followers. We also want to give each person a chance to introduce
+        themselves to their own network of friends, family and followers from
+        another angle by sharing their own unique favorites and preferences. For
+        example, you really can tell a lot about person's lifestyle and fashion
+        taste based on what type of a clothing item she or he prefers. And
         lastly, we want to serve small businesses that make great products, but
-        are unable to afford advertisement. We think this will be a great
-        platform for people like you to spread the good word about such
-        businesses. We hope that you can get the best use and value from using
-        our service.
+        are unable to afford advertisement on major platforms such as Google or
+        Facebook to achieve a full market reach. We think this will be a great
+        platform for people like yourself to spread the word about them. We hope
+        that we will be able to bring the most value to you and your community
+        and make your lives easier.
       </p>
       <h3>Team</h3>
       <p>
