@@ -45,7 +45,7 @@ export default function MobileFooter() {
           />
         </div>
       </Link>
-      <Link href='/'>
+      <Link href='/search'>
         <div id='search' className='button' onClick={clickHandler}>
           <img
             id='search'
