@@ -20,7 +20,7 @@ export default function Page() {
       </p>
       <h3>Team</h3>
       <p>
-        Favolog is created by Raihan and Aigerim - two mothers who are always
+        Favolog is created by Raihan and Aigerim - two friends who are always
         striving to make the world a better place. We are located in US and
         Canada and spend our days working tirelessly to ensure Favolog is doing
         a top notch job at bringing people the most value. If you have any
