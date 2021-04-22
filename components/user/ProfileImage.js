@@ -39,7 +39,7 @@ export default function ProfileImage({
   else {
     return (
       <Link href={`/${username}`}>
-        <span>
+        <span className='grid'>
           <Image
             src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_PROFILEIMAGESCONTAINER}/${profileImage}`}
             layout='fixed'

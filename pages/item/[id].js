@@ -52,25 +52,29 @@ export default function Page({ itemId }) {
   return (
     <div className='mainContent'>
       <div className='card'>
+        <h4>{data.title}</h4>
+
+        {data.imageName && (
+          <div className='center'>
+            <Image
+              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${data.imageName}`}
+              layout='fixed'
+              objectFit='contain'
+              width='300'
+              height='150'
+              quality={100}
+            />
+          </div>
+        )}
+        <h5>Stores</h5>
         <a href={data.url} target='_blank' className='grid'>
-          <h5>{data.title}</h5>
-          <span>
+          <span className='link'>
             <Image src='/icons/box-arrow-up-right.svg' width='10' height='10' />
             {data.urlDomain}
           </span>
-          {data.imageName && (
-            <div className='center'>
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${data.imageName}`}
-                layout='fixed'
-                objectFit='contain'
-                width='300'
-                height='150'
-                quality={100}
-              />
-            </div>
-          )}
         </a>
+        <br />
+        <h5>Catalogs</h5>
         <div className={styles.header}>
           <ProfileImage
             profileImage={data.catalog.user.profileImage}
