@@ -38,16 +38,12 @@ export default function FeedItemCard({ item, showFollow }) {
       )}
 
       <div className={styles.header}>
-        <Link href={`/${user.username}`}>
-          <div className='button'>
-            <ProfileImage
-              profileImage={user.profileImage}
-              username={user.username}
-              width='35'
-              height='35'
-            />
-          </div>
-        </Link>
+        <ProfileImage
+          profileImage={user.profileImage}
+          username={user.username}
+          width='35'
+          height='35'
+        />
         <span>
           <Link href={`/${user.username}`}>
             <b className='button'>{user.username}</b>

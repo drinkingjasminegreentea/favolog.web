@@ -1,17 +1,3 @@
-/* screen size larger than 600 */
-@media only screen and (min-width: 1200px) {
-  .catalog {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-/* screen size smaller than 600 */
-@media only screen and (max-width: 1200px) {
-  .catalog {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .profileCard {
   display: grid;
   gap: 20px;
@@ -33,18 +19,4 @@
 
 .profileContent {
   display: grid;
-}
-
-.catalog {
-  display: grid;
-  grid-gap: 20px;
-  text-align: left;
-  justify-items: left;
-  margin-bottom: 30px;
-}
-
-.items {
-  display: grid;
-  column-gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr;
 }

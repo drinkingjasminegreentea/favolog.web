@@ -10,7 +10,7 @@ import Link from 'next/link'
 import CatalogMenu from '@/components/catalog/CatalogMenu'
 import Follow from '@/components/layout/Follow'
 
-export default function Page({ catalogId, refreshKey }) {
+export default function Page({ itemId }) {
   const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(
     PageContext
   )
@@ -120,11 +120,10 @@ export default function Page({ catalogId, refreshKey }) {
   )
 }
 
-export async function getServerSideProps({ params, query }) {
+export async function getServerSideProps({ params }) {
   return {
     props: {
-      catalogId: params.id,
-      refreshKey: query.refreshKey || '',
+      itemId: params.id,
     },
   }
 }

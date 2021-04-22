@@ -1,0 +1,28 @@
+@media only screen and (min-width: 1200px) {
+  .items {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.items {
+  display: grid;
+  grid-gap: 20px;
+  text-align: left;
+  justify-items: left;
+  margin-bottom: 30px;
+  word-break: break-word;
+}
+
+.item {
+  border: solid 1px lightgray;
+  border-radius: 4px;
+  padding: 10px;
+  width: 100%;
+  display: grid;
+}

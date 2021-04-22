@@ -49,7 +49,6 @@ body {
     grid-column-start: 2;
     display: grid;
     height: fit-content;
-    width: 610px;
   }
   .desktop {
     display: grid;
@@ -205,6 +204,7 @@ button.close {
   padding: 8px 20px;
   font-weight: bold;
   min-width: 100px;
+  color: white;
 }
 
 .primary:hover {

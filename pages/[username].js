@@ -1,6 +1,6 @@
-import styles from '../styles/ProfileInfo.module.css'
-import CatalogCard from '../components/catalog/CatalogCard'
-import ProfileInfo from '../components/user/ProfileInfo'
+import styles from '@/styles/ProfileInfo.module.css'
+import CatalogsGrid from '@/components/catalog/CatalogsGrid'
+import ProfileInfo from '@/components/user/ProfileInfo'
 import { PageContext } from '../src/PageContext'
 import { AuthContext } from '../src/AuthContext'
 import { useContext, useEffect } from 'react'
@@ -8,7 +8,7 @@ import useSWR, { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import UserItem from '../components/item/UserItem'
+import ItemsGrid from '@/components/item/ItemsGrid'
 
 export default function Page({ username }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
@@ -121,20 +121,11 @@ export default function Page({ username }) {
           id='noanim-tab-example'
         >
           <Tab eventKey='catalogs' title='Catalogs'>
-            <div className={styles.catalog}>
-              {data.catalogs &&
-                data.catalogs.map((catalog) => (
-                  <CatalogCard key={catalog.id} catalog={catalog} />
-                ))}
-            </div>
+            <CatalogsGrid catalogs={data.catalogs} />
           </Tab>
           {feed && (
             <Tab eventKey='items' title='All items'>
-              <div className={styles.catalog}>
-                {feed.map((item) => (
-                  <UserItem key={item.id} item={item} user={data.user} />
-                ))}
-              </div>
+              <ItemsGrid items={feed} />
               {!isReachingEnd && (
                 <span className='center'>
                   <button
