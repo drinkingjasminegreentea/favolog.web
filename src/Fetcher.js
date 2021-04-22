@@ -17,9 +17,7 @@ export function publicFetcher(url) {
     })
 }
 
-export function privateFetcher(url) {
-  const { getToken } = useContext(AuthContext)
-
+export function privateFetcher(url, getToken) {
   return getToken().then((accessToken) => {
     return fetch(url, {
       method: 'GET',

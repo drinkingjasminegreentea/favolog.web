@@ -11,14 +11,14 @@ import Image from 'next/image'
 
 export default function Page({ itemId }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, getToken } = useContext(AuthContext)
 
   let url = null
   let fetcher = null
 
   if (currentUser) {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item/${itemId}`
-    fetcher = privateFetcher
+    fetcher = (url) => privateFetcher(url, getToken)
   } else {
     url = `${process.env.NEXT_PUBLIC_FAVOLOGAPIBASEURL}/item/${itemId}/public`
     fetcher = publicFetcher
@@ -35,13 +35,13 @@ export default function Page({ itemId }) {
         title: `${data.title}`,
         url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/item/${data.id}`,
       })
-
-      if (currentUser)
-        setIsSelf(data.catalog.user.username == currentUser.displayName)
     }
   }, [data])
 
-  if (error) return <div>failed to load</div>
+  if (error) {
+    console.error(error)
+    return <div>failed to load </div>
+  }
   if (!data)
     return (
       <div className='mainContent'>
