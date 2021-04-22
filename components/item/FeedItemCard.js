@@ -15,42 +15,44 @@ export default function FeedItemCard({ item, showFollow }) {
 
   return (
     <div className='card'>
-      <Link href={`/item/${item.id}`}>
-        <div className='button grid'>
-          <h5>{item.title}</h5>
-          {item.imageName && (
-            <div className='center'>
-              <Image
-                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-                layout='fixed'
-                objectFit='contain'
-                width='300'
-                height='150'
-                quality={100}
-              />
-            </div>
-          )}
+      <div className='grid'>
+        <div className={styles.header}>
+          <ProfileImage
+            profileImage={user.profileImage}
+            username={user.username}
+            width='35'
+            height='35'
+          />
+          <span>
+            <Link href={`/${user.username}`}>
+              <b className='button'>{user.username}</b>
+            </Link>
+            <b>{' > '}</b>
+            <Link href={`/catalog/${item.catalogId}`}>
+              <b className='button'>{item.catalogName}</b>
+            </Link>
+          </span>
+          {showFollow && <Follow />}
         </div>
-      </Link>
-      <div className={styles.header}>
-        <ProfileImage
-          profileImage={user.profileImage}
-          username={user.username}
-          width='35'
-          height='35'
-        />
-        <span>
-          <Link href={`/${user.username}`}>
-            <b className='button'>{user.username}</b>
-          </Link>
-          <b>{' > '}</b>
-          <Link href={`/catalog/${item.catalogId}`}>
-            <b className='button'>{item.catalogName}</b>
-          </Link>
-        </span>
-        {showFollow && <Follow />}
+        <Link href={`/item/${item.id}`}>
+          <div className='button grid'>
+            {item.imageName && (
+              <div className='center'>
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+                  layout='fixed'
+                  objectFit='contain'
+                  width='300'
+                  height='150'
+                  quality={100}
+                />
+              </div>
+            )}
+            <h5>{item.title}</h5>
+            <div className={styles.comment}>{item.comment}</div>
+          </div>
+        </Link>
       </div>
-      <div className={styles.comment}>{item.comment}</div>
     </div>
   )
 }

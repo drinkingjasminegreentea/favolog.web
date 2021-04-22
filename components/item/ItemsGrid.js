@@ -8,8 +8,8 @@ export default function ItemsGrid({ items }) {
   return (
     <div className={styles.items}>
       {items.map((item) => (
-        <Link href={`/item/${item.id}`}>
-          <div key={item.id} className={styles.item + ' button'}>
+        <Link key={item.id} href={`/item/${item.id}`}>
+          <div className={styles.item + ' button'}>
             <b>{item.title}</b>
             <div className='center'>
               {item.imageName && (
