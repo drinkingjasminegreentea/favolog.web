@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ProfileImage from '../user/ProfileImage'
 import Follow from '@/components/layout/Follow'
-import styles from '../../styles/Feed.module.css'
+import styles from '@/styles/Feed.module.css'
 
 export default function FeedItemCard({ item, showFollow }) {
   const user = {
@@ -15,28 +15,23 @@ export default function FeedItemCard({ item, showFollow }) {
 
   return (
     <div className='card'>
-      <a href={item.url} target='_blank' className='grid'>
-        <div className={styles.text}>
+      <Link href={`/item/${item.id}`}>
+        <div className='button grid'>
           <h5>{item.title}</h5>
-          <span>
-            <Image src='/icons/box-arrow-up-right.svg' width='10' height='10' />
-            {item.urlDomain}
-          </span>
+          {item.imageName && (
+            <div className='center'>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
+                layout='fixed'
+                objectFit='contain'
+                width='300'
+                height='150'
+                quality={100}
+              />
+            </div>
+          )}
         </div>
-      </a>
-      {item.imageName && (
-        <div className='center'>
-          <Image
-            src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${item.imageName}`}
-            layout='fixed'
-            objectFit='contain'
-            width='300'
-            height='150'
-            quality={100}
-          />
-        </div>
-      )}
-
+      </Link>
       <div className={styles.header}>
         <ProfileImage
           profileImage={user.profileImage}
