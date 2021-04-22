@@ -49,9 +49,9 @@ export default function FeedItemCard({ item, showFollow }) {
               </div>
             )}
             <h5>{item.title}</h5>
-            <div className={styles.comment}>{item.comment}</div>
           </div>
         </Link>
+        <div className={styles.comment}>{item.comment}</div>
       </div>
     </div>
   )
