@@ -17,7 +17,7 @@ export default function Page({ catalogId, refreshKey }) {
   )
   const { currentUser, getToken } = useContext(AuthContext)
   const [key, setKey] = useState(refreshKey)
-  const [self, setIsSelf] = useState(false)
+  const [isEditable, setIsEditable] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -86,7 +86,8 @@ export default function Page({ catalogId, refreshKey }) {
         url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/catalog/${data.id}`,
       })
 
-      if (currentUser) setIsSelf(data.user.username == currentUser.displayName)
+      if (currentUser)
+        setIsEditable(data.user.username == currentUser.displayName)
     }
   }, [data])
 
@@ -99,12 +100,16 @@ export default function Page({ catalogId, refreshKey }) {
     )
   return (
     <div className='mainContent'>
-      <span className='button' onClick={() => router.back()}>
-        <img src='/icons/arrow_back-24px.svg' /> Back
-      </span>
+      <div>
+        <span className='button' onClick={() => router.back()}>
+          <img src='/icons/arrow_back-24px.svg' /> Back
+        </span>
+      </div>
       <br />
       <div className='card'>
-        {data.isEditable && <CatalogMenu catalog={data} />}
+        {isEditable && <CatalogMenu catalog={data} />}
+        <h3 className='bold'> {data.name} </h3>
+        <br />
         <div className={styles.catalogAuthor}>
           <ProfileImage
             profileImage={data.user.profileImage}
@@ -116,9 +121,8 @@ export default function Page({ catalogId, refreshKey }) {
             <b className='button'>{data.user.username}</b>
           </Link>
 
-          {!self && <Follow style='primary' />}
+          {!self && <Follow style='secondary' />}
         </div>
-        <h3 className='bold'> {data.name} </h3>
         <br />
         <ItemsGrid items={data.items} />
       </div>

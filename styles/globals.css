@@ -115,6 +115,10 @@ a:hover {
   color: black;
 }
 
+.link {
+  text-decoration: underline;
+}
+
 .link:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -186,7 +190,7 @@ button.close {
 }
 
 .bold {
-  font-weight: bold;
+  font-family: 'Poppins-Bold';
 }
 
 .card {
@@ -245,6 +249,7 @@ button.close {
 
 .small {
   font-size: 14px;
+  font-weight: revert;
 }
 
 input.form-check-input {

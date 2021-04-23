@@ -37,7 +37,7 @@ export default function NavigationMenu() {
             width='35'
             height='35'
           />
-          <span className='small bold'>{currentUser.displayName}</span>
+          <b className='small'>{currentUser.displayName}</b>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>

@@ -3,16 +3,18 @@ import styles from '@/styles/Feed.module.css'
 import ProfileImage from '@/components/user/ProfileImage'
 import { AuthContext } from '@/src/AuthContext'
 import { PageContext } from '@/src/PageContext'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import ItemMenu from '@/components/item/ItemMenu'
 
 export default function Page({ itemId }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
   const { currentUser, getToken } = useContext(AuthContext)
+  const [isEditable, setIsEditable] = useState(false)
   const router = useRouter()
 
   let url = null
@@ -37,6 +39,8 @@ export default function Page({ itemId }) {
         title: `${data.title}`,
         url: `${process.env.NEXT_PUBLIC_REDIRECTURI}/item/${data.id}`,
       })
+      if (currentUser)
+        setIsEditable(data.catalog.user.username == currentUser.displayName)
     }
   }, [data])
 
@@ -53,34 +57,34 @@ export default function Page({ itemId }) {
 
   return (
     <div className='mainContent'>
-      <span className='button' onClick={() => router.back()}>
-        <img src='/icons/arrow_back-24px.svg' /> Back
-      </span>
+      <div>
+        <span className='button' onClick={() => router.back()}>
+          <img src='/icons/arrow_back-24px.svg' /> Back
+        </span>
+      </div>
+
       <br />
       <div className='card'>
-        <h4>{data.title}</h4>
-
-        {data.imageName && (
-          <div className='center'>
-            <Image
-              src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${data.imageName}`}
-              layout='fixed'
-              objectFit='contain'
-              width='300'
-              height='150'
-              quality={100}
-            />
-          </div>
-        )}
-        <h5>Stores</h5>
-        <a href={data.url} target='_blank' className='grid'>
-          <span className='link'>
-            <Image src='/icons/box-arrow-up-right.svg' width='10' height='10' />
-            {data.urlDomain}
-          </span>
+        {isEditable && <ItemMenu item={data} />}
+        <Link href={`/catalog/${data.catalog.id}`}>
+          <b className='button'>{data.catalog.name}</b>
+        </Link>
+        <a href={data.url} className='grid'>
+          <h4>{data.title}</h4>
+          <span className='link'>{data.urlDomain}</span>
+          {data.imageName && (
+            <div className='center'>
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BLOBSTORAGEURL}/${process.env.NEXT_PUBLIC_ITEMIMAGESCONTAINER}/${data.imageName}`}
+                layout='fixed'
+                objectFit='contain'
+                width='300'
+                height='150'
+                quality={100}
+              />
+            </div>
+          )}
         </a>
-        <br />
-        <h5>Catalogs</h5>
         <div className={styles.header}>
           <ProfileImage
             profileImage={data.catalog.user.profileImage}
@@ -91,10 +95,6 @@ export default function Page({ itemId }) {
           <span>
             <Link href={`/${data.catalog.user.username}`}>
               <b className='button'>{data.catalog.user.username}</b>
-            </Link>
-            <b>{' > '}</b>
-            <Link href={`/catalog/${data.catalog.id}`}>
-              <b className='button'>{data.catalog.name}</b>
             </Link>
           </span>
         </div>
