@@ -66,12 +66,24 @@ export default function Page({ itemId }) {
       <br />
       <div className='card'>
         {isEditable && <ItemMenu item={data} />}
-        <Link href={`/catalog/${data.catalog.id}`}>
-          <b className='button'>{data.catalog.name}</b>
-        </Link>
+        <div className={styles.header}>
+          <ProfileImage
+            profileImage={data.catalog.user.profileImage}
+            username={data.catalog.user.username}
+            width='35'
+            height='35'
+          />
+          <span>
+            <Link href={`/${data.catalog.user.username}`}>
+              <b className='button'>{data.catalog.user.username}</b>
+            </Link>
+            <b>{' > '}</b>
+            <Link href={`/catalog/${data.catalog.id}`}>
+              <b className='button'>{data.catalog.name}</b>
+            </Link>
+          </span>
+        </div>
         <a href={data.url} className='grid'>
-          <h4>{data.title}</h4>
-          <span className='link'>{data.urlDomain}</span>
           {data.imageName && (
             <div className='center'>
               <Image
@@ -84,20 +96,9 @@ export default function Page({ itemId }) {
               />
             </div>
           )}
+          <h4>{data.title}</h4>
+          <span className='link'>{data.urlDomain}</span>
         </a>
-        <div className={styles.header}>
-          <ProfileImage
-            profileImage={data.catalog.user.profileImage}
-            username={data.catalog.user.username}
-            width='35'
-            height='35'
-          />
-          <span>
-            <Link href={`/${data.catalog.user.username}`}>
-              <b className='button'>{data.catalog.user.username}</b>
-            </Link>
-          </span>
-        </div>
         <div>{data.comment}</div>
       </div>
     </div>

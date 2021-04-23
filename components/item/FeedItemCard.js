@@ -24,12 +24,27 @@ export default function FeedItemCard({ item, showFollow }) {
   return (
     <div className='card'>
       <div className='grid'>
-        <Link href={`/catalog/${item.catalogId}`}>
-          <b className='button'>{item.catalogName}</b>
-        </Link>
+        <div className={styles.header}>
+          <ProfileImage
+            profileImage={user.profileImage}
+            username={user.username}
+            width='35'
+            height='35'
+          />
+          <span>
+            <Link href={`/${user.username}`}>
+              <b className='button'>{user.username}</b>
+            </Link>
+            <b>{' > '}</b>
+            <Link href={`/catalog/${item.catalogId}`}>
+              <b className='button'>{item.catalogName}</b>
+            </Link>
+          </span>
+
+          {showFollow && <Follow />}
+        </div>
         <Link href={`/item/${item.id}`}>
           <div className='button grid'>
-            <h5>{item.title}</h5>
             {item.imageName && (
               <div className='center'>
                 <Image
@@ -42,29 +57,10 @@ export default function FeedItemCard({ item, showFollow }) {
                 />
               </div>
             )}
+            <h5>{item.title}</h5>
+            {item.comment && <Comment comment={item.comment} />}
           </div>
         </Link>
-        <div className={styles.header}>
-          <ProfileImage
-            profileImage={user.profileImage}
-            username={user.username}
-            width='35'
-            height='35'
-          />
-          <span>
-            <Link href={`/${user.username}`}>
-              <b className='button'>{user.username}</b>
-            </Link>
-          </span>
-          {showFollow && <Follow />}
-        </div>
-        {item.comment && (
-          <Link href={`/item/${item.id}`}>
-            <span className='button'>
-              <Comment comment={item.comment} />
-            </span>
-          </Link>
-        )}
       </div>
     </div>
   )
