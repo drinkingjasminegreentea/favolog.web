@@ -4,6 +4,14 @@ import ProfileImage from '../user/ProfileImage'
 import Follow from '@/components/layout/Follow'
 import styles from '@/styles/Feed.module.css'
 
+const Comment = ({ comment }) => {
+  const limit = 200
+
+  if (comment.length < limit + 1) return comment
+
+  return `${comment.substring(0, limit)}..`
+}
+
 export default function FeedItemCard({ item, showFollow }) {
   const user = {
     id: item.userId,
@@ -49,9 +57,9 @@ export default function FeedItemCard({ item, showFollow }) {
               </div>
             )}
             <h5>{item.title}</h5>
+            {item.comment && <Comment comment={item.comment} />}
           </div>
         </Link>
-        <div className={styles.comment}>{item.comment}</div>
       </div>
     </div>
   )
