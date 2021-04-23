@@ -8,10 +8,12 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export default function Page({ itemId }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
   const { currentUser, getToken } = useContext(AuthContext)
+  const router = useRouter()
 
   let url = null
   let fetcher = null
@@ -51,6 +53,10 @@ export default function Page({ itemId }) {
 
   return (
     <div className='mainContent'>
+      <span className='button' onClick={() => router.back()}>
+        <img src='/icons/arrow_back-24px.svg' /> Back
+      </span>
+      <br />
       <div className='card'>
         <h4>{data.title}</h4>
 

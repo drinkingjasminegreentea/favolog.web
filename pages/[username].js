@@ -1,18 +1,20 @@
 import styles from '@/styles/ProfileInfo.module.css'
 import CatalogsGrid from '@/components/catalog/CatalogsGrid'
 import ProfileInfo from '@/components/user/ProfileInfo'
-import { PageContext } from '../src/PageContext'
-import { AuthContext } from '../src/AuthContext'
+import { PageContext } from '@/src/PageContext'
+import { AuthContext } from '@/src/AuthContext'
 import { useContext, useEffect } from 'react'
 import useSWR, { useSWRInfinite } from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import ItemsGrid from '@/components/item/ItemsGrid'
+import { useRouter } from 'next/router'
 
 export default function Page({ username }) {
   const { setOpenGraphInfo, openGraphInfo } = useContext(PageContext)
   const { currentUser, getToken } = useContext(AuthContext)
+  const router = useRouter()
 
   const fetchPublic = (url) => {
     return fetch(url, {
@@ -112,9 +114,17 @@ export default function Page({ username }) {
         </div>
       </div>
       <div className={styles.profileMobile + ' mobile card'}>
+        <span className='button' onClick={() => router.back()}>
+          <img src='/icons/arrow_back-24px.svg' /> Back
+        </span>
+        <br />
         <ProfileInfo user={data.user} />
       </div>
       <div className='card mainContent'>
+        <span className='button' onClick={() => router.back()}>
+          <img src='/icons/arrow_back-24px.svg' /> Back
+        </span>
+        <br />
         <Tabs
           defaultActiveKey='catalogs'
           transition={false}

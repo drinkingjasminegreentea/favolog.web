@@ -9,6 +9,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Link from 'next/link'
 import CatalogMenu from '@/components/catalog/CatalogMenu'
 import Follow from '@/components/layout/Follow'
+import { useRouter } from 'next/router'
 
 export default function Page({ catalogId, refreshKey }) {
   const { setOpenGraphInfo, openGraphInfo, setCurrentCatalogId } = useContext(
@@ -17,6 +18,7 @@ export default function Page({ catalogId, refreshKey }) {
   const { currentUser, getToken } = useContext(AuthContext)
   const [key, setKey] = useState(refreshKey)
   const [self, setIsSelf] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     setCurrentCatalogId(catalogId)
@@ -97,6 +99,10 @@ export default function Page({ catalogId, refreshKey }) {
     )
   return (
     <div className='mainContent'>
+      <span className='button' onClick={() => router.back()}>
+        <img src='/icons/arrow_back-24px.svg' /> Back
+      </span>
+      <br />
       <div className='card'>
         {data.isEditable && <CatalogMenu catalog={data} />}
         <div className={styles.catalogAuthor}>
