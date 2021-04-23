@@ -58,7 +58,13 @@ export default function FeedItemCard({ item, showFollow }) {
           </span>
           {showFollow && <Follow />}
         </div>
-        {item.comment && <Comment comment={item.comment} />}
+        {item.comment && (
+          <Link href={`/item/${item.id}`}>
+            <span className='button'>
+              <Comment comment={item.comment} />
+            </span>
+          </Link>
+        )}
       </div>
     </div>
   )

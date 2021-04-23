@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner'
 
 export default function Page() {
   const { currentUser, getToken } = useContext(AuthContext)
-  const [showFollow, setShowFollow] = useState(true)
+  const [showFollow, setShowFollow] = useState(false)
 
   const fetchGuestFeed = (url) => {
     return fetch(url)

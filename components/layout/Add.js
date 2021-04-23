@@ -41,6 +41,9 @@ const AddItemDialog = ({ show, parentAction }) => {
 
   const closeModal = () => {
     parentAction()
+    setTitle('')
+    setSourceImageUrl('')
+    setUrl('')
     setCatalogName('')
     setCatalogId('')
     setOriginalUrl('')
@@ -111,7 +114,7 @@ const AddItemDialog = ({ show, parentAction }) => {
         setAddInProgress(false)
         closeModal()
         setCatalogRefresh(createNewCatalog)
-        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+        router.push(`/item/${data.id}?refreshKey=${Date.now()}`)
       })
       .catch((error) => {
         setAddInProgress(false)
@@ -152,9 +155,11 @@ const AddItemDialog = ({ show, parentAction }) => {
         return Promise.reject(response)
       })
       .then((data) => {
-        setTitle(data.title)
-        setSourceImageUrl(data.image)
-        setUrl(data.url)
+        if (data.title) {
+          setTitle(data.title)
+          setSourceImageUrl(data.image)
+          setUrl(data.url)
+        }
         setShowPreview(true)
       })
       .catch(() => {
@@ -178,9 +183,6 @@ const AddItemDialog = ({ show, parentAction }) => {
   return (
     <Modal show={show} onHide={closeModal} centered size='lg'>
       <Modal.Body>
-        {errors && errors.originalUrl && (
-          <p className='error'>{errors.originalUrl}</p>
-        )}
         <Form.Group>
           <span>
             <img src='/icons/link.svg' className='icon' />
@@ -199,6 +201,9 @@ const AddItemDialog = ({ show, parentAction }) => {
         </Form.Group>
         {showPreview && (
           <div className={styles.preview}>
+            {errors && errors.originalUrl && (
+              <p className='error'>{errors.originalUrl}</p>
+            )}
             <Form.Control
               type='text'
               placeholder='Title'
