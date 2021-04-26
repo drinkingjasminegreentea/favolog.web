@@ -1,7 +1,7 @@
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import styles from '../styles/Settings.module.css'
+import styles from '../styles/EditProfile.module.css'
 import { useContext, useEffect, useState, useRef } from 'react'
 import { AuthContext } from '../src/AuthContext'
 import { useRouter } from 'next/router'

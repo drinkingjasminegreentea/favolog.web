@@ -1,16 +1,23 @@
+import Image from 'next/image'
 import styles from '../../styles/Layout.module.css'
 import { PageContext } from '../../src/PageContext'
 import Header from './Header'
 import Add from './Add'
 import Head from 'next/head'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import SideBar from './SideBar'
 import MobileFooter from './MobileFooter'
 import { AuthContext } from '../../src/AuthContext'
+import Settings from './Settings'
 
 export default function Layout({ children }) {
   const { openGraphInfo } = useContext(PageContext)
   const { currentUser } = useContext(AuthContext)
+  const [showSettings, setShowSettings] = useState(false)
+
+  const onClick = () => {
+    setShowSettings(true)
+  }
 
   return (
     <>
@@ -29,13 +36,22 @@ export default function Layout({ children }) {
         <title>favolog - share what you love</title>
       </Head>
       <div className={styles.container}>
+        <span
+          className={styles.hamburgerIcon + ' mobile button'}
+          onClick={() => setShowSettings(!showSettings)}
+        >
+          <Image src='/icons/list.svg' width='35' height='35' />
+        </span>
+        {<Settings show={showSettings} close={() => setShowSettings(false)} />}
         <Header />
-        <div className={styles.pageContent}>
-          <div className={styles.content}>
-            {children}
-            <SideBar />
+        {!showSettings && (
+          <div className={styles.pageContent}>
+            <div className={styles.content}>
+              {children}
+              <SideBar />
+            </div>
           </div>
-        </div>
+        )}
         <Add /> {currentUser && <MobileFooter />}
       </div>
     </>

@@ -27,24 +27,12 @@ export default function Header() {
           <NavigationMenu />
         </div>
       </div>
-      <div className={styles.headerContainer + ' mobile'}>
+      <div className='mobile card grid'>
         <Link href='/'>
-          <span className={styles.logo + ' button'}>
+          <span className={styles.logo + ' button center'}>
             <img src='/icons/gratipay-brands.svg' /> favolog
           </span>
         </Link>
-        {!currentUser ? (
-          <>
-            <button className='primary' onClick={toggleModalWindow}>
-              Log in
-            </button>
-            <SignInModal show={showModal} parentAction={toggleModalWindow} />
-          </>
-        ) : (
-          <span className='end'>
-            <Image src='/icons/list.svg' width='25' height='25' />
-          </span>
-        )}
       </div>
     </>
   )

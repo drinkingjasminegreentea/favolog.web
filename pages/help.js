@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div className='mainContent'>
+    <div className='mainContent card'>
       <h1>Help center</h1>
       <br />
       <h5>How can I contact you?</h5>

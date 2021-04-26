@@ -1,11 +1,11 @@
-import styles from '../../styles/Header.module.css'
+import styles from '@/styles/Header.module.css'
 import { useContext, useState } from 'react'
 import { useRouter } from 'next/router'
-import { AuthContext } from '../../src/AuthContext'
+import { AuthContext } from '@/src/AuthContext'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Image from 'next/image'
 import ProfileImage from '../user/ProfileImage'
-import { SignInModal } from '../../src/AuthContext'
+import { SignInModal } from '@/src/AuthContext'
 
 export default function NavigationMenu() {
   const { currentUser, logOut } = useContext(AuthContext)

@@ -55,8 +55,8 @@
 }
 
 .headerContainer {
-  display: grid;
   z-index: 1000;
+  display: grid;
   width: 100%;
 }
 

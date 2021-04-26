@@ -121,12 +121,12 @@ export default function Page({ username }) {
         <ProfileInfo user={data.user} />
       </div>
       <div className='card mainContent'>
-        <div>
+        <div className='desktop'>
           <span className='button' onClick={() => router.back()}>
             <img src='/icons/arrow_back-24px.svg' /> Back
           </span>
+          <br />
         </div>
-        <br />
         <Tabs
           defaultActiveKey='catalogs'
           transition={false}

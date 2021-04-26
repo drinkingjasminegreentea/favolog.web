@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <div className='mainContent'>
+    <div className='mainContent card'>
       <h3>Mission</h3>
       <p>
         Our mission is to help people discover the best products in the market

@@ -91,3 +91,10 @@
   right: 50px;
   bottom: 50px;
 }
+
+.hamburgerIcon {
+  position: absolute;
+  z-index: 1000;
+  top: 12px;
+  left: 12px;
+}
