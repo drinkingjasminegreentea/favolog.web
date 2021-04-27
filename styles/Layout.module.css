@@ -14,6 +14,24 @@
   .addButton {
     display: grid;
   }
+  .header {
+    position: relative;
+    width: 1200px;
+    padding: 10px 0px;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    align-items: center;
+  }
+  .headerContainer {
+    background: white;
+    border: solid 1px #dbdbdb;
+    justify-items: center;
+    position: fixed;
+  }
+
+  .logo {
+    width: 150px;
+  }
 }
 
 /* screen size smaller than 600 */
@@ -26,7 +44,18 @@
   .pageContent {
     margin-bottom: 60px;
   }
-
+  .headerContainer {
+    padding: 10px;
+    background: white;
+    margin-bottom: 10px;
+    position: relative;
+    height: 60px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0px 10px;
+    align-items: center;
+  }
   .container {
     display: grid;
     grid-template-rows: 80px 1fr;
@@ -42,6 +71,25 @@
   min-height: 100vh;
   width: 100%;
   height: fit-content;
+}
+
+.headerContainer {
+  z-index: 1000;
+  display: grid;
+  width: 100%;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 25px 1fr;
+}
+
+.logo > img {
+  width: 20px;
+  height: 20px;
 }
 
 .pageContent {
