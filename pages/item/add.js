@@ -8,7 +8,7 @@ import { PageContext } from '../../src/PageContext'
 import uploadImage from '../../src/UploadImage'
 import Spinner from 'react-bootstrap/Spinner'
 
-export default function Page({ show, parentAction }) {
+export default function Page() {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [sourceImageUrl, setSourceImageUrl] = useState('')
