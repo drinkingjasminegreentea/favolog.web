@@ -98,8 +98,7 @@ export default function Page() {
       })
       .then((data) => {
         setAddInProgress(false)
-        setCatalogRefresh(createNewCatalog)
-        router.push(`/catalog/${data.catalogId}?refreshKey=${Date.now()}`)
+        router.push(`/item/${data.id}`)
       })
       .catch((error) => {
         setAddInProgress(false)
