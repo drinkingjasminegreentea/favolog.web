@@ -83,7 +83,7 @@ export default function Page({ itemId }) {
             </Link>
           </span>
         </div>
-        <a href={data.url} className='grid'>
+        <a href={data.url} target='_blank' className='grid'>
           {data.imageName && (
             <div className='center'>
               <Image
